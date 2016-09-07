@@ -25,7 +25,7 @@ There are also bindings for Python and IDL.
 Complete documentation and function reference
 ---------------------------------------------
 
-Use a browser to view online documentation: ${MTKHOME}/doc/index.html
+Use a browser to view online documentation: https://nasa.github.io/MISR-Toolkit/html/index.html
 
 
 Third Party Library Dependencies

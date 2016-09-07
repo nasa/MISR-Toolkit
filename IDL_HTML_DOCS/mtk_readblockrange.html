@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_READBLOCKRANGE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;470300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061110;14145400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_READBLOCKRANGE returns 3-D array of MISR data given file, grid, field, and block range. The blocks
+   are not assembled and are just stacked on top of each other. The Coordinate Query routines can be used
+   to map or convert geographic coordinates into block, line and sample which correspond to the data
+   returned by this function.  Note that block index returned by the Coordinate Query routines are 1-based
+   and are referenced to the entire MISR path. <U>The 3-D array returned is referenced to your 1-based start</U>
+<SPAN STYLE="text-decoration: none">   <U>block and indexed in IDL by 0-based, so adjust block index accordingly</U>.</SPAN>  The routines is provide as an
+   alternative to Mtk_ReadData which eliminates all the block headaches.  See Particulars below regarding
+   extra dimensions in some fields.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       grid name
+      fieldname      field name
+      block_start    beginning block
+      block_end      ending block
+
+   the call:
+   
+      <B>status = MTK_READBLOCKRANGE( filename, gridname, fieldname, block_start, block_end, databuf )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      databuf        3-D data array
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      gridname    = 'RedBand'
+      fieldname   = 'Red Radiance/RDQI'
+      block_start = 32
+      block_end   = 40
+      <B>status      = MTK_READBLOCKRANGE</B>( <B>filename, gridname, fieldname, block_start, block_end, databuf</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', filename
+      print, 'grid                  : ', gridname
+      print, 'field                 : ', fieldname
+      print, 'beginning block       : ', block_start
+      print, 'ending block          : ', block_end
+      print, '================================================='
+      help, databuf
+      block = 35
+      print, databuf[1023:1024, 127:128, block-block_start]
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : RedBand
+      field                 : Red Radiance/RDQI
+      beginning block       : 32
+      ending block          : 40
+    =================================================
+      DATABUF         UINT      = Array[2048, 512, 9]
+      28416   28696
+      28600   28712
+
+-Particulars
+   The MISR Toolkit read functions always return a 2-D data plane buffer.  Some fields in the MISR data products
+   are multi-dimensional.  In order to read one of these fields, the slice to read needs to be specified.
+   A bracket notation on the fieldname is used for this purpose.  For example fieldname = “RetrAppMask[0][5]”.
+
+   Additional dimensions can be determined by the routine <B>mtk_file_grid_field_to_dimlist()</B> or by the
+   <B><U><I>MISR Data Product Specification (DPS) Document</I></U></B>.  The actually definition of the indices are not described in the
+   MISR product files and thus not described by the MISR Toolkit.  These will have to be looked up in the
+   MISR DPS.  All indices are 0-based.
+
+   Example with 1-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'RegParamsAer'
+      basefieldname = 'RegBestEstimateSpectralOptDepth'
+      block_start   = 32
+      block_end     = 40
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RegBestEstimateSpectralOptDepth[1]'
+      <B>status      = MTK_READBLOCKRANGE</B>( <B>filename, gridname, fieldname, block_start, block_end, databuf )</B>
+
+      <B>status      = MTK_READBLOCKRANGE(</B> <B>filename, gridname, basefieldname, block_start, block_end, databuf )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+   Example with 2-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'SubregParamsAer'
+      basefieldname = 'RetrAppMask'
+      block_start   = 32
+      block_end     = 40
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RetrAppMask[0][5]'
+      <B>status      = MTK_READBLOCKRANGE</B>( <B>filename, gridname, fieldname, block_start, block_end, databuf )</B>
+
+      <B>status      = MTK_READBLOCKRANGE</B>( <B>filename, gridname, basefieldname, block_start, block_end, databuf )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkReadBlockRange.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

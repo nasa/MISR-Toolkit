@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="mtkfield.html" />
+<link rel="prev" href="mtkfile.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="mtkfield.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.2 MtkGrid </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.1 MtkFile"
+  href="mtkfile.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.3 MtkField"
+  href="mtkfield.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkfile.html">2.1 MtkFile</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkfield.html">2.3 MtkField</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000220000000000000000"></a><a name="mtkgrid"></a>
+<br>
+2.2 MtkGrid 
+</h2>
+
+<p>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-19' xml:id='l2h-19' class="class">MtkGrid</tt></b>
+<dd>
+  Grid from file.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf').grid('BlueBand')
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-20' xml:id='l2h-20' class="method">attr_get</tt></b>(</nobr></td>
+  <td><var>attr_name</var>)</td></tr></table></dt>
+<dd>
+  Get a grid attribute.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.attr_get('Block_size.resolution_x')
+1100
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-21' xml:id='l2h-21' class="member">attr_list</tt></b></dt>
+<dd>
+  List of attribute names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.attr_list
+['Block_size.resolution_x', 'Block_size.resolution_y', 'Block_size.size_x', 'Block_size.size_y', 'Scale factor', 'std_solar_wgted_height', 'SunDistanceAU']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-22' xml:id='l2h-22' class="method">field_dims</tt></b>(</nobr></td>
+  <td><var>field_name</var>)</td></tr></table></dt>
+<dd>
+  Returns a list of tuples of the extra dimension names and sizes.  If field_name 
+  doesn't have extra dimensions an empty list is returned.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.field_dims('Blue Radiance')
+[]
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-23' xml:id='l2h-23' class="method">field</tt></b>(</nobr></td>
+  <td><var>field_name</var>)</td></tr></table></dt>
+<dd>
+  Return MtkField.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.field('Blue Radiance')
+&lt;MisrToolkit.MtkField object at 0x15137a0&gt;
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-24' xml:id='l2h-24' class="member">field_list</tt></b></dt>
+<dd>
+  List of field names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.field_list
+['Blue Radiance/RDQI', 'Blue Radiance', 'Blue RDQI', 'Blue DN', 'Blue Equivalent Reflectance', 'Blue Brf']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-25' xml:id='l2h-25' class="member">native_field_list</tt></b></dt>
+<dd>
+  List of native field names (excludes derived fields).
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.native_field_list
+['Blue Radiance/RDQI']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-26' xml:id='l2h-26' class="member">grid_name</tt></b></dt>
+<dd>
+  Grid name.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.grid_name
+'BlueBand'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-27' xml:id='l2h-27' class="member">resolution</tt></b></dt>
+<dd>
+  Resolution of grid in meters.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; g.resolution
+1100
+</pre></div>
+</dl>
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.1 MtkFile"
+  href="mtkfile.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.3 MtkField"
+  href="mtkfield.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkfile.html">2.1 MtkFile</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkfield.html">2.3 MtkField</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="mtkreproject.html" />
+<link rel="prev" href="mtkmapinfo.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="mtkreproject.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.7 MtkTimeMetaData </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.6 MtkMapInfo"
+  href="mtkmapinfo.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.8 MtkReProject"
+  href="mtkreproject.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkmapinfo.html">2.6 MtkMapInfo</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkreproject.html">2.8 MtkReProject</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000270000000000000000"></a><a name="mtktimemetadata"></a>
+<br>
+2.7 MtkTimeMetaData 
+</h2>
+
+<p>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-64' xml:id='l2h-64' class="class">MtkTimeMetaData</tt></b>
+<dd>
+  Contains time metadata information, and supports calculating pixel time.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf').time_metadata_read()
+</pre></div>
+
+<p>
+<div class="note"><b class="label">Note:</b>
+
+Time metadata is stored in the L1B2 Ellipsoid product, it is not available in any other product. The pixel time varies according to camera by approximately 7 minutes. To get the average or center pixel acquistion time, it is recommended to use the time metadata from the AN camera.
+</div>
+
+<p>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-65' xml:id='l2h-65' class="member">camera</tt></b></dt>
+<dd>
+  Camera for which time metadata applies.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.camera  
+'AA'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-66' xml:id='l2h-66' class="member">coeff_line</tt></b></dt>
+<dd>
+  Line transform coefficients.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.coeff_line
+array([[[  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00]],
+
+       [[  2.06016807e+03,   2.31347217e+03],
+        [  9.89420163e-01,   9.89470448e-01],
+        [  2.32523204e-02,   2.23010430e-02],
+        [  1.03023724e-05,   1.03026080e-05],
+        [ -3.72946711e-06,  -3.72871997e-06],
+        [ -6.93100473e-13,  -1.58848849e-11]],
+
+       [[  2.56679833e+03,   2.82013585e+03],
+        [  9.89537006e-01,   9.89609347e-01],
+        [  2.13693245e-02,   2.04218034e-02],
+        [  1.03134648e-05,   1.03101703e-05],
+        [ -3.77586865e-06,  -3.69789446e-06],
+        [ -5.35620372e-11,  -1.11540278e-11]],
+
+       ..., 
+       [[  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00]],
+
+       [[  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00]],
+
+       [[  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00],
+        [  0.00000000e+00,   0.00000000e+00]]])
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-67' xml:id='l2h-67' class="member">end_block</tt></b></dt>
+<dd>
+  End block number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.end_block 
+140
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-68' xml:id='l2h-68' class="member">number_line</tt></b></dt>
+<dd>
+  Number of lines.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.number_line
+array([[  0,   0],
+       [256, 256],
+       [256, 256],
+       [256, 256],
+       ...,
+       [  0,   0],
+       [  0,   0],
+       [  0,   0],
+       [  0,   0]])
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-69' xml:id='l2h-69' class="member">number_transform</tt></b></dt>
+<dd>
+  Number of transforms.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.number_transform
+array([0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-70' xml:id='l2h-70' class="member">path</tt></b></dt>
+<dd>
+  Path number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.path
+37
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-71' xml:id='l2h-71' class="method">pixel_time</tt></b>(</nobr></td>
+  <td><var>som_x, som_y</var>)</td></tr></table></dt>
+<dd>
+  Calculate pixel time at Som X, Som Y.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.pixel_time(10153687.5, 738787.5)
+'2005-06-04T18:06:07.656501Z'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-72' xml:id='l2h-72' class="member">ref_time</tt></b></dt>
+<dd> 
+  Reference time.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.ref_time
+[['', ''], ['2005-06-04T17:58:13.127920Z', '2005-06-04T17:58:13.127920Z'], ... ['', ''], ['', '']]
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-73' xml:id='l2h-73' class="member">som_ctr_x</tt></b></dt>
+<dd>
+  SOM X center coordinates.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.som_ctr_x
+array([[     0.,      0.],
+       [   128.,    384.],
+       [   640.,    896.],
+       ...
+       [     0.,      0.],
+       [     0.,      0.],
+       [     0.,      0.]])
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-74' xml:id='l2h-74' class="member">som_ctr_y</tt></b></dt>
+<dd>
+  SOM Y center coordinates.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.som_ctr_y
+array([[    0.,     0.],
+       [ 1024.,  1024.],
+       [ 1024.,  1024.],
+       ...
+       [     0.,      0.],
+       [     0.,      0.],
+       [     0.,      0.]])
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-75' xml:id='l2h-75' class="member">start_block</tt></b></dt>
+<dd>
+  Start block number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.start_block
+1
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-76' xml:id='l2h-76' class="member">start_line</tt></b></dt>
+<dd>
+  Starting line.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; time_metadata.start_line 
+array([[    0,     0],
+       [    0,   256],
+       [  512,   768],
+       ...
+       [    0,     0],
+       [    0,     0],
+       [    0,     0]])
+</pre></div>
+</dl>
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.6 MtkMapInfo"
+  href="mtkmapinfo.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.8 MtkReProject"
+  href="mtkreproject.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkmapinfo.html">2.6 MtkMapInfo</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkreproject.html">2.8 MtkReProject</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

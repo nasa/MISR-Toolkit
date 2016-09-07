@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_SETREGION_BY_LATLON_EXTENT</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;191200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13132600">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_SETREGION_BY_LATLON_EXTENT creates a region structure that defines an approximate region of
+   interest given a center latitude/longitude coordinate and a latitudinal/longitudinal full extent
+   in specified units of degrees, meters, kilometers, or pixels. This structure is used as input to
+   other MTK routines, Mtk_ReadData in particular.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      center_lat     center latitude of region
+      center_lon     center longitude of region
+      lat_extent     latitudinal extent (in extent_units)
+      lon_extent     longitudinal extent (in extent_units)
+      extent_units   units of extent
+
+   Where:
+
+      extent_units is a case insensitive string that defines the units of lat_extent and lon_extent.
+
+      Acceptable values are:
+        1) &quot;degrees&quot;, &quot;deg&quot;, &quot;dd&quot; for degrees;
+        2) &quot;meters&quot;, &quot;m&quot; for meters;
+        3) &quot;kilometers&quot;, &quot;km&quot; for kilometers; and
+        4) &quot;275m&quot;, &quot;275 meters&quot;, &quot;1.1km&quot;, &quot;1.1 kilometers&quot; for number of pixels of the specified resolution per pixel.
+
+   the call:
+   
+      <B>status = MTK_SETREGION_BY_LATLON_EXTENT( center_lat, center_lon, lat_extent, lon_extent, extent_units, region )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      region         MTK region structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      lat          = 66.0
+      lon          = -89.0
+      lat_extent   = 111000.0
+      lon_extent   = 111000.0
+      extent_units = 'meters'
+      <B>status       = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, extent_units, region</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'center latitude       : ', lat
+      print, 'center longitude      : ', lon
+      print, 'latitudinal extent    : ', lat_extent
+      print, 'longitudinal extent   : ', lon_extent
+      print, 'extent_units          : ', extent_units
+      print, '================================================='
+      FOR i=0,N_TAGS(region)-1 DO $
+         PRINT, STRTRIM((TAG_NAMES(region))[i],2),': ', $
+         STRTRIM(region.(i),2),FORMAT='(A-22,A2,A)'
+
+   IDL outputs:
+   
+      center latitude       : 66.000
+      center longitude      : -89.000
+      latitudinal extent    : 111000.0
+      longitudinal extent   : 111000.0
+      extent_units          : meters
+    =================================================
+      GEO_CTR_LAT           : 66.000000
+      GEO_CTR_LON           : -89.000000
+      HEXTENT_XLAT          : 55500.000
+      HEXTENT_YLON          : 55500.000
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkSetRegionByLatLonExtent.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

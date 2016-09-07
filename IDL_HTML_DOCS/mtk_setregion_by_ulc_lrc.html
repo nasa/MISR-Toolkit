@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_SETREGION_BY_ULC_LRC</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;191300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13065300">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_SETREGION_BY_ULC_LRC creates a region structure that defines an approximate region of interest given
+   upper left corner and lower right corner latitude/longitude coordinates. This structure is used as input to
+   other MTK routines, Mtk_ReadData in particular. 
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      ul_lat         upper-left latitude
+      ul_lon         upper-left longitude
+      lr_lat         lower-right latitude
+      lr_lon         lower-right longitude
+
+   the call:
+   
+      <B>status = MTK_SETREGION_BY_ULC_LRC( ul_lat, ul_lon, lr_lat, lr_lon, region )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      region         MTK region structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      ul_lat      = 67.0
+      ul_lon      = -90.0
+      lr_lat      = 65.0
+      lr_lon      = -88.0
+      <B>status      = MTK_SETREGION_BY_ULC_LRC</B>( <B>ul_lat, ul_lon, lr_lat, lr_lon, region</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'upper-left latitude   : ', ul_lat
+      print, 'upper-left longitude  : ', ul_lon
+      print, 'lower-right latitude  : ', lr_lat
+      print, 'lower-right longitude : ', lr_lon
+      print, '================================================='
+      FOR i=0,N_TAGS(region)-1 DO $
+         PRINT, STRTRIM((TAG_NAMES(region))[i],2),': ', $
+         STRTRIM(region.(i),2),FORMAT='(A-22,A2,A)'
+
+   IDL outputs:
+   
+      upper-left latitude   : 67.0000
+      upper-left longitude  : -90.0000
+      lower-right latitude  : 65.0000
+      lower-right longitude : -88.0000
+    =================================================
+      GEO_CTR_LAT           : 66.000000
+      GEO_CTR_LON           : -89.000000
+      HEXTENT_XLAT          : 111319.54
+      HEXTENT_YLON          : 111319.54
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkSetRegionByUlcLrc.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_GRID_FIELD_TO_DATATYPE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;16055700">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_GRID_FIELD_TO_DATATYPE returns the IDL data type code of the given file/grid/field combination.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       grid name for file
+      fieldname      field name for grid
+
+   the call:
+   
+      <B>status = MTK_FILE_GRID_FIELD_TO_DATATYPE( filename, gridname, fieldname, idltype)</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      idltype        type code representing IDL data type, as follows:
+
+      Type Code  Type Name  Data Type  
+      =========  =========  =========
+          0      UNDEFINED  Undefined  
+          1      BYTE       Byte  
+          2      INT        Integer  
+          3      LONG       Longword integer  
+          4      FLOAT      Floating point  
+          5      DOUBLE     Double-precision floating  
+          6      COMPLEX    Complex floating  
+          7      STRING     String  
+          8      STRUCT     Structure  
+          9      DCOMPLEX   Double-precision complex  
+          10     POINTER    Pointer  
+          11     OBJREF     Object reference  
+          12     UINT       Unsigned Integer  
+          13     ULONG      Unsigned Longword Integer  
+          14     LONG64     64-bit Integer  
+          15     ULONG64    Unsigned 64-bit Integer  
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      yesno       = ['NO','YES']
+      file        = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      grid        = 'RedBand'
+      field       = 'Red Radiance/RDQI'
+      <B>status      = MTK_FILE_GRID_FIELD_TO_DATATYPE(file, grid, field, idltype</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, 'field                 : ', field
+      print, '================================================='
+      print, 'IDL type code         : ', idltype
+
+   IDL outputs:
+
+       file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+       grid                  : RedBand
+       field                 : Red Radiance/RDQI
+       =================================================
+       IDL type code         :           12
+   
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileGridFieldToDataType.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

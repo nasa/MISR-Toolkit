@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_SETREGION_BY_PATH_BLOCKRANGE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;191300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13072800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_SETREGION_BY_PATH_BLOCKRANGE creates a region structure that defines an approximate region of interest
+   given a MISR path and block range. This structure is used as input to other MTK routines, Mtk_ReadData in
+   particular.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path           center latitude of region
+      start_block    starting block
+      end_block      ending block
+
+   the call:
+   
+      <B>status = MTK_SETREGION_BY_PATH_BLOCKRANGE( path, start_block, end_block, region )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      region         MTK region structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      start_block = 32
+      end_block   = 40
+      <B>status      = MTK_SETREGION_BY_PATH_BLOCKRANGE</B>( <B>path, start_block, end_block, region</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'starting block        : ', start_block
+      print, 'ending block          : ', end_block
+      print, '================================================='
+      FOR i=0,N_TAGS(region)-1 DO $
+         PRINT, STRTRIM((TAG_NAMES(region))[i],2),': ', $
+         STRTRIM(region.(i),2),FORMAT='(A-22,A2,A)'
+
+   IDL outputs:
+   
+      path                  : 37
+      starting block        : 32
+      ending block          : 40
+    =================================================
+      GEO_CTR_LAT           : 67.286285
+      GEO_CTR_LON           : -95.222043
+      HEXTENT_XLAT          : 633462.50
+      HEXTENT_YLON          : 307862.50
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkSetRegionByPathBlockRange.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

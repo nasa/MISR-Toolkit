@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_DOWNSAMPLE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_DOWNSAMPLE Downsample data by averaging pixels. 
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+   Given: 
+	 srcbuf         source data buffer 
+	 src_mask       source mask
+	 size_factor    factor to reduce data by
+	 resamp         resampled data
+	 resamp_mask    resampled mask
+	 
+   the call:
+   
+      <B>status = MTK_DOWNSAMPLE( srcbuf, src_mask, size_factor, resamp, resamp_mask )</B>
+
+   returns: 
+	status          0 on success; otherwise failure
+	resamp          resampled data
+	resamp_mask     resampled mask   
+   
+-Examples
+
+
+	;;
+	;; Set up input parameters
+	;;
+	filename    = '../Mtk_testdata/in/MISR_AM1_AGP_P039_F01_24.hdf'
+	gridname    = 'Standard'
+	fieldname   = 'AveSceneElev'
+	path        = 39
+	start_block = 50
+	end_block   = 52
+	size_factor = 2
+	status      = MTK_SETREGION_BY_PATH_BLOCKRANGE( path, start_block, end_block, region )      
+	status      = MTK_READDATA( filename, gridname, fieldname, region, srcbuf, mapinfo )
+	srcbuf = float(srcbuf)
+	src_mask = byte(replicate(1,528,384))
+	;;
+	;; The call
+	;;
+	<B>status = MTK_DOWNSAMPLE</B>( <B>srcbuf, src_mask, size_factor, resamp, resamp_mask</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	help, srcbuf, resamp
+
+	IDL outputs:
+		=================================================		
+		SRCBUF          FLOAT     = Array[528, 384]
+		RESAMP          FLOAT     = Array[264, 192]
+
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkDownsample.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

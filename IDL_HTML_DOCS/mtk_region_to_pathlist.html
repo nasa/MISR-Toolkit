@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_REGION_TO_PATHLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13134800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_REGION_TO_PATHLIST returns a list of paths intersecting a given region.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      region       region structure
+
+   the call:
+   
+      <B>status = MTK_REGION_TO_PATHLIST( region, path_cnt, path_list )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      path_cnt       number of paths returned
+      path_list      array of returned paths
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      lat         = 40.0
+      lon         = -120.0
+      lat_extent  = 0.1
+      lon_extent  = 0.1
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_REGION_TO_PATHLIST</B>( <B>region, path_cnt, path_list</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'center latitude       : ', lat
+      print, 'center longitude      : ', lon
+      print, 'latitudinal extent    : ', lat_extent
+      print, 'longitudinal extent   : ', lon_extent
+      print, '================================================='
+      print, '--- PATH LIST ---'
+      FOR i=0,path_cnt-1 DO PRINT, path_list[i]
+
+   IDL outputs:
+   
+      center latitude       : 40.000
+      center longitude      : 120.000
+      latitudinal extent    : 0.100
+      longitudinal extent   : 0.100
+    =================================================
+      --- PATH LIST ---
+                41
+                42
+                43
+                44
+                45
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkRegionToPathList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

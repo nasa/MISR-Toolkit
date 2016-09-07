@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_REGRESSION_COEFF_CALC</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_REGRESSION_COEFF_CALC Calculate linear regression coefficients for translating values in data buffer 1 to corresponding values in data buffer 2. 
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+    Given: 
+        data1        Data Buffer 1
+        valid_mask1  Valid Mask for Buffer 1
+        data2        Data Buffer 2
+        data2_sigma  Uncertainty
+        valid_mask2  Valid Mask for Buffer 2
+        map_info     Map info for input data
+        size_factor  Number of pixel to aggregate		
+
+    the call:
+
+        <B>status = MTK_REGRESSION_COEFF_CALC( data1, valid_mask1, data2, data2_sigma, valid_mask2, mapinfo, size_factor, regression_coeff, regression_coeff_map_info )</B>
+
+    returns: 
+        status                     0 on success; otherwise failure
+        regression_coeff           Structure with 4 data buffers contain regression coefficient information (valid_mask, slope, intercept, correlation)
+        regression_coeff_map_info  Map info for regression coefficients
+
+   
+-Examples
+
+
+	;;
+	;; Set up input parameters
+	;;
+	data1       = RANDOMU(seed, 512, 704)
+	valid_mask1 = byte(replicate(1,512,704))
+	data2       = RANDOMU(seed, 512, 704)
+	data2_sigma = RANDOMU(seed, 512, 704)	
+	valid_mask2 = byte(replicate(1,512,704))
+	path        = 37
+	resolution  = 275
+	lat         = 66.0
+	lon         = -89.0
+	lat_extent  = 1.5
+	lon_extent  = 1.0
+	status      = MTK_SETREGION_BY_LATLON_EXTENT( lat, lon, lat_extent, lon_extent, "degrees", region )
+	status      = MTK_SNAP_TO_GRID( path, resolution, region, mapinfo )
+	size_factor = 2
+	;;
+	;; The call
+	;;
+	<B>status = MTK_REGRESSION_COEFF_CALC</B>( <B>data1, valid_mask1, data2, data2_sigma, valid_mask2, mapinfo, size_factor, regression_coeff, regression_coeff_map_info </B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	help, regression_coeff
+	print, regression_coeff_map_info.nsample, regression_coeff_map_info.nline
+      
+   IDL outputs:
+   
+   =================================================   
+   ** Structure regression_coeff, 4 tags, length=2523136, data length=2523136:
+      VALID_MASK      LONG      Array[256, 352]
+      SLOPE           FLOAT    Array[256, 352]
+      INTERCEPT       FLOAT    Array[256, 352]
+      CORRELATION     FLOAT    Array[256, 352]
+            256         352
+   
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkRegressionCoeffCalc.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

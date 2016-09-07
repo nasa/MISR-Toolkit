@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_READDATA</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;470300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061110;14142200">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_READDATA returns 2-D array of MISR data given a file, grid, field, and region. The data returned is
+   unscaled, unpacked or interpreted.  If a field is not packed or the fieldname parameter input string is
+   preceded by the word “raw”, Mtk_ReadRaw is called and no unpacking, unscaling or interpreting is done.
+   If the field has a flag associated with it the word “flag” can follow the fieldname parameter input
+   string and the fields flag value is returned.  Use Mtk_file_grid_to_fieldlist to get a complete list
+   of field options for a given MISR product file and grid. The Mtk_ReadData routine always returns data
+   on a MISR grid approximated by the region, no spatial interpolation is performed (only block assembly). 
+   See Particulars below regarding extra dimensions in some fields.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       grid name
+      fieldname      field name
+      region         region structure
+
+   the call:
+   
+      <B>status = MTK_READDATA( filename, gridname, fieldname, region, databuf, mapinfo )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      databuf        2-D data array
+      mapinfo        map info structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      gridname    = 'RedBand'
+      fieldname   = 'Red Radiance/RDQI'
+      lat         = 66.0
+      lon         = -89.0
+      lat_extent  = 1.5
+      lon_extent  = 1.0
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, fieldname, region, databuf, mapinfo )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', filename
+      print, 'grid                  : ', gridname
+      print, 'field                 : ', fieldname
+      print, '================================================='
+      help, databuf
+      help, /struct, mapinfo
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : RedBand
+      field                 : Red Radiance/RDQI
+    =================================================
+      DATABUF         UINT      = Array[448, 640]
+      ** Structure &lt;2866210&gt;, 37 tags, length=1064, data length=1064, refs=1:
+         PATH            LONG                37
+         START_BLOCK     LONG                36
+         END_BLOCK       LONG                37
+         RESOLUTION      LONG               275
+         RESFACTOR       LONG                 1
+         NLINE           LONG               640
+         NSAMPLE         LONG               448
+         PIXEL_CENTER    LONG                 1
+         SOM_PATH        LONG                37
+         SOM_ULC_X       DOUBLE           12394112.
+         SOM_ULC_Y       DOUBLE           1065762.5
+         SOM_CTR_X       DOUBLE           12481975.
+         SOM_CTR_Y       DOUBLE           1127225.0
+         SOM_LRC_X       DOUBLE           12569838.
+         SOM_LRC_Y       DOUBLE           1188687.5
+         GEO_ULC_LAT     DOUBLE           66.950041
+         GEO_ULC_LON     DOUBLE          -89.380321
+         GEO_URC_LAT     DOUBLE           66.451144
+         GEO_URC_LON     DOUBLE          -86.901382
+         GEO_CTR_LAT     DOUBLE           66.001338
+         GEO_CTR_LON     DOUBLE          -89.003794
+         GEO_LRC_LAT     DOUBLE           65.052256
+         GEO_LRC_LON     DOUBLE          -88.652965
+         GEO_LLC_LAT     DOUBLE           65.523048
+         GEO_LLC_LON     DOUBLE          -91.031282
+         PP_PATH         LONG                37
+         PP_PROJCODE     LONG                22
+         PP_ZONECODE     LONG                -1                                                  
+         PP_SPHERECODE   LONG                12
+         PP_PROJPARAM    DOUBLE    Array[15]
+         PP_ULC_BLOCK1   DOUBLE    Array[2]
+         PP_LRC_BLOCK1   DOUBLE    Array[2]
+         PP_NBLOCK       LONG               180
+         PP_NLINE        LONG               512
+         PP_NSAMPLE      LONG              2048
+         PP_RELOFFSET    FLOAT     Array[179]
+         PP_RESOLUTION   LONG               275
+
+-Particulars
+   The MISR Toolkit read functions always return a 2-D data plane buffer.  Some fields in the MISR data products
+   are multi-dimensional.  In order to read one of these fields, the slice to read needs to be specified.
+   A bracket notation on the fieldname is used for this purpose.  For example fieldname = “RetrAppMask[0][5]”.
+
+   Additional dimensions can be determined by the routine <B>mtk_file_grid_field_to_dimlist()</B> or by the
+   <B><U><I>MISR Data Product Specification (DPS) Document</I></U></B>.  The actually definition of the indices are not described in the
+   MISR product files and thus not described by the MISR Toolkit.  These will have to be looked up in the
+   MISR DPS.  All indices are 0-based.
+
+   Example with 1-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'RegParamsAer'
+      basefieldname = 'RegBestEstimateSpectralOptDepth'
+      lat           = 66.0
+      lon           = -89.0
+      lat_extent    = 1.5
+      lon_extent    = 1.0
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RegBestEstimateSpectralOptDepth[1]'
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, fieldname, region, databuf, mapinfo )</B>
+
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, basefieldname, region, databuf, mapinfo )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+   Example with 2-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'SubregParamsAer'
+      basefieldname = 'RetrAppMask'
+      lat           = 66.0
+      lon           = -89.0
+      lat_extent    = 1.5
+      lon_extent    = 1.0
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RetrAppMask[0][5]'
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, fieldname, region, databuf, mapinfo )</B>
+
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, basefieldname, region, databuf, mapinfo )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkReadData.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

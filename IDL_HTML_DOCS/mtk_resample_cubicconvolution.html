@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_RESAMPLE_CUBICCONVOLUTION</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_RESAMPLE_CUBICCONVOLUTION Resample source data at the given coordinates using interpolation by cubic convolution. 
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+   Given: 
+	source	    Source data. (float)
+	source_mask Valid mask for source data. (uint8)
+	line	    Line coordinates. (float)
+	sample	    Sample coordinates. (float)
+	a           Convolution parameter (-1.0 <= A <= 0.0)
+   
+   the call:
+   
+	  <B>status = MTK_RESAMPLE_CUBICCONVOLUTION( source, source_mask, line, sample, a, resampled, resampled_mask )</B>
+
+   returns: 
+	status         0 on success; otherwise failure
+	resampled      Resampled data
+	resampled_mask Valid mask for resampled data  
+	
+   
+   
+-Examples
+
+
+	;;
+	;; Set up input parameters
+	;;
+	source = RANDOMU(seed, 40, 60)
+	source_mask = byte(REPLICATE(1,40,60))
+	line = RANDOMU(seed, 40, 60) * 400
+	sample = RANDOMU(seed, 40, 60) * 600
+	a = -0.5
+	;;
+	;; The call
+	;;
+	<B>status = MTK_RESAMPLE_CUBICCONVOLUTION</B>( <B>source, source_mask, line, sample, a, resampled, resampled_mask</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	a = WHERE(resampled_mask EQ 1, mask_count)
+	print, mask_count
+	help, resampled, resampled_mask
+
+	IDL outputs:
+		=================================================
+		22
+		RESAMPLED       FLOAT     = Array[40, 60]
+		RESAMPLED_MASK  BYTE      = Array[40, 60]
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkResampleCubicConvolution.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_ORBIT_TO_PATH</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15285000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_ORBIT_TO_PATH returns the path corresponding to the given orbit.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      orbit        orbit number
+
+   the call:
+   
+      <B>status = MTK_ORBIT_TO_PATH( orbit, path )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      path           path number
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      orbit      = 29058
+      <B>status = MTK_ORBIT_TO_PATH</B>( <B>orbit, path</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'orbit                 : ', orbit
+      print, '================================================='
+      print, 'PATH                  : ',path
+
+   IDL outputs:
+   
+      orbit                 : 29058
+    =================================================
+      PATH                  : 37
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkOrbitToPath.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

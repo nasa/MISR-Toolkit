@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_RESAMPLE_REGRESSION_COEFF</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By Functionality</A>
+    &nbsp;|&nbsp; <A HREF="../html/index.html">MISR Toolkit: Main Page</A> 
+</P>
+<PRE>
+-Abstract
+
+    MTK_RESAMPLE_REGRESSION_COEFF Resample regression coefficients at each pixel in the target map. Resampling is by cubic convolution. 
+
+-Copyright
+
+    Copyright (2013), California Institute of Technology.
+    U.S. Government sponsorship acknowledged.
+
+-I/O
+
+    Given: 
+        regression_coeff          regression coefficients
+        regression_Coeff_mapinfo  map info for regression coefficients
+        target_mapinfo            map info for target grid
+
+    the call:
+
+        <B>status = MTK_RESAMPLE_REGRESSION_COEFF( regression_coeff, mapinfo, target_mapinfo, regression_coeff_out )</B>
+
+    returns: 
+        status                0 on success; otherwise failure
+        regression_coeff_out  regression coefficients resampled to target grid
+
+
+-Examples
+
+    ;;
+    ;; Set up input parameters
+    ;;
+    data1       = RANDOMU(seed, 512, 704)
+    valid_mask1 = byte(replicate(1,512,704))
+    data2       = RANDOMU(seed, 512, 704)
+    data2_sigma = RANDOMU(seed, 512, 704)	
+    valid_mask2 = byte(replicate(1,512,704))
+    path        = 37
+    resolution  = 275
+    lat         = 66.0
+    lat2        = 66.1
+    lon         = -89.0
+    lon2        = -88.9
+    lat_extent  = 1.5
+    lon_extent  = 1.0
+    status      = MTK_SETREGION_BY_LATLON_EXTENT( lat, lon, lat_extent, lon_extent, "degrees", region )
+    status      = MTK_SNAP_TO_GRID( path, resolution, region, mapinfo )
+    status      = MTK_SETREGION_BY_LATLON_EXTENT( lat2, lon2, lat_extent, lon_extent, "degrees", region2 )    
+    status      = MTK_SNAP_TO_GRID( path, resolution, region2, target_mapinfo )
+    size_factor = 2
+    status = MTK_REGRESSION_COEFF_CALC( data1, valid_mask1, data2, data2_sigma, valid_mask2, mapinfo, size_factor, regression_coeff, regression_coeff_map_info  )
+    ;;
+    ;; The call
+    ;;
+    <B>status = MTK_RESAMPLE_REGRESSION_COEFF</B>( <B>regression_coeff, regression_coeff_map_info, target_mapinfo, regression_coeff_out</B> <B>)</B>
+    ;;
+    ;; Output...
+    ;;
+    print, '================================================='
+    help, regression_coeff
+    help, regression_coeff_out
+
+    IDL outputs:
+    =================================================
+    ** Structure regression_coeff, 4 tags, length=2523136, data length=2523136:
+    VALID_MASK      LONG      Array[256, 352]
+    SLOPE           FLOAT     Array[256, 352]
+    INTERCEPT       FLOAT     Array[256, 352]
+    CORRELATION     FLOAT     Array[256, 352]
+    ** Structure regression_coeff_out, 4 tags, length=5767168, data length=5767168:
+    VALID_MASK      LONG      Array[512, 704]
+    SLOPE           FLOAT     Array[512, 704]
+    INTERCEPT       FLOAT     Array[512, 704]
+    CORRELATION     FLOAT     Array[512, 704]
+
+
+
+-Particulars
+    None.
+
+-Required Reading
+    For important details concerning this module's function, please refer to
+    the MTK routine <B>MtkResampleRegressionCoeff.c</B>.
+
+
+-Version
+    -IDL-MTK Version 1.2.4
+</PRE>
+</BODY>
+</HTML>

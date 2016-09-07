@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_GRIDATTR_GET</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15305500">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_GRIDATTR_LIST lists the attributes for a specified grid/file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       name of a grid within the file
+
+   the call:
+   
+      <B>status = MTK_GRIDATTR_LIST( filename, gridname, attrcnt, attrlist )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      attrcnt        number of attributes in attrlist
+      attrlist       grid attribute list
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      grid        = 'RedBand'
+      <B>status      = MTK_GRIDATTR_LIST( file, grid, attrcnt, attrlist</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, '================================================='
+      print, 'attribute count       : ', attrcnt
+      print, 'attribute list        : ', attrlist
+
+   IDL outputs:
+   
+       file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+       grid                  : RedBand
+       =================================================
+       attribute count       :            7
+       attribute list        :  Block_size.resolution_x Block_size.resolution_y Block_size.size_x
+                                Block_size.size_y Scale factor std_solar_wgted_height SunDistanceAU
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkGridAttrList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_PATH_TIMERANGE_TO_ORBITLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15262000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_PATH_TIMERANGE_TO_ORBITLIST returns the all orbits corresponding to a given path and period of time.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path         path number
+      start_time   beginning time
+      end_time     ending time
+
+   the call:
+   
+      <B>status = MTK_PATH_TIMERANGE_TO_ORBITLIST( path, start_time, end_time, orbit_cnt, orbit_list )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      orbit_cnt      number of orbits
+      orbit_list     list of orbits
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      start_time  = '2002-02-02T02:00:00Z' ;YYYY-MM-DDThh:mm:ssZ
+      end_time    = '2002-05-02T02:00:00Z' ;YYYY-MM-DDThh:mm:ssZ
+      <B>status      = MTK_PATH_TIMERANGE_TO_ORBITLIST</B>( <B>path, start_time, end_time, orbit_cnt, orbit_list</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'starting time         : ', start_time
+      print, 'ending time           : ', end_time
+      print, '================================================='
+      print, '--- ORBIT LIST ---'
+      FOR i=0,orbit_cnt-1 DO print, orbit_list[i]
+
+   IDL outputs:
+   
+      path                  : 37
+      starting time         : 2002-02-02T02:00:00Z
+      ending time           : 2002-05-02T02:00:00Z
+    =================================================
+      --- ORBIT LIST ---
+             11350
+             11583
+             11816
+             12049
+             12282
+             12515
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkPathTimeRangeToOrbitList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

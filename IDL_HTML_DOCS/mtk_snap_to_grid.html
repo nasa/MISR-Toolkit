@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_SNAP_TO_GRID</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;1274000">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13032000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_SNAP_TO_GRID snaps a region of interest to a MISR grid given a path, resolution and a region
+   structure.  It is not typically called directly, instead it is used by Mtk_ReadData and Mtk_ReadRaw
+   to adjust the region defined by the SetRegion routines to the grid of the MISR product file to read.
+   The Mtk_ReadData and Mtk_ReadRaw routines always return data on a MISR grid approximated by the region,
+   no spatial interpolation is performed (only block assembly). This routines does the snap from region to
+   grid.  It may be useful to perform region to map to coordinate computations without actually reading data.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path           MISR path number
+      resolution     resolution
+      region         region structure
+
+   the call:
+   </PRE>
+<OL>
+	<PRE STYLE="margin-bottom: 0.2in"><B>status = MTK_SNAP_TO_GRID( path, resolution, region, mapinfo )</B></PRE>
+</OL>
+<PRE>   
+   returns:
+   
+      status         0 on success; otherwise failure
+      mapinfo         map info structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      resolution  = 275
+      lat         = 66.0
+      lon         = -89.0
+      lat_extent  = 1.5
+      lon_extent  = 1.0
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_SNAP_TO_GRID( path, resolution, region, mapinfo )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'resolution            : ', resolution
+      help, /struct, region
+      print, '================================================='
+      help, /struct, mapinfo
+
+   IDL outputs:
+   
+      path                  :       37
+      resolution            :      275
+      ** Structure &lt;5353c0&gt;, 4 tags, length=32, data length=32, refs=1:
+         GEO_CTR_LAT     DOUBLE           66.000000
+         GEO_CTR_LON     DOUBLE          -89.000000
+         HEXTENT_XLAT    DOUBLE           83489.657
+         HEXTENT_YLON    DOUBLE           55659.772
+      =================================================
+      ** Structure &lt;2866210&gt;, 37 tags, length=1064, data length=1064, refs=1:
+         PATH            LONG                37
+         START_BLOCK     LONG                36
+         END_BLOCK       LONG                37
+         RESOLUTION      LONG               275
+         RESFACTOR       LONG                 1
+         NLINE           LONG               640
+         NSAMPLE         LONG               448
+         PIXEL_CENTER    LONG                 1
+         SOM_PATH        LONG                37
+         SOM_ULC_X       DOUBLE           12394112.
+         SOM_ULC_Y       DOUBLE           1065762.5
+         SOM_CTR_X       DOUBLE           12481975.
+         SOM_CTR_Y       DOUBLE           1127225.0
+         SOM_LRC_X       DOUBLE           12569838.
+         SOM_LRC_Y       DOUBLE           1188687.5
+         GEO_ULC_LAT     DOUBLE           66.950041
+         GEO_ULC_LON     DOUBLE          -89.380321
+         GEO_URC_LAT     DOUBLE           66.451144
+         GEO_URC_LON     DOUBLE          -86.901382
+         GEO_CTR_LAT     DOUBLE           66.001338
+         GEO_CTR_LON     DOUBLE          -89.003794
+         GEO_LRC_LAT     DOUBLE           65.052256
+         GEO_LRC_LON     DOUBLE          -88.652965
+         GEO_LLC_LAT     DOUBLE           65.523048
+         GEO_LLC_LON     DOUBLE          -91.031282
+         PP_PATH         LONG                37
+         PP_PROJCODE     LONG                22
+         PP_ZONECODE     LONG                -1                                                  
+         PP_SPHERECODE   LONG                12
+         PP_PROJPARAM    DOUBLE    Array[15]
+         PP_ULC_BLOCK1   DOUBLE    Array[2]
+         PP_LRC_BLOCK1   DOUBLE    Array[2]
+         PP_NBLOCK       LONG               180
+         PP_NLINE        LONG               512
+         PP_NSAMPLE      LONG              2048
+         PP_RELOFFSET    FLOAT     Array[179]
+         PP_RESOLUTION   LONG               275
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkSnapToGrid.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

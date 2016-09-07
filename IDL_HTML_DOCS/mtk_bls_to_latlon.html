@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_BLS_TO_LATLON</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22541500">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15252500">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_BLS_TO_LATLON converts from block, line, and sample to latitude and longitude for a given MISR path
+   and resolution.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path      MISR path
+      res       resolution in meters
+      block     block number (1-based)
+      line      block fractional line (x.0 represents pixel center)
+      sample    block fractional sample (x.0 represents pixel center)
+   
+   the call:
+   
+      <B>status = MTK_BLS_TO_LATLON( path, res, block, line, sample, lat, lon )</B>
+   
+   returns:
+   
+      status  0 on success; otherwise failure
+      lat     latitude in decimal degrees   
+      lon     longitude in decimal degrees
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path  = 189
+      res   = 275.0
+      block = 47
+      line  = 12.5
+      samp  = 50.5
+      
+      <B>status = MTK_BLS_TO_LATLON( path, res, block, line, samp, lat, lon )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'resolution (meters)   : ', res
+      print, 'block number          : ', block
+      print, 'block line            : ', line
+      print, 'block sample          : ', samp
+      print, '================================================='
+      print, 'LATITUDE              : ', lat
+      print, 'LONGITUDE             : ', lon
+   
+   IDL outputs:
+   
+      path                  : 189
+      resolution (meters)   : 275.000
+      block number          : 47
+      block line            : 12.5000
+      block sample          : 50.5000
+      =================================================
+      LATITUDE              : 55.161373
+      LONGITUDE             : 16.435319
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkBlsToLatLon.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

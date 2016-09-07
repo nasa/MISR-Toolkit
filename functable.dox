@@ -1,0 +1,144 @@
+/** \page functable Function Summary
+
+<table align=center border="1">
+
+<tr><th>Category</th><th>C Routine Name</th><th>Description</th></tr>
+
+<tr><td rowspan = 9 align=center>Util</td>
+<tr><td>MtkVersion()</td><td>Reports MISR Tookit version</td></tr>
+<tr><td>MtkDataBufferAllocate()</td><td>Allocates 2D data plane buffer of specified type and size</td></tr>
+<tr><td>MtkDataBufferFree()</td><td>Frees a 2D data plane buffer</td></tr>
+<tr><td>MtkDataBufferAllocate3D()</td><td>Allocates 3D data buffer of specified type and size</td></tr>
+<tr><td>MtkDataBufferFree3D()</td><td>Frees a 3D data buffer</td></tr>
+<tr><td>MtkStringListFree()</td><td>Frees a string list</td></tr>
+<tr><td>MtkDateTimeToJulian()</td><td>Convert date and time (ISO 8601) to Julian date</td></tr>
+<tr><td>MtkJulianToDateTime()</td><td>Convert Julian date to date and time (ISO 8601)</td></tr>
+
+<tr><td rowspan = 31 align=center>FileQuery</td>
+<tr><td>MtkFileType()</td><td>Retrieves MISR product type of a file</td></tr>
+<tr><td>MtkFileLGID()</td><td>Retrieves MISR local granule ID (true product name)</td></tr>
+<tr><td>MtkFileVersion()</td><td>Retrieves MISR file version</td></tr>
+<tr><td>MtkFillValueGet()</td><td>Retrieves fill value of a file/grid/field</td></tr> 
+<tr><td>MtkFileAttrList()</td><td>Lists file attributes of a file</td></tr> 
+<tr><td>MtkFileAttrGet()</td><td>Retrieves file attributes of a file</td></tr> 
+<tr><td>MtkGridAttrList()</td><td>Lists grid attributes of a file/grid</td></tr> 
+<tr><td>MtkGridAttrGet()</td><td>Retrieves grid attributes of a file/grid</td></tr>
+<tr><td>MtkFieldAttrList()</td><td>Lists field attributes of a file</td></tr> 
+<tr><td>MtkFieldAttrGet()</td><td>Retrieves field attributes of a file</td></tr>  
+<tr><td>MtkFileToPath()</td><td>Retrieves path of a file</td></tr>
+<tr><td>MtkFileToOrbit()</td><td>Retrieves orbit of a file</td></tr>
+<tr><td>MtkFileToBlockRange()</td><td>Retrieves block range of a file</td></tr>
+<tr><td>MtkFileToGridList()</td><td>Retrieves grid list of file</td></tr>
+<tr><td>MtkFileGridToFieldList()</td><td>Retrieves field list of a file/grid</td></tr> 
+<tr><td>MtkFileGridToNativeFieldList()</td><td>Retrieves native field list of a file/grid (excludes derived fields)</td></tr> 
+<tr><td>MtkFileGridFieldToDimList()</td><td>Retrieves dimension list of a file/grid/field</td></tr>
+<tr><td>MtkFileGridFieldCheck()</td><td>Checks validity of a file/grid/field</td></tr>
+<tr><td>MtkFileGridFieldToDataType()</td><td>Retrieves the data type of a file/grid/field</td></tr>
+<tr><td>MtkFileGridToResolution()</td><td>Retrieves resolution of a file/grid</td></tr> 
+<tr><td>MtkFileCoreMetaDataRaw()</td><td></td>Read core metadata from a MISR product file into a buffer</tr>
+<tr><td>MtkFileCoreMetaDataQuery()</td><td></td>Query file for core metadata parameter</tr>
+<tr><td>MtkFileCoreMetaDataGet()</td><td></td>Get parameter from file core metadata</tr>
+<tr><td>MtkCoreMetaDataFree()</td><td></td>Free core metadata structure</tr>
+<tr><td>MtkMakeFilename()</td><td>Constructs a MISR filename from it's components</td></tr>
+<tr><td>MtkFindFileList()</td><td>Searches a directory for MISR file from it's components</td></tr>
+<tr><td>MtkFileBlockMetaList()</td><td>Lists block metadata of a file</td></tr>
+<tr><td>MtkFileBlockMetaFieldList()</td><td>Lists block metadata fields of a file</td></tr>
+<tr><td>MtkFileBlockMetaFieldRead()</td><td>Retrieves block metadata fields from a file</td></tr>
+<tr><td>MtkTimeMetaRead()</td><td>Retrieves time metadata from L1B2 Ellipsoid file for use with MtkPixelTime()</td></tr>
+
+<tr><td rowspan = 13 align=center>UnitConv</td>
+<tr><td>MtkDdToDegMinSec()</td><td>Converts decimal degrees to degrees, minutes, seconds</td></tr>
+<tr><td>MtkDdToDms()</td><td>Converts decimal degrees to packed dms</td></tr>
+<tr><td>MtkDdToRad()</td><td>Converts decimal degrees to radians</td></tr>
+<tr><td>MtkDegMinSecToDd()</td><td>Converts degrees, minutes, seconds to decimal degrees</td></tr>
+<tr><td>MtkDegMinSecToDms()</td><td>Converts degrees, minutes, seconds to packed dms</td></tr>
+<tr><td>MtkDegMinSecToRad()</td><td>Converts degrees, minutes, seconds to radians</td></tr>
+<tr><td>MtkDmsToDd()</td><td>Converts packed dms to decimal degrees</td></tr>
+<tr><td>MtkDmsToDegMinSec()</td><td>Converts packed dms to degrees, minutes, seconds</td></tr>
+<tr><td>MtkDmsToRad()</td><td>Converts packed dms to radians</td></tr>
+<tr><td>MtkRadToDd()</td><td>Converts radians to decimal degrees</td></tr>
+<tr><td>MtkRadToDegMinSec()</td><td>Converts radians to degrees, minutes, seconds</td></tr>
+<tr><td>MtkRadToDms()</td><td>Converts radians to packed dms</td></tr>
+
+
+<tr><td rowspan = 16 align=center>CoordQuery</td>
+<tr><td>MtkBlsToLatLon()</td><td>Converts block/line/sample to lat/lon</td></tr>
+<tr><td>MtkBlsToLatLonAry()</td><td>Converts an array of block/line/sample to lat/lon</td></tr>
+<tr><td>MtkBlsToSomXY()</td><td>Converts block/line/sample to SOM x/y</td></tr>
+<tr><td>MtkBlsToSomXYAry()</td><td>Converts an array of block/line/samples to SOM x/y</td></tr>
+<tr><td>MtkLatLonToBls()</td><td>Converts lat/lon to block/line/sample</td></tr>
+<tr><td>MtkLatLonToBlsAry()</td><td>Converts an array of lat/lon to block/line/sample</td></tr>
+<tr><td>MtkSomXYToBls()</td><td>Converts SOM x/y to block/line/sample</td></tr>
+<tr><td>MtkSomXYToBlsAry()</td><td>Converts an array of SOM x/y to block/line/sample</td></tr>
+<tr><td>MtkLatLonToSomXY()</td><td>Converts lat/lon to SOM x/y</td></tr>
+<tr><td>MtkLatLonToSomXYAry()</td><td>Converts an array of lat/lon to SOM x/y</td></tr>
+<tr><td>MtkSomXYToLatLon()</td><td>Converts SOM x/y to lat/lon</td></tr>
+<tr><td>MtkSomXYToLatLonAry()</td><td>Converts an array of SOM x/y to lat/lon</td></tr>
+<tr><td>MtkPathToProjParam()</td><td>Retrieves MISR projection parameters for a given path</td></tr>
+<tr><td>MtkPathBlockRangeToBlockCorners()</td><td>Computes block corner lat/lon coordinates for a path and block range</td></tr>
+<tr><td>MtkPixelTime()</td><td>Computes pixel time given a SOM x/y coordinate and time metadata</td></tr>
+
+<tr><td rowspan = 16 align=center>MapQuery</td>
+<tr><td>MtkLSToLatLon()</td><td>Converts data plane line/sample to lat/lon</td></tr>
+<tr><td>MtkLSToLatLonAry()</td><td>Converts an array of data plane line/sample to lat/lon</td></tr>
+<tr><td>MtkLSToSomXY()</td><td>Converts data plane line/sample to SOM x/y</td></tr>
+<tr><td>MtkLSToSomXYAry()</td><td>Converts an array of data plane line/sample to SOM x/y</td></tr>
+<tr><td>MtkLatLonToLS()</td><td>Converts lat/lon to data plane line/sample</td></tr>
+<tr><td>MtkLatLonToLSAry()</td><td>Converts an array of lat/lon to data plane line/sample</td></tr>
+<tr><td>MtkSomXYToLS()</td><td>Converts SOM x/y to data plane line/sample</td></tr>
+<tr><td>MtkSomXYToLSAry()</td><td>Converts an array of SOM x/y to data plane line/sample</td></tr>
+<tr><td>MtkCreateLatLon()</td><td>Creates latitudes and longitudes data plane buffers given mapinfo</td></tr>
+<tr><td>MtkChangeMapResolution()</td><td>Change resolution of an MTKt_MapInfo structure</td></tr>
+<tr><td>MtkGCTPCreateLatLon()</td><td>Create an array of latitude and longitude values corresponding to each pixel in the given map</td></tr>
+<tr><td>MtkGCTPProjInfo()</td><td>Initialize a MTKt_GCTPProjInfo structure</td></tr>
+<tr><td>MtkGCTPProjInfoRead()</td><td>Initialize a MTKt_GCTPProjInfo structure using data from an external file</td></tr>
+<tr><td>MtkGenericMapInfo()</td><td>Initialize a MTKt_GenericMapInfo structure.</td></tr>
+<tr><td>MtkGenericMapInfoRead()</td><td>Initialize a MTKt_GenericMapInfo structure using data from an external file</td></tr>
+
+<tr><td rowspan = 9 align=center>OrbitPath</td>
+<tr><td>MtkLatLonToPathList()</td><td>Retrieves a path list that crosses a given lat/lon</td></tr>
+<tr><td>MtkRegionToPathList()</td><td>Retrieves a path list that crosses a given region</td></tr>
+<tr><td>MtkRegionPathToBlockRange()</td><td>Retrieves the block range of a given region and path
+<tr><td>MtkOrbitToPath()</td><td>Retrieves the path of a given orbit</td></tr>
+<tr><td>MtkTimeToOrbitPath()</td><td>Retrieves an orbit/path of a given time</td></tr>
+<tr><td>MtkTimeRangeToOrbitList()</td><td>Retrieves an orbit list over a given time range</td></tr>
+<tr><td>MtkPathTimeRangeToOrbitList()</td><td>Retrieves an orbit list over a given path and time range</td></tr>
+<tr><td>MtkOrbitToTimeRange()</td><td>Retrieves the time range of a given orbit</td></tr>
+
+<tr><td rowspan = 6 align=center>SetRegion</td>
+<tr><td>MtkSetRegionByPathBlockRange()</td><td>Sets a region by path and block range</td></tr>
+<tr><td>MtkSetRegionByUlcLrc()</td><td>Sets a region by upper left and lower right lat/lon</td></tr>
+<tr><td>MtkSetRegionByLatLonExtent()</td><td>Sets a region by center lat/lon and an extent by specifying the units of extent</td></tr>
+<tr><td>MtkSetRegionByPathSomUlcLrc()</td><td>Sets a region by path and upper left and lower right SOM X/Y</td></tr>
+<tr><td>MtkSnapToGrid()</td><td>Snaps a region to a grid of a given path and resolution</td></tr>
+
+<tr><td rowspan = 5 align=center>ReadData</td>
+<tr><td>MtkReadData()</td><td>Reads a region of MISR data given file/grid/field and a region</td></tr>
+<tr><td>MtkReadBlock()</td><td>Reads a block of MISR data given file/grid/field and block number</td></tr>
+<tr><td>MtkReadBlockRange()</td><td>Reads a block range of MISR data given file/grid/field and start block/end block into a 3D buffer</td></tr>
+<tr><td>MtkReadRaw()</td><td>Reads a region of MISR data given file/grid/field and a region without unpacking and/or unscaling</td></tr>
+
+<tr><td rowspan = 4 align=center>WriteData</td>
+<tr><td>MtkWriteBinFile()</td><td>Writes a raw binary file and info file given a data buffer and mapinfo</td></tr>
+<tr><td>MtkWriteBinFile3D()</td><td>Writes a raw binary file and info file given a 3D data buffer</td></tr>
+<tr><td>MtkWriteEnviFile()</td><td>Writes an IDL ENVI file given a data buffer and mapinfo</td></tr>
+
+<tr><td rowspan = 5 align=center>ReProject</td>
+<tr><td>MtkCreateGeoGrid()</td><td>Creates a regularly spaced geographic 2-D grid</td></tr>
+<tr><td>MtkResampleCubicConvolution()</td><td>Resample source data at the given coordinates using interpolation by cubic convolution</td></tr>
+<tr><td>MtkResampleNearestNeighbor()</td><td>Perform nearest neighbor resampling</td></tr>
+<tr><td>MtkTransformCoordinates()</td><td>Transforms latitude/longitude coordinates into line/sample coordinates</td></tr>
+
+<tr><td rowspan = 10 align=center>Regression</td>
+<tr><td>MtkApplyRegression()</td><td>Apply regression to given data</td></tr>
+<tr><td>MtkDownsample()</td><td>Downsample data by averaging pixels</td></tr>
+<tr><td>MtkLinearRegressionCalc()</td><td>Use linear regression to fit data</td></tr>
+<tr><td>MtkRegressionCoeffAllocate()</td><td>Allocate buffer to contain regression coefficients</td></tr>
+<tr><td>MtkRegressionCoeffCalc()</td><td>Calculate linear regression coefficients for translating values</td></tr>
+<tr><td>MtkRegressionCoeffFree()</td><td></td>Free memory for regression coefficients</tr>
+<tr><td>MtkResampleRegressionCoeff()</td><td>Resample regression coefficients at each pixel</td></tr>
+<tr><td>MtkSmoothData()</td><td>Smooth the given array with a boxcar average</td></tr>
+<tr><td>MtkUpsampleMask()</td><td>Upsample a mask by nearest neighbor sampling</td></tr>
+
+</table>
+*/

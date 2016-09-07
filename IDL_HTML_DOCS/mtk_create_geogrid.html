@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_CREATE_GEOGRID</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_CREATE_GEOGRID Creates a regularly spaced geographic 2-D grid
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+   Given: 
+   ulc_lat_dd	Upper left corner latitude
+   ulc_lon_dd	Upper left corner longitude
+   lrc_lat_dd	Lower right corner latitude
+   lrc_lon_dd	Lower right corner longitude
+   lat_cellsize_dd	Latitude cell size in decimal degrees
+   lon_cellsize_dd	Longitude cell size in decimal degrees 
+   
+   the call:
+   
+      <B>status = MTK_CREATE_GEOGRID(ulc_lat_dd, ulc_lon_dd, lrc_lat_dd, lrc_lon_dd, lat_cellsize_dd, lon_cellsize_dd, latbuf, lonbuf)</B>
+
+   returns: 
+    status         0 on success; otherwise failure
+    latbuf         2-D latitude buffer
+    lonbuf         2-D longitude buffer   
+   
+   
+-Examples
+
+
+	;;
+	;; Set up input parameters
+	;;
+	ulc_lat_dd = 40
+	ulc_lon_dd = -120.0
+	lrc_lat_dd = 30
+	lrc_lon_dd = -110.0
+	lat_cellsize_dd	= 0.25
+	lon_cellsize_dd	= 0.25
+	;;
+	;; The call
+	;;
+	<B>status = MTK_CREATE_GEOGRID</B>( <B>ulc_lat_dd, ulc_lon_dd, lrc_lat_dd, lrc_lon_dd, lat_cellsize_dd, lon_cellsize_dd , latbuf, lonbuf</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	help, latbuf, lonbuf
+      
+   IDL outputs:
+      LATBUF          DOUBLE    = Array[41, 41]
+      LONBUF          DOUBLE    = Array[41, 41]
+   
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkCreateGeoGrid.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

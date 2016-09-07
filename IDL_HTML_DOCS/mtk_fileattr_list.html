@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILEATTR_GET</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15325600">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILEATTR_LIST Lists the attributes for a specified file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+
+   the call:
+   
+      <B>status = MTK_FILEATTR_LIST( filename, attrcnt, attrlist )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      attrcnt        number of attributes in attrlist
+      attrlist       file attribute list
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      <B>status      = MTK_FILEATTR_LIST( file, attrcnt, attrlist</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, '================================================='
+      print, 'attribute count       : ', attrcnt
+      print, 'attribute list        : ', attrlist
+
+   IDL outputs:
+   
+       file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+       =================================================
+       attribute count       :           31
+       attribute list        :  HDFEOSVersion StructMetadata.0 Path_number AGP_version_id DID_version_id
+                                Number_blocks Ocean_blocks_size Ocean_blocks.count Ocean_blocks.numbers
+                                SOM_parameters.som_ellipsoid.a SOM_parameters.som_ellipsoid.e2
+                                SOM_parameters.som_orbit.aprime SOM_parameters.som_orbit.eprime
+                                SOM_parameters.som_orbit.gama SOM_parameters.som_orbit.nrev
+                                SOM_parameters.som_orbit.ro SOM_parameters.som_orbit.i
+                                SOM_parameters.som_orbit.P2P1 SOM_parameters.som_orbit.lambda0
+                                Origin_block.ulc.x Origin_block.ulc.y Origin_block.lrc.x Origin_block.lrc.y
+                                Start_block End block Cam_mode Num_local_modes Local_mode_site_name Orbit_QA
+                                Camera coremetadata
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileAttrList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

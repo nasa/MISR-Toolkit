@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_PATH_BLOCKRANGE_TO_BLOCKCORNERS</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;16045600">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_PATH_BLOCKRANGE_TO_BLOCKCORNERS returns block corner coordinates in decimal degrees of latitude and longitude
+   for a given path and block range. Coordinates returned are with respect to the pixel center of the upper left
+   corner, center and lower right corner of each block.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path           path number
+      start_block    starting block
+      end_block      ending_block
+
+   the call:
+   
+      <B>status = MTK_PATH_BLOCKRANGE_TO_BLOCKCORNERS( path, start_block, end_block, bc_struct )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      bc_struct      MTK block corner structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      sb          = 50
+      eb          = 53
+      <B>status      = MTK_PATH_BLOCKRANGE_TO_BLOCKCORNERS( path, sb, eb, bc )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      for i = bc.start_block, bc.end_block do begin
+          pth = bc.path
+          blk = bc.block[i].block_number
+          ulc_lat = bc.block[i].ulc.lat
+          ulc_lon = bc.block[i].ulc.lon
+          urc_lat = bc.block[i].urc.lat
+          urc_lon = bc.block[i].urc.lon
+          ctr_lat = bc.block[i].ctr.lat
+          ctr_lon = bc.block[i].ctr.lon
+          lrc_lat = bc.block[i].lrc.lat
+          lrc_lon = bc.block[i].lrc.lon
+          llc_lat = bc.block[i].llc.lat
+          llc_lon = bc.block[i].llc.lon
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(ulc_lat, ulc_lat_deg, ulc_lat_min, ulc_lat_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(ulc_lon, ulc_lon_deg, ulc_lon_min, ulc_lon_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(urc_lat, urc_lat_deg, urc_lat_min, urc_lat_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(urc_lon, urc_lon_deg, urc_lon_min, urc_lon_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(ctr_lat, ctr_lat_deg, ctr_lat_min, ctr_lat_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(ctr_lon, ctr_lon_deg, ctr_lon_min, ctr_lon_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(lrc_lat, lrc_lat_deg, lrc_lat_min, lrc_lat_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(lrc_lon, lrc_lon_deg, lrc_lon_min, lrc_lon_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(llc_lat, llc_lat_deg, llc_lat_min, llc_lat_sec)</B>
+          <B>status = MTK_DD_TO_DEG_MIN_SEC(llc_lon, llc_lon_deg, llc_lon_min, llc_lon_sec)</B>
+          print, format = '(%&quot;Path: %3d  Block: %3d&quot;)', pth, blk
+          print, format = '(%&quot;   ULC: Lat %3d %02d %05.2f (%f)  Lon %4d %02d %05.2f (%f)&quot;)', $
+            ulc_lat_deg, ulc_lat_min, ulc_lat_sec, ulc_lat, $
+            ulc_lon_deg, ulc_lon_min, ulc_lon_sec, ulc_lon
+          print, format = '(%&quot;   URC: Lat %3d %02d %05.2f (%f)  Lon %4d %02d %05.2f (%f)&quot;)', $
+            urc_lat_deg, urc_lat_min, urc_lat_sec, urc_lat, $
+            urc_lon_deg, urc_lon_min, urc_lon_sec, urc_lon
+          print, format = '(%&quot;   CTR: Lat %3d %02d %05.2f (%f)  Lon %4d %02d %05.2f (%f)&quot;)', $
+            ctr_lat_deg, ctr_lat_min, ctr_lat_sec, ctr_lat, $
+            ctr_lon_deg, ctr_lon_min, ctr_lon_sec, ctr_lon
+          print, format = '(%&quot;   LRC: Lat %3d %02d %05.2f (%f)  Lon %4d %02d %05.2f (%f)&quot;)', $
+            lrc_lat_deg, lrc_lat_min, lrc_lat_sec, lrc_lat, $
+            lrc_lon_deg, lrc_lon_min, lrc_lon_sec, lrc_lon
+          print, format = '(%&quot;   LLC: Lat %3d %02d %05.2f (%f)  Lon %4d %02d %05.2f (%f)&quot;)', $
+            llc_lat_deg, llc_lat_min, llc_lat_sec, llc_lat, $
+            llc_lon_deg, llc_lon_min, llc_lon_sec, llc_lon
+      endfor
+
+   IDL outputs:
+
+   Path:  37  Block:  50
+      ULC: Lat  51 30 06.22 (51.501728)  Lon -110 20 30.52 (-110.341812)
+      URC: Lat  50 33 33.17 (50.559215)  Lon -102 27 22.40 (-102.456223)
+      CTR: Lat  50 28 34.30 (50.476195)  Lon -106 32 37.43 (-106.543731)
+      LRC: Lat  49 19 56.61 (49.332393)  Lon -102 54 56.06 (-102.915573)
+      LLC: Lat  50 15 02.61 (50.250725)  Lon -110 36 17.44 (-110.604845)
+   Path:  37  Block:  51
+      ULC: Lat  50 14 53.79 (50.248276)  Lon -110 36 19.25 (-110.605348)
+      URC: Lat  49 19 47.96 (49.329990)  Lon -102 54 59.21 (-102.916447)
+      CTR: Lat  49 13 53.06 (49.231405)  Lon -106 53 59.02 (-106.899728)
+      LRC: Lat  48 06 03.56 (48.100988)  Lon -103 21 05.71 (-103.351586)
+      LLC: Lat  48 59 47.34 (48.996484)  Lon -110 51 24.19 (-110.856720)
+   Path:  37  Block:  52
+      ULC: Lat  49 00 50.64 (49.014067)  Lon -111 05 44.19 (-111.095608)
+      URC: Lat  48 08 01.93 (48.133868)  Lon -103 34 57.28 (-103.582578)
+      CTR: Lat  48 00 45.96 (48.012766)  Lon -107 28 13.49 (-107.470415)
+      LRC: Lat  46 54 06.78 (46.901884)  Lon -103 59 25.70 (-103.990473)
+      LLC: Lat  47 45 40.24 (47.761179)  Lon -111 19 50.29 (-111.330636)
+   Path:  37  Block:  53
+      ULC: Lat  47 46 40.61 (47.777947)  Lon -111 33 50.17 (-111.563935)
+      URC: Lat  46 56 00.05 (46.933346)  Lon -104 13 00.12 (-104.216699)
+      CTR: Lat  46 47 28.12 (46.791145)  Lon -108 00 53.00 (-108.014723)
+      LRC: Lat  45 41 55.11 (45.698643)  Lon -104 35 58.87 (-104.599686)
+      LLC: Lat  46 31 26.60 (46.524056)  Lon -111 47 03.26 (-111.784239)
+   
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkPathBlockRangeToBlockCorners.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

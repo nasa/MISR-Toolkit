@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FIELDATTR_GET</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20140121">
+	<META NAME="CHANGEDBY" CONTENT="Sebastian Val">
+	<META NAME="CHANGED" CONTENT="20140121">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FIELDATTR_GET returns the value of an attribute for a specified field/file.
+
+-Copyright
+
+   Copyright (2014), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      fieldname      name of a field within the file
+      attrname       name of an attribute associated with the field
+
+   the call:
+   
+      <B>status = MTK_FIELDATTR_GET( filename, fieldname, attrname, attrval )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      attrval        value of specified field attribute
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_TC_CLOUD_P110_O074017_F01_0001.hdf'
+      field       = 'CloudMotionCrossTrack'
+      attr        = 'scale_factor'
+      <B>status      = MTK_FIELDATTR_GET( file, field, attr, val</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'field                 : ', field
+      print, 'attribute             : ', attr
+      print, '================================================='
+      print, 'attribute value       : ', val
+
+   IDL outputs:
+   
+       file                  : ../Mtk_testdata/in/MISR_AM1_TC_CLOUD_P110_O074017_F01_0001.hdf
+       field                 : CloudMotionCrossTrack
+       attribute             : scale_factor
+       =================================================
+       attribute value       :     0.0100000
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFieldAttrGet.c</B>.
+
+-Version
+   -IDL-MTK Version 1.4.0</PRE>
+</BODY>
+</HTML>

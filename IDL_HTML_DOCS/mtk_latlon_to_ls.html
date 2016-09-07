@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_LATLON_TO_LS</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;23304800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15301800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_LATLON_TO_LS returns a line and sample, given a decimal latitude/longitude pair.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      mapinfo      MTK map info structure
+      lat          decimal latitude
+      lon          decimal longitude
+   
+   the call:
+   
+      <B>status = MTK_LATLON_TO_LS( mapinfo, lat, lon, line, sample )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      line           map fractional line (x.0 represents pixel center)
+      sample         map fractional sample (x.0 represents pixel center)
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      gridname    = 'GreenBand'
+      fieldname   = 'Green Radiance/RDQI'
+      lat         = 77.163654
+      lon         = 39.509401
+      start_block = 10
+      end_block   = 15
+      <B>status = MTK_FILE_TO_PATH( filename, path )</B>
+      <B>status = MTK_SETREGION_BY_PATH_BLOCKRANGE( path, start_block, end_block, region)</B>
+      <B>status = MTK_READDATA( filename, gridname, fieldname, region, databuf, mapinfo )</B>
+      <B>status = MTK_LATLON_TO_LS</B>( <B>mapinfo, lat, lon, line, sample</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file name             : ', filename
+      print, 'grid                  : ', gridname
+      print, 'field                 : ', fieldname
+      print, 'start block           : ', start_block
+      print, 'end block             : ', end_block
+      print, 'latitude              : ', lat
+      print, 'longitude             : ', lon
+      print, '================================================='
+      print, 'LINE                  : ',line
+      print, 'SAMPLE                : ',sample
+
+   IDL outputs:
+   
+      file name             : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : GreenBand
+      field                 : Green Radiance/RDQI
+      start block           : 10
+      end block             : 15
+      latitude              : 77.163654
+      longitude             : 39.509401
+     =================================================
+      LINE                  : 49.9997
+      SAMPLE                : 25.0002
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkLatLonToLS.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

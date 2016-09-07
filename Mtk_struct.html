@@ -1,0 +1,486 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: C Data Structures</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="AUTHOR" CONTENT="Brian Rheingans">
+	<META NAME="CREATED" CONTENT="20060612;13541500">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061112;21204500">
+	<STYLE>
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { text-indent: 0.5in; margin-bottom: 0.08in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT SIZE=5>MISR Toolkit
+C Data Structures</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><BR>
+</P>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_Region</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in">The MTKt_Region structure
+defines an approximate geographic area of interest and is returned by
+the SetRegion set of routines. It has a center latitude/longitude
+which uniquely describes a single location on the globe and half an
+extent measured in meters, in both the latitude and longitude
+directions. This structure is used by the MtkReadData routine to
+subset MISR data when reading. Typically this structure does not need
+to be accessed directly, but rather just passed to MtkReadData. No
+dynamic memory is allocated, so there is nothing to free.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct {
+  double lat;                   /**&lt; Latitude in decimal degrees */
+  double lon;                   /**&lt; Longitude in decimal degrees */
+} MTKt_GeoCoord;
+
+typedef struct {
+  MTKt_GeoCoord ctr;            /**&lt; Center of region */
+} MTKt_GeoCenter;
+
+typedef struct {
+  double xlat;                  /**&lt; Som x or latitude extent in meters */
+  double ylon;                  /**&lt; Som y or longitude extent in meters */
+} MTKt_Extent;
+
+typedef struct {
+  MTKt_GeoCenter geo;           /**&lt; Region coordinates in geographic terms */
+  MTKt_Extent hextent;          /**&lt; Half of the region overall extent in meters (measured from geo.ctr) */
+} MTKt_Region;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_Region region = MTK_REGION_INIT;
+
+status = MtkSetRegionByLatLonExtent(32.0, -108.0, 120.0, 360.0, ”km”, &amp;region);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+printf(“Region center (lat,lon): %f %f\n”, region.geo.ctr.lat, region.geo.ctr.lon);
+printf(“Half the extent around center (m): %f, %f\n”, region.hextent.xlat, region.hextent.ylon);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_DataBuffer</FONT></FONT></P>
+<P>The MTKt_DataBuffer structure is used to return geo-located data
+planes (“arrays”) of MISR data from the MtkReadData routine. It
+is designed to handle any C datatype. It does this using a union
+pointer data field which points to the same data pointed to by the
+dataptr field. The dataptr field points to the main data array which
+is stored in row-major form. The number of bytes of the data plane
+can be determined using buf.nline, buf.nsample and sizeof the
+datatype field. It can be used for bulk transfers. There is also a
+row vector (Illiffe vector) pointing to each row of the main array to
+support C bracket [] index notation for a 2D-array. It can be
+ignored. The structure does maintain dynamic memory, so use
+MtkDataBufferFree when finished with this structure.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef enum {
+  MTKe_void=0,
+  MTKe_char8,
+  MTKe_uchar8,
+  MTKe_int8,
+  MTKe_uint8,
+  MTKe_int16,
+  MTKe_uint16,
+  MTKe_int32,
+  MTKe_uint32,
+  MTKe_int64,
+  MTKe_uint64,
+  MTKe_float,
+  MTKe_double
+} MTKt_DataType;
+
+typedef union {
+  void **v;
+  MTKt_char8 **c8;
+  MTKt_uchar8 **uc8;
+  MTKt_int8 **i8;
+  MTKt_uint8 **u8;
+  MTKt_int16 **i16;
+  MTKt_uint16 **u16;
+  MTKt_int32 **i32;
+  MTKt_uint32 **u32;
+  MTKt_int64 **i64;
+  MTKt_uint64 **u64;
+  MTKt_float **f;
+  MTKt_double **d;
+} MTKt_DataBufferType;
+
+typedef struct {
+  int nline;                    /**&lt; Number of lines */
+  int nsample;                  /**&lt; Number of samples */
+  int datasize;                 /**&lt; Data element size (bytes) */
+  MTKt_DataType datatype;       /**&lt; Data type (enumeration) */
+  MTKt_DataBufferType data;     /**&lt; Data type access union */
+  void **vdata;                 /**&lt; Row major 2D array with Illiffe vector */
+  void *dataptr;                /**&lt; Pointer data buffer */
+} MTKt_DataBuffer;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_Region region = MTK_REGION_INIT;
+MTKt_DataBuffer buf = MTKT_DATABUFFER_INIT;
+MTKt_MapInfo mapinfo = MTKT_MAPINFO_INIT;
+
+status = MtkSetRegionByPathBlockRange(32, 65, 125, &amp;region);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+status = MtkReadData(“MISR_file.hdf”, “MISR_gridname”, “MISR_fieldname”, region, &amp;buf, &amp;mapinfo)
+if (status != MTK_SUCCESS) <I>error</I>;
+
+for (l = 0; l &lt; buf.nline; l++)
+   for (s = 0; s &lt; buf.nsample; s++)
+       printf(“Data Buffer[%d][%d]: %f\n”, l, s, buf.data.f[l][s]);
+
+MtkDataBufferFree(&amp;buf);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_DataBuffer3D</FONT></FONT></P>
+<P STYLE="text-indent: 0.51in">The MTKt_DataBuffer3D structure is
+used to return a “stacked-block array” of MISR data from the
+MtkReadBlockRange routine. This structure represents the MISR blocks
+in an unassembled stack of blocks. It is designed to handle any C
+datatype. It does this using a union pointer data field which points
+to the same data pointed to by the dataptr field. The dataptr field
+points to the main data array which is stored in row-major form. The
+number of bytes of the data plane can be determined using buf.nblock,
+buf.nline, buf.nsample and sizeof the datatype field. It can be used
+for bulk transfers. There are also a block and row vectors (Illiffe
+vectors) pointing to each block and row of the main array to support
+C bracket [] index notation for a 3D-array. It can be ignored. The
+structure does maintain dynamic memory, so use MtkDataBuffer3DFree
+when finished with this structure.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef union {
+  void ***v;
+  MTKt_char8 ***c8;
+  MTKt_uchar8 ***uc8;
+  MTKt_int8 ***i8;
+  MTKt_uint8 ***u8;
+  MTKt_int16 ***i16;
+  MTKt_uint16 ***u16;
+  MTKt_int32 ***i32;
+  MTKt_uint32 ***u32;
+  MTKt_int64 ***i64;
+  MTKt_uint64 ***u64;
+  MTKt_float ***f;
+  MTKt_double ***d;
+} MTKt_DataBufferType3D;
+
+typedef struct {
+  int nblock;                   /**&lt; Number of blocks */
+  int nline;                    /**&lt; Number of lines */
+  int nsample;                  /**&lt; Number of samples */
+  int datasize;                 /**&lt; Data element size (bytes) */
+  MTKt_DataType datatype;       /**&lt; Data type (enumeration) */
+  MTKt_DataBufferType3D data;   /**&lt; Data type access union */
+  void ***vdata;                /**&lt; Row major 3D array with Illiffe vector */
+  void *dataptr;                /**&lt; Pointer data buffer */
+} MTKt_DataBuffer3D;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_DataBuffer3D buf = MTKT_DATABUFFER3D_INIT;
+
+status = MtkReadBlockRange(“MISR_file.hdf”, “MISR_gridname”, “MISR_fieldname”, 45, 65, &amp;buf)
+if (status != MTK_SUCCESS) <I>error</I>;
+
+for (b = 0; b &lt; buf.nblock; b++)
+   for (l = 0; l &lt; buf.nline; l++)
+      for (s = 0; s &lt; buf.nsample; s++)
+          printf(“Data Buffer[%d][%d][%d]: %f\n”, b, l, s, buf.data.f[b][l][s]);
+
+MtkDataBufferFree3D(&amp;buf);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_MapInfo</FONT></FONT></P>
+<P>The MTKt_MapInfo structure is used to return the map information
+of the data plane. It is returned by the MtkReadData routine along
+with MTKt_DataBuffer. This structure contains everything necessary to
+do map queries on the returned data plane. These queries include
+coordinate converisons between data plane line/sample, SOM X/Y and
+geographic latitude/longitude. Use the MapQuery set of routines to
+pass this structure to. There are some useful field in this
+structure; mainly mapinfo.nline and mapinfo.nsample. No dynamic
+memory is allocated, so there is nothing to free.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct {
+  double lat;                   /**&lt; Latitude in decimal degrees */
+  double lon;                   /**&lt; Longitude in decimal degrees */
+} MTKt_GeoCoord;
+
+typedef struct {
+  double x;                     /**&lt; Som X in meters */
+  double y;                     /**&lt; Som Y in meters */
+} MTKt_SomCoord;
+
+typedef struct {
+  MTKt_GeoCoord ulc;            /**&lt; Upper left corner of region in geographic */
+  MTKt_GeoCoord urc;            /**&lt; Upper right corner of region in geographic */
+  MTKt_GeoCoord ctr;            /**&lt; Center of region in geographic */
+  MTKt_GeoCoord lrc;            /**&lt; Lower right corner of geographic */
+  MTKt_GeoCoord llc;            /**&lt; Lower left corner of geographic */
+} MTKt_GeoRegion;
+
+typedef struct {
+  int path;                     /**&lt; Path these coordinates */
+  MTKt_SomCoord ulc;            /**&lt; Upper left corner of region in som */
+  MTKt_SomCoord ctr;            /**&lt; Center of region in som */
+  MTKt_SomCoord lrc;            /**&lt; Lower right corner of region in som */
+} MTKt_SomRegion;
+
+typedef struct {
+  int path;                     /**&lt; Path */
+  int start_block;              /**&lt; Start block */
+  int end_block;                /**&lt; End block */
+  int resolution;               /**&lt; Resolution */
+  int resfactor;                /**&lt; Resolution factor */
+  int nline;                    /**&lt; Number of lines */
+  int nsample;                  /**&lt; Number of samples */
+  MTKt_boolean pixelcenter;     /**&lt; Pixel registration center */
+  MTKt_SomRegion som;           /**&lt; Som region */
+  MTKt_GeoRegion geo;           /**&lt; Geographic region */
+  MTKt_MisrProjParam pp;        /**&lt; MISR projection parameters */
+} MTKt_MapInfo;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_Region region = MTK_REGION_INIT;
+MTKt_DataBuffer buf = MTKT_DATABUFFER_INIT;
+MTKt_MapInfo mapinfo = MTKT_MAPINFO_INIT;
+
+status = MtkSetRegionByLatLonExtent(32.0, -108.0, 120.0, 360.0, ”km”, region);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+status = MtkReadData(“MISR_file.hdf”, “MISR_gridname”, “MISR_fieldname”, region, &amp;buf, &amp;mapinfo)
+if (status != MTK_SUCCESS) <I>error</I>;
+
+printf(“Data Plane size (nlines,nsamples): %f, %f\n”, mapinfo.nlines, mapinfo.nsamples);
+status = MtkLSToLatLon(mapinfo, 10, 20, lat, lon);
+printf(“Line, Sample: 10, 20 -&gt; Lat, Lon: %f, %f\n”, lat, lon);
+
+MtkDataBufferFree(&amp;buf);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_MisrProjParam</FONT></FONT></P>
+<P>The MTKt_MisrProjParam structure contains the MISR projection
+parameters for each MISR path. This structure also contains the GCTP
+projection parameters. It is not typically used, except to explicitly
+retrieve a the projection parameters for a specific MISR path for use
+in other libraries, such as GCTP. No dynamic memory is allocated, so
+there is nothing to free.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct {
+  int path;                     /**&lt; MISR path number */
+  long projcode;                /**&lt; GCTP projection code */
+  long zonecode;                /**&lt; GCTP zone code */
+  long spherecode;              /**&lt; GCTP sphere code */
+  double projparam[15];         /**&lt; GCTP projection parameters */
+  double ulc[2];                /**&lt; MISR ulc_xy of first block */
+  double lrc[2];                /**&lt; MISR lrc_xy of first block */
+  int nblock;                   /**&lt; MISR number blocks */
+  int nline;                    /**&lt; MISR number lines */
+  int nsample;                  /**&lt; MISR number samples */
+  float reloffset[179];         /**&lt; MISR relative block offset */
+  int resolution;               /**&lt; MISR resolution */
+} MTKt_MisrProjParam;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_MisrProjParam pp = MTKT_MISRPROJPARAM_INIT;
+
+status = MtkPatToProjParam(27, 275, &amp;pp);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+printf(“Path number: %d\n”, pp.path);
+printf(“Resolution: %d\n”, pp.resolution);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKCoreMetaData</FONT></FONT></P>
+<P>The MTKCoreMetaData structure contains the value(s) of the
+parameters retrieved using the MtkFileCoreMetaDataGet routine. It
+contains the following fields 1) data - a union pointer of the
+appropriate datatype to an array containing the data; 2) num_values -
+number of elements in the array; 3) datatype – an enumeration of
+possible types and 4) dataptr – a void data pointer to the same
+data pointed to by the union pointer data. The data union field
+enables access to the data using the bracket [] index notation of C
+for the listed data types. The dataptr field enables bulk transfers
+of data. The number of bytes can be determined by multiplying the
+sizeof the datatype by the num_values field. The structure does
+maintain dynamic memory, so use MtkCoreMetaDataFree when finished
+with this structure.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct MtkCoreMetaData {
+  union {
+    char **s;                   /* Array of strings */
+    int *i;                     /* Array of integers */
+    double *d;                  /* Array of doubles */
+  } data;
+  int num_values;
+  enum {
+    MTKMETA_CHAR,
+    MTKMETA_INT,
+    MTKMETA_DOUBLE
+  } datatype;
+  void *dataptr;                /* Pointer data buffer */
+} MtkCoreMetaData;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MtkCoreMetaData coremeta = MTK_CORE_METADATA_INIT;
+
+status = MtkFileCoreMetaGet(“MISR_file.hdf”, “LOCALGRANULEID”, &amp;metadata);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+printf(“Local Granule ID: %s\n”,metadata.data.s);
+
+MtkFreeCoreMetaData(&amp;metadata);</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_TimeMetaData</FONT></FONT></P>
+<P>The MTKt_TimeMetaData structure contains all the metadata
+necessary to compute the pixel acquisition date/time for each SOM X/Y
+location. Generally, this structure is not referenced directly. It is
+used to pass coefficients to MtkPixelTime() to actually compute the
+pixel time at a given SOM X/Y location. It should be noted that the
+pixel time metadata is only available in MISR L1B2 Ellipsoid product files
+and not L2 product files. However, one can read the time metadata from
+a L1B2 Ellipsoid file and easily compute the pixel date/time of any
+SOM X/Y location at any resolution of another data product as long as
+the path and orbit are the same.  The pixel time actually varies according
+to camera by approximately 7 minutes. To get the average or center pixel
+acquistion time, it is recommended to use the AN camera time metadata.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct MTKt_TimeMetaData {
+  MTKt_int32 path;
+  MTKt_int32 start_block;
+  MTKt_int32 end_block;
+  MTKt_char8 camera[3];
+  MTKt_int32 number_transform[NBLOCK + 1];
+  MTKt_char8 ref_time[NBLOCK + 1][NGRIDCELL][DATETIME_LEN];
+  MTKt_int32 start_line[NBLOCK + 1][NGRIDCELL];
+  MTKt_int32 number_line[NBLOCK + 1][NGRIDCELL];
+  MTKt_double coeff_line[NBLOCK + 1][6][NGRIDCELL];
+  MTKt_double som_ctr_x[NBLOCK + 1][NGRIDCELL]; /**&lt; In terms of pixels */
+  MTKt_double som_ctr_y[NBLOCK + 1][NGRIDCELL]; /**&lt; In terms of pixels */
+} MTKt_TimeMetaData;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_TimeMetaData timemeta = MTKT_TIME_META_DATA;
+double somx, somy;
+char pixel_datetime[DATETIME_LEN];
+
+status = MtkTimeMetaRead(“MISR_L1B2_file.hdf”, &amp;timemeta);
+if (status != MTK_SUCCESS) <I>error</I>;
+
+status = MtkPixelTime(timemeta, somx, somy, &amp;pixel_datetime);
+if (status != MTK_SUCCESS) error;</PRE>
+<HR>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_BlockCorners</FONT></FONT></P>
+<P>The MTKt_BlockCorners structure contains an array of geographic
+coordinates for representing the bounding box and center of each MISR
+block for a given path. Use the routine
+MtkPathBlockRangeToBlockCorners() to populate this structure. Note
+that a MISR block can be thought of as rectangular when represented
+in SOM coordinates, but not in Geographic coordinates. Thus,
+coordinates for all four corners of the each block are provided in
+addition to the center to give a sense of block shape. The center
+coordinate can be useful when blocks cross the international date
+line. The array of coordinates in this structure is indexed over a
+1-based block number.</P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct {
+  double lat;                   /**&lt; Latitude in decimal degrees */
+  double lon;                   /**&lt; Longitude in decimal degrees */
+} MTKt_GeoCoord;
+
+typedef struct {
+  int block_number;             /**&lt; Block number */
+  MTKt_GeoCoord ulc;            /**&lt; Upper left corner block coordinate */
+  MTKt_GeoCoord urc;            /**&lt; Upper right corner block coordinate */
+  MTKt_GeoCoord ctr;            /**&lt; Center block coordinate */
+  MTKt_GeoCoord lrc;            /**&lt; Lower right corner block coordinate */
+  MTKt_GeoCoord llc;            /**&lt; Lower left corner block coordinate */
+} MTKt_GeoBlock;
+
+typedef struct {
+  int path;                     /**&lt; Path */
+  int start_block;              /**&lt; Start block */
+  int end_block;                /**&lt; End block */
+  MTKt_GeoBlock block[NBLOCK+1]; /**&lt; Array of block coordinates index by 1-based block number */
+} MTKt_BlockCorners;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_BlockCorners block_corners = MTKT_BLOCKCORNERS_INIT;
+int path, start_block, end_block;
+
+status = MtkPathBlockRangeToBlockCorners(path, start_block, end_block, &amp;block_corners);
+if (status != MTK_SUCCESS) <I>error</I>;</PRE>
+<HR>
+    <!---- HERE I AM! -->
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>MTKt_RegressionCoeff</FONT></FONT></P>
+<P>The MTKt_RegressionCoeff structure contains linear regression coefficients 
+for translating values between data buffers. Use the routine
+MtkRegressionCoeffCalc() to populate this structure. </P>
+<P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Type Definition:</FONT></FONT></P>
+<PRE>typedef struct {
+  MTKt_DataBuffer valid_mask; /**&lt; Mask for regression  */
+  MTKt_DataBuffer slope; /**&lt; Slope of regression  */
+  MTKt_DataBuffer intercept; /**&lt; Intercept of regression  */
+  MTKt_DataBuffer correlation; /**&lt; Correlation for regression  */
+} MTKt_RegressionCoeff;</PRE><P STYLE="text-indent: 0in; margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Example Usage:</FONT></FONT></P>
+<PRE>#include “MisrToolkit.h”
+
+MTKt_status status;
+MTKt_DataBuffer toa_brf_data_1100 = MTKT_DATABUFFER_INIT;
+MTKt_DataBuffer toa_brf_mask_1100 = MTKT_DATABUFFER_INIT;
+MTKt_DataBuffer land_brf_data = MTKT_DATABUFFER_INIT;
+MTKt_DataBuffer land_brf_sigma = MTKT_DATABUFFER_INIT;
+MTKt_DataBuffer land_brf_mask = MTKT_DATABUFFER_INIT;
+MTKt_MapInfo    land_brf_map_info = MTKT_MAPINFO_INIT;
+MTKt_RegressionCoeff regression_coeff = MTKT_REGRESSION_COEFF_INIT;
+MTKt_MapInfo    regression_coeff_map_info = MTKT_MAPINFO_INIT;
+MTKt_Region region = MTKT_REGION_INIT;
+
+status = MtkSetRegionByPathBlockRange(39, 50, 60, &ampregion);
+status = MtkReadData("MISR_AM1_GRP_TERRAIN_GM_P161_O012115_DF_F03_0021.hdf", "BlueBand", "Blue Radiance/RDQI",
+                       region, &toa_brf_data, &toa_brf_map_info);
+status = MtkReadData("MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf", "SubregParamsLnd", "LandBRF", region, &land_brf_data, &land_brf_map_info);
+status = MtkDataBufferAllocate(land_brf_data.nline, land_brf_data.nsample, MTKe_float,&land_brf_sigma);
+for (iline = 0; iline < land_brf_data.nline; iline++) {
+  for (isample = 0; isample < land_brf_data.nsample; isample++) {
+    land_brf_sigma.data.f[iline][isample] = 1.0;
+  }
+}                               
+status = MtkRegressionCoeffCalc(&toa_brf_data_1100, &toa_brf_mask_1100, &land_brf_data, &land_brf_sigma,  &land_brf_mask,
+                                 &land_brf_map_info, 16, &regression_coeff, &regression_coeff_map_info);
+if (status != MTK_SUCCESS) <I>error</I>;</PRE>
+<HR>
+</BODY>
+</HTML>

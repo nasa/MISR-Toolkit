@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_SETREGION_BY_PATH_SOM_ULC_LRC</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By Functionality</A>
+    &nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>
+-Abstract
+
+    MTK_SETREGION_BY_PATH_SOM_ULC_LRC Sets a region by path and upper left and lower right SOM X/Y.
+
+-Copyright
+
+    Copyright (2013), California Institute of Technology.
+    U.S. Government sponsorship acknowledged.
+
+-I/O
+ 
+    Given: 
+        path        Path
+        ulc_som_x   Upper left corner SOM X
+        ulc_som_y   Upper left corner SOM Y
+        lrc_som_x   Lower right corner SOM X
+        lrc_som_y   Lower right corner SOM Y 
+        
+    the call:
+
+        <B>status = MTK_SETREGION_BY_PATH_SOM_ULC_LRC( path, ulc_som_x, ulc_som_y, lrc_som_x, lrc_som_y, region )</B>
+
+    returns: 
+        status      0 on success; otherwise failure
+        region      region set by path and SOM ULC/LRC
+
+-Examples
+
+    ;;
+    ;; Set up input parameters
+    ;;
+    path        = 27
+    ulc_som_x   = 15600000.0
+    ulc_som_y   = -300.0
+    lrc_som_x   = 16800000.0
+    lrc_som_y   = 2000.0
+    ;;
+    ;; The call
+    ;;
+    <B>status = MTK_SETREGION_BY_PATH_SOM_ULC_LRC</B>( <B>path, ulc_som_x, ulc_som_y, lrc_som_x, lrc_som_y, region</B> <B>)</B>
+    ;;
+    ;; Output...
+    ;;
+    print, '================================================='
+    help, region
+
+    IDL outputs:
+    =================================================
+    ** Structure <3406708>, 4 tags, length=32, data length=32, refs=1:
+       GEO_CTR_LAT     DOUBLE           35.384618
+       GEO_CTR_LON     DOUBLE          -102.05138
+       HEXTENT_XLAT    DOUBLE           600137.50
+       HEXTENT_YLON    DOUBLE           1287.5000
+
+-Particulars
+    None.
+
+-Required Reading
+    For important details concerning this module's function, please refer to
+    the MTK routine <B>MtkSetRegionByPathSomUlcLrc.c</B>.
+
+
+-Version
+    -IDL-MTK Version 1.2.4
+</PRE>
+</BODY>
+</HTML>

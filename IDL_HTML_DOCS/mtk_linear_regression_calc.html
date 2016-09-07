@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_LINEAR_REGRESSION_CALC</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_LINEAR_REGRESSION_CALC Use linear regression to fit a set of observations (x,y) to the model: y(x) = a + b * x
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+	Given: 
+	num            number of elements
+	x              x values
+	y              y values
+	y_sigma        uncertainty in y values
+	
+	the call:
+
+	  <B>status = MTK_LINEAR_REGRESSION_CALC( num, x, y, y_sigma, a, b, corr )</B>
+
+	returns: 
+	status         0 on success; otherwise failure
+	a              variable a
+	b              variable b
+	corr           correlation for linear regression
+   
+   
+-Examples
+
+
+	;;
+	;; Set up input parameters
+	;;
+	num = 4	
+	x = [1,5,7,8]
+	y = [12,14,19,21]
+	y_sigma = [0.1, 0.2, 0.2, 0.3]
+	;;
+	;; The call
+	;;
+	<B>status = MTK_LINEAR_REGRESSION_CALC</B>( <B>num, x, y, y_sigma, a, b, corr</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	print, a, b, corr
+
+	IDL outputs:
+	=================================================
+    10.696193       0.0000000       0.0000000       0.0000000
+    1.0944363       0.0000000       0.0000000       0.0000000
+    0.94802655       0.0000000       0.0000000       0.0000000
+   
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkLinearRegressionCalc.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

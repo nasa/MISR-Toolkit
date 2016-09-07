@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="mtkgrid.html" />
+<link rel="prev" href="core.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="mtkgrid.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.1 MtkFile </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.2 MtkGrid"
+  href="mtkgrid.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="core.html">2 Main Classes</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkgrid.html">2.2 MtkGrid</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000210000000000000000"></a><a name="mtkfile"></a>
+<br>
+2.1 MtkFile 
+</h2>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-1' xml:id='l2h-1' class="class">MtkFile</tt></b>(</nobr></td>
+  <td><var>filename</var>)</td></tr></table></dt>
+<dd>
+  Constructs a new MtkFile object.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-2' xml:id='l2h-2' class="method">attr_get</tt></b>(</nobr></td>
+  <td><var>attribute</var>)</td></tr></table></dt>
+<dd>
+  Get a file attribute.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.attr_get('Path_number')
+37
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-3' xml:id='l2h-3' class="member">attr_list</tt></b></dt>
+<dd>
+  List of file attributes names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.attr_list
+['HDFEOSVersion', 'StructMetadata.0', 'Path_number', 'AGP_version_id',
+ 'DID_version_id', 'Number_blocks', 'Ocean_blocks_size', 'Ocean_blocks.count',
+ 'Ocean_blocks.numbers', 'SOM_parameters.som_ellipsoid.a',
+ 'SOM_parameters.som_ellipsoid.e2', 'SOM_parameters.som_orbit.aprime',
+ 'SOM_parameters.som_orbit.eprime', 'SOM_parameters.som_orbit.gama',
+ 'SOM_parameters.som_orbit.nrev', 'SOM_parameters.som_orbit.ro',
+ 'SOM_parameters.som_orbit.i', 'SOM_parameters.som_orbit.P2P1',
+ 'SOM_parameters.som_orbit.lambda0', 'Origin_block.ulc.x',
+ 'Origin_block.ulc.y', 'Origin_block.lrc.x', 'Origin_block.lrc.y',
+ 'Start_block', 'End block', 'Cam_mode', 'Num_local_modes',
+ 'Local_mode_site_name', 'Orbit_QA', 'Camera', 'coremetadata']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-4' xml:id='l2h-4' class="member">block</tt></b></dt>
+<dd>
+  Start and end block numbers.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.block
+(1, 140)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-5' xml:id='l2h-5' class="member">block_metadata_list</tt></b></dt>
+<dd>
+  List of block metadata structure names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.block_metadata_list
+['PerBlockMetadataCommon', 'PerBlockMetadataRad', 'PerBlockMetadataTime']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-6' xml:id='l2h-6' class="method">block_metadata_field_list</tt></b>(</nobr></td>
+  <td><var>blockmetaname</var>)</td></tr></table></dt>
+<dd>
+  List fields in a block metadata structure.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.block_metadata_field_list('PerBlockMetadataCommon')
+['Block_number', 'Ocean_flag', 'Block_coor_ulc_som_meter.x',
+ 'Block_coor_ulc_som_meter.y', 'Block_coor_lrc_som_meter.x',
+ 'Block_coor_lrc_som_meter.y', 'Data_flag']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-7' xml:id='l2h-7' class="method">block_metadata_field_read</tt></b>(</nobr></td>
+  <td><var>blockmetaname, fieldname</var>)</td></tr></table></dt>
+<dd>
+  Read a block metadata field.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.block_metadata_field_read('PerBlockMetadataCommon', 'Block_number')
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+ 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+ 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+ 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+ 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+ 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
+ 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+ 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140]
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-8' xml:id='l2h-8' class="method">core_metadata_get</tt></b>(</nobr></td>
+  <td><var>parameter</var>)</td></tr></table></dt>
+<dd>
+  Get core metadata parameter.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.core_metadata_get('LOCALGRANULEID')
+'MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-9' xml:id='l2h-9' class="member">core_metadata_list</tt></b></dt>
+<dd>
+  List of core metadata parameter names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.core_metadata_list
+['LOCALGRANULEID', 'PRODUCTIONDATETIME', 'LOCALVERSIONID', 'PGEVERSION',
+ 'MEASUREDPARAMETERCONTAINER', 'AUTOMATICQUALITYFLAGEXPLANATION',
+ 'AUTOMATICQUALITYFLAG', 'QAPERCENTMISSINGDATA', 'PARAMETERNAME',
+ 'ORBITCALCULATEDSPATIALDOMAINCONTAINER', 'EQUATORCROSSINGDATE',
+ 'EQUATORCROSSINGTIME', 'ORBITNUMBER', 'EQUATORCROSSINGLONGITUDE',
+ 'VERSIONID', 'SHORTNAME', 'INPUTPOINTER', 'GPOLYGONCONTAINER',
+ 'GRINGPOINTLONGITUDE', 'GRINGPOINTLATITUDE', 'GRINGPOINTSEQUENCENO',
+ 'EXCLUSIONGRINGFLAG', 'RANGEENDINGDATE', 'RANGEENDINGTIME',
+ 'RANGEBEGINNINGDATE', 'RANGEBEGINNINGTIME', 'ADDITIONALATTRIBUTESCONTAINER',
+ 'ADDITIONALATTRIBUTENAME', 'PARAMETERVALUE', 'ADDITIONALATTRIBUTESCONTAINER',
+ 'ADDITIONALATTRIBUTENAME', 'PARAMETERVALUE', 'ADDITIONALATTRIBUTESCONTAINER',
+ 'ADDITIONALATTRIBUTENAME', 'PARAMETERVALUE', 'ADDITIONALATTRIBUTESCONTAINER',
+ 'ADDITIONALATTRIBUTENAME', 'PARAMETERVALUE',
+ 'ASSOCIATEDPLATFORMINSTRUMENTSENSORCONTAINER',
+ 'ASSOCIATEDSENSORSHORTNAME', 'ASSOCIATEDPLATFORMSHORTNAME', 'OPERATIONMODE',
+ 'ASSOCIATEDINSTRUMENTSHORTNAME']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-10' xml:id='l2h-10' class="member">file_name</tt></b></dt>
+<dd>
+  File name of file.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.file_name
+'../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-11' xml:id='l2h-11' class="member">file_type</tt></b></dt>
+<dd>
+  MISR product file type.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.file_type
+'GRP_ELLIPSOID_GM'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-12' xml:id='l2h-12' class="method">grid</tt></b>(</nobr></td>
+  <td><var>grid_name</var>)</td></tr></table></dt>
+<dd>
+  Returns MtkGrid object for grid_name.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.grid('BlueBand')
+&lt;MisrToolkit.MtkGrid object at 0x140e740&gt;
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-13' xml:id='l2h-13' class="member">grid_list</tt></b></dt>
+<dd>
+  List of grid names.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.grid_list
+['BlueBand', 'GreenBand', 'RedBand', 'NIRBand', 'BRF Conversion Factors', 'GeometricParameters']
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-14' xml:id='l2h-14' class="member">local_granule_id</tt></b></dt>
+<dd>
+  Local granual ID of MISR product file.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.local_granule_id
+'MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-15' xml:id='l2h-15' class="member">orbit</tt></b></dt>
+<dd>
+  Orbit number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.orbit
+29058
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-16' xml:id='l2h-16' class="member">path</tt></b></dt>
+<dd>
+  Path number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.path
+37
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-17' xml:id='l2h-17' class="method">time_metadata_read</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+  Read time metadata from L1B2 Ellipsoid product.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.time_metadata_read()
+&lt;MisrToolkit.MtkTimeMetaData object at 0x158f000&gt;
+</pre></div>
+
+<p>
+<div class="note"><b class="label">Note:</b>
+
+Time metadata is stored in the L1B2 Ellipsoid product, it is not available in any other product.
+</div>
+
+<p>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-18' xml:id='l2h-18' class="member">version</tt></b></dt>
+<dd>
+  MISR product file version.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; m.version
+'F03_0024'
+</pre></div>
+</dl>
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.2 MtkGrid"
+  href="mtkgrid.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="core.html">2 Main Classes</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkgrid.html">2.2 MtkGrid</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

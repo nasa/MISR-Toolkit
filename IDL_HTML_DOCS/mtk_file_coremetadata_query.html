@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_COREMETADATA_QUERY</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;16062000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_COREMETADATA_QUERY returns the number of coremetadata parameters and a list of all coremetadata parameter names for a given file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+
+   the call:
+   
+      <B>status = MTK_FILE_COREMETADATA_QUERY( filename, nparams, paramlist )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      nparams        number of coremetadata parameters
+      paramlist      string array of all coremetadata parameter names
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf'
+      <B>status      = MTK_FILE_COREMETADATA_QUERY</B>( <B>file, nparams, paramlist</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'nparams               : ', nparams
+      print, '================================================='
+      FOR i=0,MIN([5,nparams-1]) DO $
+         PRINT, 'COREMETADATA PARAMETER NAME #'+STRTRIM(i+1,2)+ $
+         ' = '+paramlist[i]
+
+   IDL outputs:
+
+      file                  : ../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf
+      nparams               :           42
+      =================================================
+      COREMETADATA PARAMETER NAME #1 = LOCALGRANULEID
+      COREMETADATA PARAMETER NAME #2 = SIZEMBECSDATAGRANULE
+      COREMETADATA PARAMETER NAME #3 = PRODUCTIONDATETIME
+      COREMETADATA PARAMETER NAME #4 = LOCALVERSIONID
+      COREMETADATA PARAMETER NAME #5 = PGEVERSION
+      COREMETADATA PARAMETER NAME #6 = MEASUREDPARAMETERCONTAINER
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileCoreMetaDataQuery.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

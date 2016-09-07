@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_PIXEL_TIME</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;16023200">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_PIXEL_TIME computes pixel time given an SOM x/y coordinate and time metadata.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      timemeta       time metadata structure
+      somx           SOM X in meters
+      somy           SOM Y in meters
+
+   the call:
+   
+      <B>status = MTK_PIXEL_TIME( timemeta, somx, somy, pixel_datetime )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      pixel datetime pixel date time string at SOM X/Y location
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      L1B2_filename_aa = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      L1B2_filename_an = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AN_F03_0024.hdf'
+      path             = 37
+      resolution       = 275
+      block            = 50
+      line             = 105
+      sample           = 650
+      <B>status           = MTK_TIME_META_READ( L1B2_filename_aa, timemeta_aa )</B>
+      <B>status           = MTK_TIME_META_READ( L1B2_filename_an, timemeta_an )</B>
+      <B>status           = MTK_BLS_TO_SOMXY( path, resolution, block, line, sample, somx, somy )</B>
+      <B>status           = MTK_PIXEL_TIME( timemeta_aa, somx, somy, pixel_datetime_aa )</B>
+      <B>status           = MTK_PIXEL_TIME( timemeta_an, somx, somy, pixel_datetime_an )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'L1B2_filename_aa      : ', L1B2_filename_aa
+      print, 'L1B2_filename_an      : ', L1B2_filename_an
+      print, 'Path                  : ', path
+      print, 'Resolution            : ', resolution
+      print, 'Block                 : ', block
+      print, 'Line                  : ', line
+      print, 'Sample                : ', sample
+      print, '================================================='
+      print, 'Pixel Date/Time AA    : ', pixel_datetime_aa
+      print, 'Pixel Date/Time AN    : ', pixel_datetime_an
+
+
+   IDL outputs:
+   
+      L1B2_filename_aa      : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      L1B2_filename_an      : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AN_F03_0024.hdf
+      Path                  :       37
+      Resolution            :      275
+      Block                 :       50
+      Line                  :      105
+      Sample                :      650
+      =================================================
+      Pixel Date/Time AA    :  2005-06-04T18:16:29.837567Z
+      Pixel Date/Time AN    :  2005-06-04T18:15:44.426997Z
+
+-Particulars
+   Each MISR camera has a different observation time, so read time metadata from
+   each camera appropriate Ellipsoid or Terrain product file.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkPixelTime.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

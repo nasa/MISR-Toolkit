@@ -1,0 +1,4 @@
+This documentation was created by running /path/to/Python-2.3.7/Doc/tools/mkhowto --html --pdf pymtk.tex in the main doc directory.
+Please do not make changes to this directory but instead make changes to the latex pymtk.tex
+If you need to rebuild the doc you can obtain the mkhowto script within the Doc/tools directory of the full Python source distributions up to and including version 2.5.
+This script was removed in 2.6 when python changed from LaTeX documention to RST (reStructuredText).

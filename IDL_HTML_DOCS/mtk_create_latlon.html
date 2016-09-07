@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_CREATE_LATLON</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11130500">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_CREATE_LATLON creates latitudes and longitudes 2-D data plane buffers given mapinfo structure.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      mapinfo         map info structure
+
+   the call:
+   
+      <B>status = MTK_CREATE_LATLON( mapinfo, latbuf, lonbuf )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      latbuf         2-D latitude buffer
+      lonbuf         2-D longitude buffer
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      resolution  = 1100
+      lat         = 66.0
+      lon         = -89.0
+      lat_extent  = 1.5
+      lon_extent  = 1.0
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_SNAP_TO_GRID( path, resolution, region, mapinfo )</B>
+      <B>status      = MTK_CREATE_LATLON</B>( <B>mapinfo, latbuf, lonbuf</B> <B>)</B>
+       
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'resolution            : ', resolution
+      print, '================================================='
+      help, latbuf, lonbuf
+     
+   IDL outputs:
+   
+      path                  :       37
+      resolution            :     1100
+      =================================================
+      LATBUF          DOUBLE    = Array[112, 160]
+      LONBUF          DOUBLE    = Array[112, 160]
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkCreateLatLon.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

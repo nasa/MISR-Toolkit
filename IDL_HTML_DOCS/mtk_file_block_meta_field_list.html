@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_BLOCK_META_FIELD_LIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;14210100">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_BLOCK_META_FIELD_LIST lists block metadata fields of a file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product filename
+      blockmeta      Block metadata name
+
+   the call:
+   
+      <B>status = MTK_FILE_BLOCK_META_FIELD_LIST( filename, blockmeta, nfields, fieldlist )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      nfield         Number of fields in block metadata
+      bfieldlist     List of fields in block metadata
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      blockmeta   = 'PerBlockMetadataCommon'
+      <B>status      = MTK_FILE_BLOCK_META_FIELD_LIST( filename, blockmeta, nfields, fieldlist )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'Filename                     : ', filename
+      print, 'Block metadata               : ', blockmeta
+      print, '================================================='
+      print, 'Number block metadata fields : ', nfields
+      print, 'Block metadata field list    : ', fieldlist
+
+   IDL outputs:
+   
+      Filename                     : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      Block metadata               : PerBlockMetadataCommon
+      =================================================
+      Number block metadata fields :            7
+      Block metadata field list    :  Block_number Ocean_flag Block_coor_ulc_som_meter.x Block_coor_ulc_som_meter.y
+                                      Block_coor_lrc_som_meter.x Block_coor_lrc_som_meter.y Data_flag
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileBlockMetaFieldList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

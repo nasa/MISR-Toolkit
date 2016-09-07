@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="mtktimemetadata.html" />
+<link rel="prev" href="mtkdataplane.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="mtktimemetadata.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.6 MtkMapInfo </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.5 MtkDataPlane"
+  href="mtkdataplane.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.7 MtkTimeMetaData"
+  href="mtktimemetadata.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkdataplane.html">2.5 MtkDataPlane</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtktimemetadata.html">2.7 MtkTimeMetaData</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000260000000000000000"></a><a name="mtkmapinfo"></a>
+<br>
+2.6 MtkMapInfo 
+</h2>
+
+<p>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-47' xml:id='l2h-47' class="class">MtkMapInfo</tt></b>
+<dd>
+  Contains map information, and supports map queries.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info = MtkRegion(37, 35, 36).snap_to_grid(37, 1100)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-48' xml:id='l2h-48' class="method">create_latlon</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Create a latitude array and a longitude array in decimal degrees.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.create_latlon()
+(array([[ 69.84396725,  69.84125375,  69.83853597, ...,  67.95214383,
+         67.94751056,  67.94287408],
+       [ 69.83449667,  69.83178431,  69.82906768, ...,  67.94344755,
+         67.93881609,  67.9341814 ],
+       [ 69.82502575,  69.82231453,  69.81959905, ...,  67.93475031,
+         67.93012064,  67.92548775],
+       ..., 
+       [ 67.43810121,  67.43564618,  67.43318732, ...,  65.72400133,
+         65.71978632,  65.71556829],
+       [ 67.42855667,  67.42610255,  67.4236446 , ...,  65.71509301,
+         65.71087952,  65.70666301],
+       [ 67.41901189,  67.41655868,  67.41410164, ...,  65.70618396,
+         65.701972  ,  65.697757  ]]),
+         
+ array([[ -99.94798275,  -99.92052402,  -99.89307216, ...,  -87.01432073,
+         -86.9911815 ,  -86.96805169],
+       [ -99.95583948,  -99.92839213,  -99.90095165, ...,  -87.0266458 ,
+         -87.00351269,  -86.98038898],
+       [ -99.96368936,  -99.93625339,  -99.90882428, ...,  -87.03896147,
+         -87.01583448,  -86.99271687],
+       ..., 
+       [-101.7397708 , -101.71492204, -101.69007822, ...,  -89.85775933,
+         -89.83612005,  -89.81448799],
+       [-101.74615355, -101.72131411, -101.69647961, ...,  -89.86799566,
+         -89.84636208,  -89.82473572],
+       [-101.75253136, -101.72770125, -101.70287606, ...,  -89.87822477,
+         -89.85659689,  -89.83497623]]))
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-49' xml:id='l2h-49' class="member">end_block</tt></b></dt>
+<dd>
+  End block number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.end_block
+36
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-50' xml:id='l2h-50' class="member">geo</tt></b></dt>
+<dd>
+  MtkGeoRegion object.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.geo
+&lt;MisrToolkit.MtkGeoRegion object at 0xe458&gt;
+&gt;&gt;&gt; map_info.geo.ctr
+(67.848508,-94.442838)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-51' xml:id='l2h-51' class="method">latlon_to_ls</tt></b>(</nobr></td>
+  <td><var>lat, lon</var>)</td></tr></table></dt>
+<dd>
+    Lat and Lon to Line Sample.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.latlon_to_ls(68.36,-97.74)             
+(120.52, 120.55)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-52' xml:id='l2h-52' class="method">ls_to_latlon</tt></b>(</nobr></td>
+  <td><var>line, sample</var>)</td></tr></table></dt>
+<dd>
+    Line and Sample To Lat and Lon.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.ls_to_latlon(120,120)
+(68.36, -97.74)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-53' xml:id='l2h-53' class="method">ls_to_somxy</tt></b>(</nobr></td>
+  <td><var>line, sample</var>)</td></tr></table></dt>
+<dd>
+    Convert Line and Sample values to Som X and Som Y coordinates.  line and sample can be either scalar values or numarrays.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.ls_to_somxy(120,120) 
+(12380500.0, 677600.0)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-54' xml:id='l2h-54' class="member">nline</tt></b></dt>
+<dd>
+  Number of lines.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.nline                            
+256
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-55' xml:id='l2h-55' class="member">nsample</tt></b></dt>
+<dd>
+  Number of samples.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.nsample
+512
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-56' xml:id='l2h-56' class="member">path</tt></b></dt>
+<dd>
+  Path number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.path   
+37
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-57' xml:id='l2h-57' class="member">pixelcenter</tt></b></dt>
+<dd>
+  Pixel Center.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.pixelcenter
+True
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-58' xml:id='l2h-58' class="member">pp</tt></b></dt>
+<dd>
+  MtkProjParam object.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.pp         
+&lt;MisrToolkit.MtkProjParam object at 0x18ade00&gt;
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-59' xml:id='l2h-59' class="member">resfactor</tt></b></dt>
+<dd>
+  Resfactor.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.resfactor
+4
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-60' xml:id='l2h-60' class="member">resolution</tt></b></dt>
+<dd>
+  Resolution.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.resolution
+1100
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-61' xml:id='l2h-61' class="member">som</tt></b></dt>
+<dd>
+  MtkSomRegion object.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.som       
+&lt;MisrToolkit.MtkSomRegion object at 0xe338&gt;
+&gt;&gt;&gt; map_info.som.ctr
+(12388750.0,826650.0)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-62' xml:id='l2h-62' class="method">somxy_to_ls</tt></b>(</nobr></td>
+  <td><var>somx, somy</var>)</td></tr></table></dt>
+<dd>
+    Som X and Som Y To Line and Sample.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.somxy_to_ls(12380500.0, 677600.0)
+(120.0, 120.0)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><b><tt id='l2h-63' xml:id='l2h-63' class="member">start_block</tt></b></dt>
+<dd>
+  Start block number.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info.start_block
+35
+</pre></div>
+</dl>
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.5 MtkDataPlane"
+  href="mtkdataplane.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.7 MtkTimeMetaData"
+  href="mtktimemetadata.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkdataplane.html">2.5 MtkDataPlane</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtktimemetadata.html">2.7 MtkTimeMetaData</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

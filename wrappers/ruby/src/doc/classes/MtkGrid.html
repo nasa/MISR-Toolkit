@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: MtkGrid</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "width=400,height=400,scrollbars=yes" )
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />MtkGrid</td>
+  <td align="right">
+    <table cellspacing=0 cellpadding=2>
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../files/ext/mtk_ext_cc.html">ext/mtk_ext.cc</a>
+<a href="../files/lib/mtk_grid_rb.html">lib/mtk_grid.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+This is used to read a grid
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000007">field</a></li>
+  <li><a href="#M000006">field_list</a></li>
+  <li><a href="#M000005">new</a></li>
+  <li><a href="#M000008">resolution</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>file</td>
+    <td class='attr-desc'>
+File that grid belongs to
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>grid_name</td>
+    <td class='attr-desc'>
+Grid name
+
+</td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000005"></a><b>mtk_file.grid(grid_name) &rarr; MtkGrid<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Create an object to read a grid in a <a href="MtkFile.html">MtkFile</a>
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000005_source')" id="l_M000005_source">show source</a> ]</p>
+  <div id="M000005_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_grid.rb, line 17</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">g</span>)
+    <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">f</span>
+    <span class="ruby-ivar">@grid_name</span> = <span class="ruby-identifier">g</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Grid #{grid_name} is not found in file #{file.file_name}&quot;</span> <span class="ruby-keyword kw">unless</span>
+      <span class="ruby-identifier">file</span>.<span class="ruby-identifier">grid_list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">grid_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000007"></a><b>field(field_name) &rarr; MtkField<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return an object to read the given field.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000007_source')" id="l_M000007_source">show source</a> ]</p>
+  <div id="M000007_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_grid.rb, line 39</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field</span>(<span class="ruby-identifier">field_name</span>)
+    <span class="ruby-constant">MtkField</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">field_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000006"></a><b>field_list &rarr; Array<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return an Array of String containing the field names for this grid
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000006_source')" id="l_M000006_source">show source</a> ]</p>
+  <div id="M000006_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_grid.rb, line 29</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_list</span>
+    <span class="ruby-ivar">@field_list</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@field_list</span>)
+    <span class="ruby-ivar">@field_list</span> = <span class="ruby-constant">MtkGrid</span>.<span class="ruby-identifier">grid_to_field_list</span>(<span class="ruby-identifier">file</span>.<span class="ruby-identifier">file_name</span>, <span class="ruby-identifier">grid_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000008"></a><b>resolution &rarr; Integer<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+: Return resolution in meters of this grid.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000008_source')" id="l_M000008_source">show source</a> ]</p>
+  <div id="M000008_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_grid.rb, line 48</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resolution</span>
+    <span class="ruby-constant">MtkGrid</span>.<span class="ruby-identifier">grid_to_resolution</span>(<span class="ruby-identifier">file</span>.<span class="ruby-identifier">file_name</span>, <span class="ruby-identifier">grid_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

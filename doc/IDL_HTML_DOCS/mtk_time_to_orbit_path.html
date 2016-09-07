@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_TIME_TO_ORBIT_PATH</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;12551900">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_TIME_TO_ORBIT_PATH returns an orbit and corresponding path given a time.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      datetime       date and time
+
+   the call:
+   
+      <B>status = MTK_TIME_TO_ORBIT_PATH( datetime, orbit, path )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      orbit          orbit corresponding to date and time
+      path           path corresponding to orbit
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      datetime    = '2005-02-02T02:00:00Z' ;YYYY-MM-DDThh:mm:ssZ
+      <B>status      = MTK_TIME_TO_ORBIT_PATH</B>( <B>datetime, orbit, path</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'date/time             : ', datetime
+      print, '================================================='
+      print, 'ORBIT                 : ',orbit
+      print, 'PATH                  : ',path
+
+   IDL outputs:
+   
+      date/time             : 2005-02-02T02:00:00Z
+    =================================================
+      ORBIT                 : 27271
+      PATH                  : 104
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkTimeToOrbitPath.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

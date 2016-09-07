@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILLVALUE_GET</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15324100">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILLVALUE_GET returns the fill values for a given MISR product file, grid, and field.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      file      MISR file
+      grid      grid name
+      field     field name
+   
+   the call:
+   
+      <B>status = MTK_FILLVALUE_GET( file, grid, field, fill_value )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      fill_value     fill value
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file  = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      grid  = 'RedBand'
+      field = 'Red Radiance/RDQI[
+      
+      <B>status = MTK_FILLVALUE_GET</B>( <B>file, grid, field, fill_value</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, 'field                 : ', field
+      print, '================================================='
+      print, 'FILL VALUE            : ',fill_value
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : RedBand
+      field                 : Red Radiance/RDQI
+     =================================================
+      FILL VALUE            : 65515
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFillValueGet.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

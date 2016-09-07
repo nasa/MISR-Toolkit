@@ -1,0 +1,473 @@
+/** \mainpage
+
+  <img src="../MISRToolkitConceptDiagramSmall.png">
+
+  \section intro Introduction
+ 
+  The MISR Toolkit is a simplified programming interface to access MISR L1B2, L2, conventional 
+  and ancillary data products. It is an interface built upon HDF-EOS that knows about MISR data
+  products. It has the ability to:
+  <ul>
+  <li>Specify regions to read  based on geographic location and extent or the more 
+      traditional path and  block range</li>
+  <li>Map between path, orbit, block, time range and geographic location</li>
+  <li>Automatically stitch, unpack and unscale MISR data while reading</li>
+  <li>Perform coordinate conversions between lat/lon, SOM x/y, block/line/sample 
+      and line/sample of a data plane, which means geolocation can be computed instantly
+      without referring to an ancillary data set lookups</li>
+  <li>Retrieve pixel acquistion time from L1B2 product files</li>
+  <li>Read a slice of a multi-dimensional field into an 2-D data plane (eg. RetrAppMask[0][5])</li>
+  <li>Convert MISR product files to IDL ENVI files</li>
+  </ul>
+
+  \section userguid Users Guide and Interface Documents
+
+  <ul>
+  <li>The <a href="../Mtk_ug.pdf">MISR Toolkit Users Guide</a> gives a good introduction and is a good place to start</li>
+  <li>The <a href="../pymtk.pdf">MISR Toolkit Python Interface</a> gives a good summary of the Python bindings</li>
+  <li>The <a href="http://eosweb.larc.nasa.gov/project/misr/dps">MISR Data Production Specification</a> describes all MISR data products</li>
+  </ul>
+
+  \section funcsum Function Summary
+
+  <ul>
+  <li>\ref functable "MISR Toolkit Routine Summary Table" describes the core C interface</li>
+  <li><a href="../Mtk_struct.html">MISR Toolkit C Data Structure Summary</a> describes the C data structures</li>
+  <li><a href="../IDL_HTML_DOCS/IDL_MTK_Index.html">MISR Toolkit IDL Function Index</a> describes the IDL interface</li>
+  <li><a href="../pymtk/index.html">MISR Toolkit Python Interface</a> describes the Python interface</li>
+  <li><a href="../cmdtable.html">MISR Toolkit Command-line Utilities</a> describes the command-line interface</li>
+  </ul>
+
+  \section support Architecture and Language Support
+
+    \subsection linux32 Linux32 Fedora Core 19 or later
+      <ul>
+      <li>C functions (source only)</li>
+      <li>IDL bindings (source only)</li>
+      <li>Python bindings (source only)</li>
+      </ul>
+
+    \subsection linux64 Linux64 Fedora Core 19 or later
+      <ul>
+      <li>C functions (source only)</li>
+      <li>IDL bindings (source only)</li>
+      <li>Python bindings (source only)</li>
+      </ul>
+
+    \subsection macintel MacOS X 10.6.8 or later (Intel)
+      <ul>
+      <li>C functions (source only)</li>
+      <li>IDL bindings (source only)</li>
+      <li>Python bindings (source only)</li>
+      </ul>    
+
+  \subsection win32 Windows XP 32-bit
+      <ul>
+      <li>C functions (dll & source)</li>
+      <li>IDL bindings (dll & source - pre-built dll's require IDL 8.2)</li>
+      <li>Python bindings (dll & source - pre-built dll's require Python 2.7)</li>
+      </ul>
+
+  \section avail Availability
+
+  Source code and Microsoft Windows dll's are available via the <a href="http://www.openchannelsoftware.org/projects/MISR_Visualization_and_Analysi">Open Channel Foundation MISR Visualization and Analysis Tools webpage</a>
+
+  \section depend Third Party Library Dependencies
+
+  The MISR Toolkit depends on the following libraries.  Download links are provided for your reference, but it is highly recommended that you use the script "download_libraries" in the source bundle "scripts" directory. Python users will still need to download <a href="http://www.numpy.org">NumPy</a> 1.2 or later and install it according to NumPy instructions.
+
+  <ul>
+  <li>HDF-EOS2.18v1.00 <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a></li>
+  <li>hdf4.2.8 <a href="http://www.hdfgroup.org/ftp/HDF/releases/HDF4.2.8/src/">Download</a></li>
+  <li>jpegsrc.v6b <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a></li>
+  <li>zlib-1.2.5 <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a></li>
+  <li>NumPy 1.2 or later Python module <a href="http://www.numpy.org">Download</a></li>
+  </ul>
+
+  \section install_sec Installation Instructions
+
+    \subsection linux_macosx_sec Linux and MacOS X
+
+    The recommended location for the HDF-EOS/HDF libraries and the MISR Toolkit is /usr/local/hdfeoslibs
+    and /usr/local/Mtk-1.4.X respectively, because this location provides convenient access for multiple user
+    accounts.  It is not necessary, however, to install in /usr/local. The MISR Toolkit and HDF-EOS can be
+    installed anywhere.  Of course installing in /usr/local requires root or sudo privileges. Use the sudo
+    commands below if you are a sudoer or simply become root before installing the HDF-EOS/HDF libraries
+    and before the "make install" step for the MISR Toolkit.
+
+    1) Create a working directory
+                <ul>
+                <li><kbd>mkdir Mtk_tmp</kbd></li>
+                <li><kbd>cd Mtk_tmp</kbd></li>
+                </ul>
+
+	2) Extract Mtk-src-1.4.X.tar.gz
+                <ul>
+                <li><kbd>tar xzvf Mtk-src-1.4.X.tar.gz</kbd> (if not done already)</li>
+                </ul>
+
+	3) Extract Mtk testdata (substitute Mtk-testdata-1.0.2 with your version)
+		<ul>
+		<li><kbd>tar xzvf Mtk-testdata-1.0.2.tar.gz</kbd></li>
+		</ul>
+
+	4) Download HDF-EOS/HDF, JPEG and ZLIB libraries
+                <ul>
+		<li><kbd>cd Mtk-src-1.4.X</kbd></li>
+                <li><kbd>scripts/download_libraries</kbd></li>
+                <li>Hit "return" for defaults</li>
+                </ul>
+
+	5) Install HDF-EOS/HDF, JPEG and ZLIB libraries (using the following script is necessary because it applies patches which are required for some systems, like Mac Universal Binaries, Linux and Linux64)
+                <ul>
+                <li>The next step requires root privileges to install into /usr/local/hdfeoslibs, otherwise choose another location and disregard sudo</li>
+                <li><kbd>sudo scripts/install_hdf+hdfeos</kbd></li>
+                <li>Hit "return" for defaults (/usr/local/hdfeoslibs)</li>
+                </ul>
+
+	6) Build, test and install Mtk (substitute Mtk-src-1.4.X with your version)
+		<ul>
+ 		<li>Setup your HDF/HDFEOS environment</li>
+                        <ul>
+                        <li>for csh:</li>
+			       <ul>                	       
+                	       <li><kbd>source <your-step5-path>/bin/hdfeos_env.csh</kbd></li>
+			       </ul>
+                        </ul>
+                        <ul>
+                        <li>for bash:</li>
+			       <ul>
+                	       <li><kbd>source <your-step5-path>/bin/hdfeos_env.sh</kbd></li>
+                               </ul>
+			</ul>
+                <li>Set MTK_INSTALLDIR environment variable (ex. /usr/local/Mtk-1.4.X)</li>
+                        <ul>
+                        <li>for csh:</li>
+			       <ul>
+                               <li><kbd>setenv MTK_INSTALLDIR <your-path>/Mtk-1.4.X</kbd></li>
+			       </ul>
+                        </ul>
+                        <ul>
+                        <li>for bash:</li>
+			       <ul>
+                               <li><kbd>export MTK_INSTALLDIR=<your-path>/Mtk-1.4.X</kbd></li>
+                               </ul>
+                        </ul>
+                <li>Set IDL_DIR environment variable (if applicable)</li>
+                        <ul>
+                        <li>for csh:</li>
+			       <ul>
+                               <li><kbd>setenv IDL_DIR <path-to-idl>/rsi/idl</kbd></li>
+			       </ul>
+                        </ul>
+                        <ul>
+                        <li>for bash:</li>
+			       <ul>
+                               <li><kbd>export IDL_DIR=<path-to-idl>/rsi/idl</kbd></li>
+                               </ul>
+                        </ul>
+                <li>To build, test and install (choose which libraries to build)</li>
+                   <ul>
+                   <li>Everything - C library, command-line utilities, IDL and Python</li>
+                        <ul>
+		        <li><kbd>make</kbd></li>
+		        <li><kbd>make testall</kbd> (If you have Mtk testdata installed and would like to test C, IDL and Python)</li>
+                        <li>The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo</li>
+		        <li><kbd>sudo make install</kbd></li>
+                        </ul>
+                   <li>Or - C library and command-line utilites</li>
+                        <ul>
+		        <li><kbd>make lib</kbd></li>
+		        <li><kbd>make cmdutil</kbd></li>
+		        <li><kbd>make test</kbd> (If you have Mtk testdata installed and would like to test only C routines)</li>
+                        <li>The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo</li>
+		        <li><kbd>sudo make install</kbd></li>
+                        </ul>
+                   <li>Or - IDL library</li>
+                        <ul>
+		        <li><kbd>make idl</kbd></li>
+		        <li><kbd>make testidl</kbd> (If you have Mtk testdata installed and would like to test only IDL routines - requires user interaction)</li>
+                        <li>The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo</li>
+		        <li><kbd>sudo make install</kbd></li>
+                        </ul>
+                   <li>Or - Python library</li>
+                        <ul>
+		        <li><kbd>make python</kbd></li>
+		        <li><kbd>make testpython</kbd> (If you have Mtk testdata installed and would like to test only python routines)</li>
+                        <li>The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo</li>
+		        <li><kbd>sudo make install</kbd></li>
+                        </ul>
+                   </ul>
+                <li>Other build targets and options</li>
+                        <ul>
+		        <li><kbd>make help</kbd> (for other build targets)</li>
+                        <li><kbd>make clean</kbd> (to clean everything)</li>
+                        </ul>
+                
+		<li>If the build complains about <kbd>.d</kbd> files (This occurs when the HDF-EOS environment is not set)</li>
+                        <ul>
+                        <li><kbd>scripts/rmdepend.sh</kbd> (to remove dependency files)</li>
+                        <li><kbd>make</kbd></li>
+                        </ul>
+		</ul>
+
+	7) To use Mtk
+		<ul>
+		<li>The HDF/HDFEOS environment is already set above</li>
+		<li>Setup your Mtk environment (pick any):</li>
+		   <ul>
+		   <li>For csh:</li>
+			<ul>
+			<li><kbd>source $MTK_INSTALLDIR/bin/Mtk_c_env.csh</kbd> for C</li>
+			<li><kbd>source $MTK_INSTALLDIR/bin/Mtk_idl_env.csh</kbd> for IDL</li>
+			<li><kbd>source $MTK_INSTALLDIR/bin/Mtk_python_env.csh</kbd> for Python (Don't need to do if installed in site-packages (see step 8))</li>
+			</ul>
+	           <li>For bash:</li>
+			<ul>
+			<li><kbd>. $MTK_INSTALLDIR/bin/Mtk_c_env.sh</kbd> for C</li>
+			<li><kbd>. $MTK_INSTALLDIR/bin/Mtk_idl_env.sh</kbd> for IDL</li>
+			<li><kbd>. $MTK_INSTALLDIR/bin/Mtk_python_env.sh</kbd> for Python (Don't need to do if installed in site-packages (see step 8))</li>
+			</ul>
+		   </ul>
+		</ul>
+                <ul>
+		<li>For C examples: <kbd>$MTK_INSTALLDIR/examples/C</kbd></li>
+		<li>For IDL examples: <kbd>$MTK_INSTALLDIR/examples/idl</kbd></li>
+		<li>For Python examples: <kbd>$MTK_INSTALLDIR/examples/python</kbd></li>
+		<li>For C command-line utilities source code: <kbd>Mtk-src-1.4.X/src</kbd></li>
+		<li>For IDL tests source code: <kbd>Mtk-src-1.4.X/wrappers/idl</kbd></li>
+		</ul>
+
+	8) Optional - You may want to install the MisrToolkit into you Python site-packages directory
+		<ul>
+		<li><kbd>cd Mtk-src-1.4.X/wrappers/python</kbd></li>
+		<li><kbd>sudo python setup.py install</kbd></li>
+                <li><kbd>setenv LD_LIBRARY_PATH $MTK_INSTALLDIR/lib</kbd></li>
+		</ul>
+
+        9) Optional -  After installing the Mtk_tmp directory, it's contents is not needed, unless for reference and may be removed
+                <ul>
+                <li><kbd>cd ../..</kbd></li>
+                <li><kbd>rm -rf Mtk_tmp</kbd></li>
+                </ul>
+
+      \subsection windows_sec Windows
+
+	See win32/README.txt in the source or binary bundle.
+    
+
+  \section doc_sec Documentation
+
+    \subsection doc_avail_sec Documentation Availability
+      
+    HTML documentation for the supported interfaces is available in the doc directory.
+        
+    \subsection doc_regen_sec Documentation Regeneration
+      
+    The target to remake documentation is "make doc" <br>
+    The C documentation, including this page, is created using doxygen. A doxygen config file template is at doc/Doxyfile.template<br><br>
+    
+    The Python documentation is generated using the python's mkhowto tool, which was removed from recent Python distributions and pdfTeX.<br>
+    You must sepearely install pdfTeX (for example by installing the TeX Live distribution) before using make doc to rebuild python documentation.<br>
+    Scripts have been provided to allow the download of a compatible distribution and extraction of the required files.<br>
+    <pre> 
+    $ cd $MTK_INSTALLDIR
+    $ scripts/download_mkhowto
+    $ scripts/install_mkhowto
+    </pre>
+    You must then set PYDOCDIR environment variable (ex. ~/Mtk_tmp/Mtk_thirdparty/pythonDocTools)
+            <ul>
+            <li>for csh:</li>
+                    <ul>
+                   <li><kbd>setenv PYDOCDIR <your-path>/Mtk_thirdparty/pythonDocTools</kbd></li>
+                   </ul>
+            </ul>
+            <ul>
+            <li>for bash:</li>
+                    <ul>
+                   <li><kbd>export PYDOCDIR=<your-path>/Mtk_thirdparty/pythonDocTools</kbd></li>
+                   </ul>
+            </ul>
+    You should then be able to make doc successfully.    
+
+  \section examples Examples
+
+
+     \subsection cmdutil_usage How to use the command-line utilities
+
+          <pre>
+          $ source \<HDFEOSDIR>/bin/\<ARCH>/hdfeos_env.csh
+          $ source $MTK_INSTALLDIR/bin/Mtk_c_env.csh
+          $ MtkLatLonToPathList --dd=-75.345,169.89
+            Lat/Lon: -75.345000 169.890000
+          Path list: 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 
+
+          $ MtkOrbitToTimeRange 29058
+          2005-06-04T17:41:17Z
+          2005-06-04T19:20:10Z
+
+          $ MtkMisrToEnvi --entire-file --hdffilename=../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf \
+          > --gridname=BlueBand --fieldname="Blue Brf" --envifilename=out
+          path = 37
+          start block = 1
+          end block = 140
+          </pre>
+ 
+     \subsection c_usage How to build using core C MisrToolkit library
+
+	Compile, link and run (click foo.c, bar.c and biz.c for source code) or see examples/C/Makefile
+          <pre>
+          $ source \<HDFEOSDIR>/bin/\<ARCH>/hdfeos_env.csh
+          $ source $MTK_INSTALLDIR/bin/Mtk_c_env.csh
+          $ gcc $MTK_CFLAGS -c foo.c
+          $ gcc $MTK_CFLAGS -c bar.c
+          $ gcc $MTK_CFLAGS -c biz.c
+          $ gcc -o baz foo.o bar.o biz.o $MTK_LDFLAGS
+          $./baz
+
+          Example 1:
+          path = 37
+          resolution = 275
+          block, line, sample = 60,  256.0, 1024.0
+          lat_dd, lon_dd = 38.130890, -110.848247
+          lat deg, min, sec = 38:07:51.21
+          lon deg, min, sec = -110:50:53.69
+          b, l, s = 60,  256.0, 1024.0
+
+          Example2:
+          starttime = 2002-02-02T02:00:00Z
+          endtime = 2002-05-02T02:00:00Z
+          Pathlist = 35 36 37 38 39 
+          Orbitlist for Path 35 = 11379 11612 11845 12078 12311 12544 
+          Orbitlist for Path 36 = 11481 11714 11947 12180 12413 
+          Orbitlist for Path 37 = 11350 11583 11816 12049 12282 12515 
+          Orbitlist for Path 38 = 11452 11685 11918 12151 12384 
+          Orbitlist for Path 39 = 11321 11554 11787 12020 12253 12486 
+
+          Example 3:
+          region center lat/lon (dd) = (32.200000, -114.500000)
+                   region extent (m) = (200000.000000, 100000.000000)
+
+                        Reading file = /Users/ber/Development/Toolkit/Mtk/../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+                        Reading grid = RedBand
+                       Reading field = Red Brf
+             number of lines/samples = (768, 384)
+                  input lat/lon (dd) = (32.200000, -114.500000)
+                         line/sample = (383.293396, 191.933014)
+                       Brf[383][192] = 0.357760
+                   block/line/sample = (65, 210.292969, 413.932983)
+                        lat/lon (dd) = (32.200000, -114.500000)
+                       lat/lon (dms) = (32:11:59.999887, -114:30:0.000085)
+                             SOM x/y = (16529918.187500, 307019.078125)
+                pixel time[383][192] = 2005-06-04T18:21:45.415768Z
+
+                        Reading file = /Users/ber/Development/Toolkit/Mtk/../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf
+                        Reading grid = SubregParamsLnd
+                       Reading field = LandHDRF[3][4]
+             number of lines/samples = (192, 96)
+                  input lat/lon (dd) = (32.200000, -114.500000)
+                         line/sample = (95.198349, 47.108253)
+                        HDRF[95][47] = 0.208766
+                   block/line/sample = (65, 52.198242, 103.108246)
+                        lat/lon (dd) = (32.200000, -114.500000)
+                       lat/lon (dms) = (32:11:59.999887, -114:30:0.000085)
+                             SOM x/y = (16529918.184044, 307019.077821)
+
+          Worked like champ!
+          </pre>
+
+  	See \ref functable "MISR Toolkit Routine Summary Table" and <a href="../Mtk_ug.pdf">MISR Toolkit Users Guide</a> for more C examples
+
+      \subsection idl_usage How to use the IDL MisrToolkit library
+
+	See examples/idl/filelist_by_timerange.pro
+          <pre>
+	  $ source $MTK_INSTALLDIR/bin/Mtk_idl_env.sh
+          $ idl
+          IDL> help,/dlm
+              ....
+              MTK - MISR Toolkit (not loaded)
+              Version: 1.2.0, Build Date: Nov 08 2006, Source: Jet Propulsion Laboratory
+              ....
+          IDL> filelist_by_timerange,'2005-01-01T00:00:00','2005-01-01T00:59:59'
+                Start time = 2005-01-01T00:00:00
+                  End time = 2005-01-01T00:59:59
+          Number of orbits =            2
+                Orbit list =        26804       26805
+                 0
+          orbit =        26804 path =           88
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_DA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_CA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_BA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_AA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_AN_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_AF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_BF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_CF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P088_O026804_DF_F03_0023.hdf
+          MISR_AM1_GP_GMP_P088_O026804_F03_0013.hdf
+          MISR_AM1_TC_STEREO_P088_O026804_F07_0012.hdf
+                 1
+          orbit =        26805 path =          104
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_DA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_CA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_BA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_AA_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_AN_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_AF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_BF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_CF_F03_0023.hdf
+          MISR_AM1_GRP_ELLIPSOID_GM_P104_O026805_DF_F03_0023.hdf
+          MISR_AM1_GP_GMP_P104_O026805_F03_0013.hdf
+          MISR_AM1_TC_STEREO_P104_O026805_F07_0012.hdf
+          IDL> help,/dlm
+              ....
+              MTK - MISR Toolkit (loaded)
+              Version: 1.2.0, Build Date: Nov 08 2006, Source: Jet Propulsion Laboratory
+              ....
+          </pre>
+
+  	See <a href="../IDL_HTML_DOCS/IDL_MTK_Index.html">MISR Toolkit IDL Function Index</a>
+
+      \subsection python_usage How to use the Python MisrToolkit library
+
+	See examples/python/readmisr.py
+	  <pre>
+	  $ source $MTK_INSTALLDIR/bin/Mtk_python_env.sh
+          $ python
+          >>> import MisrToolkit as Mtk
+          >>> import os
+
+          >>> region = Mtk.MtkRegion(37,40,42)
+          >>> filename = os.getenv('MTKHOME') + '/../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+          >>> gridname = 'RedBand'
+          >>> fieldname = 'Red Brf'
+          >>> d = Mtk.MtkFile(filename).grid(gridname).field(fieldname).read(region)
+          >>> n = d.data()
+          >>> n.shape
+          >>> m = d.mapinfo()
+
+          >>> type(d)
+          >>> type(n)
+          >>> type(m)
+
+          >>> help(d)
+          >>> help(n)
+          >>> help(m)
+          </pre>
+  	See <a href="../pymtk/index.html">MISR Toolkit Python Interface</a>
+
+  \section known_problems Known Problems
+
+	<ul>
+        <li>The IDL routine MTK_FIND_FILELIST() does not work properly.</li>
+        <li>By default OS X swallows click-events on change of focus.<br>
+        <ul><li>If IDL test windows on MacOS X 10.6/10.7 don't respond to clicks, do this command 
+            <kbd>"defaults write com.apple.x11 wm_click_through -bool true"</kbd></li></ul>
+         <ul><li>If IDL test windows on MacOS X 10.8 don't respond to clicks, do this command 
+             <kbd>"defaults write org.x.x11 wmclickthrough -bool true"</kbd></li></ul>  
+            Then, once at a shell prompt, restart X11/XQuartz and retry
+            <kbd>"make testidl"</kbd>.
+            </li>
+        </ul>
+*/

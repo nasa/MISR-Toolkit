@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_TRANSFORM_COORDINATES</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_TRANSFORM_COORDINATES Transforms latitude/longitude coordinates into line/sample coordinates
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+   Given: 
+	srcbuf	Source data buffer
+	linebuf	Line data buffer
+	samplebuf	Sample data buffer
+
+	    
+   the call:
+   
+      <B>status = MTK_TRANSFORM_COORDINATES( mapinfo, latbuf, latbuf, linebuf, samplebuf )</B>
+
+   returns: 
+    status         0 on success; otherwise failure
+    resampbuf      Resampled data buffer
+   
+   
+-Examples
+
+
+	;; Set up input parameters
+	;;
+	filename    = '../Mtk_testdata/in/MISR_AM1_AGP_P039_F01_24.hdf'
+	gridname    = 'Standard'
+	fieldname   = 'AveSceneElev'
+	path        = 39
+	start_block = 50
+	end_block   = 52
+	ulc_lat_dd  = 51
+	ulc_lon_dd  = -114
+	lrc_lat_dd  = 46
+	lrc_lon_dd  = -106
+	lat_cellsize_dd	= 0.01
+	lon_cellsize_dd	= 0.01
+	status      = MTK_SETREGION_BY_PATH_BLOCKRANGE( path, start_block, end_block, region )      
+	status      = MTK_READDATA( filename, gridname, fieldname, region, srcbuf, mapinfo )
+	status      = MTK_CREATE_GEOGRID( ulc_lat_dd, ulc_lon_dd, lrc_lat_dd, lrc_lon_dd, lat_cellsize_dd, lon_cellsize_dd , latbuf, lonbuf )
+	;;
+	;; The call
+	;;
+	<B>status = MTK_TRANSFORM_COORDINATES</B>( <B>mapinfo, latbuf, latbuf, linebuf, samplebuf</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	help, status, samplebuf
+      
+   IDL outputs:   
+	   STATUS          LONG      =            0
+	   SAMPLEBUF       FLOAT     = Array[801, 501]
+   
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkTransformCoordinates.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

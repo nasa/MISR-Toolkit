@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='MISR Toolkit' Id='0D01B7B4-3C86-4187-B183-16E2B7010C3C' UpgradeCode='B0C356F7-B16A-43A7-9750-1CAA687D3B0C'
+    Language='1033' Codepage='1252' Version='1.4.3' Manufacturer='Jet Propulsion Lab / California Institute of Technology'>   
+    <Package Id='*' Keywords='Installer' Description="MISR Toolkit Installer"
+      Comments='MISR Toolkit Install Package' Manufacturer='Jet Propulsion Lab / California Institute of Technology'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+    <Media Id='1' Cabinet='MISRToolkit.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="MISR Toolkit Installation [1]" />
+
+    <Property Id="PYTHONPATH">
+       <RegistrySearch Id="PythonPath" Root="HKLM" Key="SOFTWARE\Python\PythonCore\2.7\InstallPath" Type="directory"/>
+    </Property>
+    <Property Id="PYTHONSITELIBPATH">
+       <RegistrySearch Id="PythonPath2" Root="HKLM" Key="SOFTWARE\Python\PythonCore\2.7\InstallPath" Type="directory"/>
+         <DirectorySearch Id='DirectorySearch1' Path='[PYTHONPATH]Lib\site-packages\'/>
+    </Property>
+    <Property Id="IDLPATH">
+       <RegistrySearch Id="IDLPath" Root="HKLM" Key="SOFTWARE\Exelis\IDL\8.2" Name="InstallDir" Type="directory"/>
+    </Property>
+    <Property Id="IDLDLMPATH">
+       <RegistrySearch Id="IDLPath2" Root="HKLM" Key="SOFTWARE\Exelis\IDL\8.2" Name="InstallDir" Type="directory"/>
+         <DirectorySearch Id='DirectorySearch2' Path='[IDLPATH]IDL82\bin\bin.x86\'/>
+    </Property>
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='JPL' Name='JPL'>
+          <Directory Id='INSTALLDIR' Name='MISR Toolkit'>
+            <Component Id='ReadmeTXT' Guid='f8ac4338-a878-4344-88e6-250d49c321f9'>
+              <File Id='ReadmeTXTF' Name='README.txt' DiskId='1' Source='README.txt' KeyPath='yes' />
+            </Component>
+            <Component Id='Manual' Guid='C9F24EA9-9165-4BB4-B9E8-DA3E4ADA4345'>
+              <File Id='Manual' Name='Mtk_ug.pdf' DiskId='1' Source='..\doc\Mtk_ug.pdf' KeyPath='yes'>
+                <Shortcut Id="startmenuManual" Directory="ProgramMenuDir" Name="Instruction Manual" Advertise="yes" />
+              </File>
+            </Component>
+            <Directory Id='DLLDIR' Name='dll'>
+            <Component Id='HelperLibrary' Guid='19988872-70F9-48FF-9AB5-1238E68B9A92'>
+              <File Id='HelperDLL' Name='MisrToolkit.dll' DiskId='1' Source='MisrToolkit\Release\MisrToolkit.dll' KeyPath='yes' />
+              <Environment Id="DLLDIRPATH" Name="PATH" Value="[DLLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
+            </Component>
+            </Directory>
+            <Directory Id='DEPENDDIR' Name='Mtk_depend'>
+            <Component Id='AssociatedDLL' Guid='11350A1F-41BF-4019-9595-AECF7712A896'>
+              <File Id='AssociatedDLL2' Name='hd426m.dll' DiskId='1' Source='HDF-EOS5Binaries\hd426m.dll' KeyPath='yes' />
+              <File Id='AssociatedDLL3' Name='hdf_fcstubdll.dll' DiskId='1' Source='HDF-EOS5Binaries\hdf_fcstubdll.dll' KeyPath='no' />
+              <File Id='AssociatedDLL4' Name='hdf_fortrandll.dll' DiskId='1' Source='HDF-EOS5Binaries\hdf_fortrandll.dll' KeyPath='no' />
+              <File Id='AssociatedDLL5' Name='hm426m.dll' DiskId='1' Source='HDF-EOS5Binaries\hm426m.dll' KeyPath='no' />
+              <File Id='AssociatedDLL6' Name='mfhdf_fcstubdll.dll' DiskId='1' Source='HDF-EOS5Binaries\mfhdf_fcstubdll.dll' KeyPath='no' />
+              <File Id='AssociatedDLL7' Name='mfhdf_fortrandll.dll' DiskId='1' Source='HDF-EOS5Binaries\mfhdf_fortrandll.dll' KeyPath='no' />
+              <File Id='AssociatedDLL8' Name='szip.dll' DiskId='1' Source='HDF-EOS5Binaries\szip.dll' KeyPath='no' />
+              <File Id='AssociatedDLL9' Name='szlibdll.dll' DiskId='1' Source='HDF-EOS5Binaries\szlibdll.dll' KeyPath='no' />
+              <File Id='AssociatedDLL10' Name='zlib1.dll' DiskId='1' Source='HDF-EOS5Binaries\zlib1.dll' KeyPath='no' />
+              <File Id='AssociatedDLL11' Name='tre4.dll' DiskId='1' Source='HDF-EOS5Binaries\tre4.dll' KeyPath='no' />
+              <File Id='AssociatedDLL12' Name='libiconv2.dll' DiskId='1' Source='HDF-EOS5Binaries\libiconv2.dll' KeyPath='no' />
+              <File Id='AssociatedDLL13' Name='libintl3.dll' DiskId='1' Source='HDF-EOS5Binaries\libintl3.dll' KeyPath='no' />
+              <Environment Id="DEPENDDIRPATH" Name="PATH" Value="[DEPENDDIR]" Permanent="no" Part="last" Action="set" System="yes" />
+            </Component>
+            </Directory>
+            <Directory Id='LIBDIR' Name='lib'>
+            <Component Id='AssociatedLIB' Guid='fce2b665-e479-4b7d-86e1-ce7e744736a6'>
+              <File Id='AssociatedLIB2' Name='hd426m.lib' DiskId='1' Source='HDF-EOS5Binaries\hd426m.lib' KeyPath='no' />
+              <File Id='AssociatedLIB3' Name='hdf_fcstubdll.lib' DiskId='1' Source='HDF-EOS5Binaries\hdf_fcstubdll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB4' Name='hdf_fortrandll.lib' DiskId='1' Source='HDF-EOS5Binaries\hdf_fortrandll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB5' Name='hm426m.lib' DiskId='1' Source='HDF-EOS5Binaries\hm426m.lib' KeyPath='no' />
+              <File Id='AssociatedLIB6' Name='mfhdf_fcstubdll.lib' DiskId='1' Source='HDF-EOS5Binaries\mfhdf_fcstubdll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB7' Name='mfhdf_fortrandll.lib' DiskId='1' Source='HDF-EOS5Binaries\mfhdf_fortrandll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB8' Name='szip.lib' DiskId='1' Source='HDF-EOS5Binaries\szip.lib' KeyPath='no' />
+              <File Id='AssociatedLIB9' Name='szlibdll.lib' DiskId='1' Source='HDF-EOS5Binaries\szlibdll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB10' Name='xdr_for_dll.lib' DiskId='1' Source='HDF-EOS5Binaries\xdr_for_dll.lib' KeyPath='no' />
+              <File Id='AssociatedLIB11' Name='zlib1.lib' DiskId='1' Source='HDF-EOS5Binaries\zlib1.lib' KeyPath='no' />
+              <File Id='AssociatedLIB12' Name='gctp.lib' DiskId='1' Source='HDF-EOS5Binaries\gctp.lib' KeyPath='no' />
+              <File Id='AssociatedLIB13' Name='gctpd.lib' DiskId='1' Source='HDF-EOS5Binaries\gctpd.lib' KeyPath='no' />
+              <File Id='AssociatedLIB14' Name='hdfeos.lib' DiskId='1' Source='HDF-EOS5Binaries\hdfeos.lib' KeyPath='no' />
+              <File Id='AssociatedLIB15' Name='hdfeosd.lib' DiskId='1' Source='HDF-EOS5Binaries\hdfeosd.lib' KeyPath='no' />
+              <File Id='AssociatedLIB16' Name='MisrToolkit.lib' DiskId='1' Source='HDF-EOS5Binaries\MisrToolkit.lib' KeyPath='no' />
+              <File Id='AssociatedLIB17' Name='libjpeg.lib' DiskId='1' Source='HDF-EOS5Binaries\libjpeg.lib' KeyPath='no' />
+              <File Id='AssociatedLIB18' Name='libszip.lib' DiskId='1' Source='HDF-EOS5Binaries\libszip.lib' KeyPath='no' />
+              <File Id='AssociatedLIB19' Name='tre.lib' DiskId='1' Source='HDF-EOS5Binaries\tre.lib' KeyPath='no' />
+              <File Id='AssociatedLIB20' Name='zlib.lib' DiskId='1' Source='HDF-EOS5Binaries\zlib.lib' KeyPath='no' />
+            </Component>
+            </Directory>
+            <Directory Id='EXAMPLEDIR' Name='example'>
+            <Component Id='ExampleTOP' Guid='ca6b5249-b320-4c03-8aaa-7ad7b969c2cf'>
+              <File Id='ExampleSLN' Name='example.sln' DiskId='1' Source='example\example.sln' KeyPath='no' />
+            </Component>
+              <Directory Id='EXAMPLESUBDIR' Name='example'>
+              <Component Id='ExampleSUB' Guid='bff675fd-d13e-4ba0-9533-265a8569eb87'>
+                <File Id='ExampleSUB2' Name='example.vcproj' DiskId='1' Source='example\example\example.vcproj' KeyPath='no' />
+                <File Id='ExampleSUB3' Name='bar.c' DiskId='1' Source='..\examples\C\bar.c' KeyPath='no' />
+                <File Id='ExampleSUB4' Name='foo.c' DiskId='1' Source='..\examples\C\foo.c' KeyPath='no' />
+                <File Id='ExampleSUB5' Name='biz.c' DiskId='1' Source='..\examples\C\biz.c' KeyPath='no' />
+              </Component>
+              </Directory>
+            </Directory>
+            <Directory Id='INCLUDEDIR' Name='include'>
+            <Component Id='IncludeH' Guid='40060238-abb3-452a-893f-7a294689473d'>
+              <File Id='IncludeH2' Name='MisrError.h' DiskId='1' Source='..\include\MisrError.h' KeyPath='no' />
+              <File Id='IncludeH3' Name='MisrProjParam.h' DiskId='1' Source='..\include\MisrProjParam.h' KeyPath='no' />
+              <File Id='IncludeH4' Name='MisrToolkit.h' DiskId='1' Source='..\include\MisrToolkit.h' KeyPath='no' />
+              <File Id='IncludeH5' Name='MisrCoordQuery.h' DiskId='1' Source='..\CoordQuery\include\MisrCoordQuery.h' KeyPath='no' />
+              <File Id='IncludeH6' Name='dirent_win32.h' DiskId='1' Source='..\FileQuery\include\dirent_win32.h' KeyPath='no' />
+              <File Id='IncludeH7' Name='MisrFileQuery.h' DiskId='1' Source='..\FileQuery\include\MisrFileQuery.h' KeyPath='no' />
+              <File Id='IncludeH8' Name='MisrMapQuery.h' DiskId='1' Source='..\MapQuery\include\MisrMapQuery.h' KeyPath='no' />
+              <File Id='IncludeH9' Name='errormacros.h' DiskId='1' Source='..\misrcoord\errormacros.h' KeyPath='no' />
+              <File Id='IncludeH10' Name='misrproj.h' DiskId='1' Source='..\misrcoord\misrproj.h' KeyPath='no' />
+              <File Id='IncludeH11' Name='odlparse.h' DiskId='1' Source='..\odl\odlparse.h' KeyPath='no' />
+              <File Id='IncludeH12' Name='odlinter.h' DiskId='1' Source='..\odl\odlinter.h' KeyPath='no' />
+              <File Id='IncludeH13' Name='odldef_prototypes.h' DiskId='1' Source='..\odl\odldef_prototypes.h' KeyPath='no' />
+              <File Id='IncludeH14' Name='odldef.h' DiskId='1' Source='..\odl\odldef.h' KeyPath='no' />
+              <File Id='IncludeH15' Name='MisrOrbitPath.h' DiskId='1' Source='..\OrbitPath\include\MisrOrbitPath.h' KeyPath='no' />
+              <File Id='IncludeH16' Name='MisrCache.h' DiskId='1' Source='..\ReadData\include\MisrCache.h' KeyPath='no' />
+              <File Id='IncludeH17' Name='MisrReadData.h' DiskId='1' Source='..\ReadData\include\MisrReadData.h' KeyPath='no' />
+              <File Id='IncludeH18' Name='MisrRegression.h' DiskId='1' Source='..\Regression\include\MisrRegression.h' KeyPath='no' />
+              <File Id='IncludeH19' Name='MisrReProject.h' DiskId='1' Source='..\ReProject\include\MisrReProject.h' KeyPath='no' />
+              <File Id='IncludeH20' Name='MisrSetRegion.h' DiskId='1' Source='..\SetRegion\include\MisrSetRegion.h' KeyPath='no' />
+              <File Id='IncludeH21' Name='MisrUnitConv.h' DiskId='1' Source='..\UnitConv\include\MisrUnitConv.h' KeyPath='no' />
+              <File Id='IncludeH22' Name='MisrUtil.h' DiskId='1' Source='..\Util\include\MisrUtil.h' KeyPath='no' />
+              <File Id='IncludeH23' Name='MisrWriteData.h' DiskId='1' Source='..\WriteData\include\MisrWriteData.h' KeyPath='no' />
+              <File Id='IncludeH24' Name='regex.h' DiskId='1' Source='HDF-EOS5Includes\regex.h' KeyPath='no' />
+              <File Id='IncludeH25' Name='tre-config.h' DiskId='1' Source='HDF-EOS5Includes\tre-config.h' KeyPath='no' />
+              <File Id="fil13899814E0E4473F23081721F9F99748" KeyPath="no" Source="HDF-EOS5Includes\atom.h" />
+              <File Id="fil6C69B243DED1CD1C2EDB23619D7BB3EE" KeyPath="no" Source="HDF-EOS5Includes\bcea.h" />
+              <File Id="filE979C5BDCF3C7C240DD40495AFE1CADE" KeyPath="no" Source="HDF-EOS5Includes\bitvect.h" />
+              <File Id="filF590A8B3C3D2510E2199332B38DAA342" KeyPath="no" Source="HDF-EOS5Includes\cdeflate.h" />
+              <File Id="filC63707A86BF3059B6EB143CC480B8FAE" KeyPath="no" Source="HDF-EOS5Includes\cderror.h" />
+              <File Id="filB4A5ECF68B6A52401C454E7B0DFE381B" KeyPath="no" Source="HDF-EOS5Includes\cdjpeg.h" />
+              <File Id="fil4925678BA2D28C82B7852A790880E646" KeyPath="no" Source="HDF-EOS5Includes\cfortHdf.h" />
+              <File Id="filBD66B5FBA76B2A3ABC23EBC32678C695" KeyPath="no" Source="HDF-EOS5Includes\cnbit.h" />
+              <File Id="filDE84B7FDF555CB9DC19B0974CFEBC776" KeyPath="no" Source="HDF-EOS5Includes\cnone.h" />
+              <File Id="filE3848EAB94B5C4D6B9D58DDD84B63BE2" KeyPath="no" Source="HDF-EOS5Includes\cproj.h" />
+              <File Id="fil7294B944E68F8021D2BD361819A4986B" KeyPath="no" Source="HDF-EOS5Includes\cproj_prototypes.h" />
+              <File Id="fil4CFD6179CBFFFADEDE3BFE6F4D712A6D" KeyPath="no" Source="HDF-EOS5Includes\crle.h" />
+              <File Id="fil0210DA33FF514C02EE9ED51995060501" KeyPath="no" Source="HDF-EOS5Includes\cskphuff.h" />
+              <File Id="fil7EF417201EB42FB617E0F08A077862DA" KeyPath="no" Source="HDF-EOS5Includes\cszip.h" />
+              <File Id="filCB03C831FBD007C65EF81E41B19AC144" KeyPath="no" Source="HDF-EOS5Includes\df.h" />
+              <File Id="fil84097557EB798AB65A39A113DB47D0B8" KeyPath="no" Source="HDF-EOS5Includes\dfan.h" />
+              <File Id="filAB9C0125D8D6D828E0C35BBB954E6B7A" KeyPath="no" Source="HDF-EOS5Includes\dffunc.inc" />
+              <File Id="fil3362755A531D94506FCB9CD02A5736C8" KeyPath="no" Source="HDF-EOS5Includes\dfgr.h" />
+              <File Id="filEF84AB353033997C138ADC3FF7FAEA4B" KeyPath="no" Source="HDF-EOS5Includes\dfi.h" />
+              <File Id="fil7C79D9A876F7E3ECC16C73F45BF69C2D" KeyPath="no" Source="HDF-EOS5Includes\dfrig.h" />
+              <File Id="fil151B02AC9BEF3D448090C1F3392B7ACE" KeyPath="no" Source="HDF-EOS5Includes\dfsd.h" />
+              <File Id="fil091808A2985C6826036CA7959C307C80" KeyPath="no" Source="HDF-EOS5Includes\dfstubs.h" />
+              <File Id="fil71142C009A2ED24D7DF70C6CEBCE3E4B" KeyPath="no" Source="HDF-EOS5Includes\dfufp2i.h" />
+              <File Id="fil5602A82B8505F473EB88EB68E70D6AE2" KeyPath="no" Source="HDF-EOS5Includes\dynarray.h" />
+              <File Id="filFBC93FE1530FCBBADB82ED9A2FA80861" KeyPath="no" Source="HDF-EOS5Includes\ease.h" />
+              <File Id="filC1BD9B0AFC559AF11E9D607976470CB1" KeyPath="no" Source="HDF-EOS5Includes\gctp_prototypes.h" />
+              <File Id="fil9C93ECE1DACA6611DF45C1D20CD2EF49" KeyPath="no" Source="HDF-EOS5Includes\H4api_adpt.h" />
+              <File Id="fil341AFC15AE26C2005A5DFC49323ADEBA" KeyPath="no" Source="HDF-EOS5Includes\h4config.h" />
+              <File Id="fil5EA41041712543F8D4AAF9892C7CED09" KeyPath="no" Source="HDF-EOS5Includes\hbitio.h" />
+              <File Id="fil7DA621DC89DE06B94724449AF04728F1" KeyPath="no" Source="HDF-EOS5Includes\hchunks.h" />
+              <File Id="filC7BF88A1F8102D4B2FE9B1087815595A" KeyPath="no" Source="HDF-EOS5Includes\hcomp.h" />
+              <File Id="fil086BF8879E48E5AC27AB2AFC8C65981C" KeyPath="no" Source="HDF-EOS5Includes\hcompi.h" />
+              <File Id="fil84E62EF57FC93B3D2E3101822FC4866E" KeyPath="no" Source="HDF-EOS5Includes\hconv.h" />
+              <File Id="fil71506BF4F713D75D1C55F79C62E3A20B" KeyPath="no" Source="HDF-EOS5Includes\hdatainfo.h" />
+              <File Id="filF2531F84B9E6183B39C33FDF26C51B75" KeyPath="no" Source="HDF-EOS5Includes\hdf.h" />
+              <File Id="fil5D73067EEE1BC3ACEE707474FACE449B" KeyPath="no" Source="HDF-EOS5Includes\hdf.inc" />
+              <File Id="fil898EA8B43CB2C101586637B8A9937F37" KeyPath="no" Source="HDF-EOS5Includes\hdf2netcdf.h" />
+              <File Id="filADC7A2352F62E08C5AD1FD055970E4FB" KeyPath="no" Source="HDF-EOS5Includes\HdfEosDef.f" />
+              <File Id="fil1DC1635C608740143F07FCD1725D1B15" KeyPath="no" Source="HDF-EOS5Includes\HdfEosDef.h" />
+              <File Id="fil47D2F585CB3CFE113FCE51E6DC94716C" KeyPath="no" Source="HDF-EOS5Includes\HDFEOSVersion.h" />
+              <File Id="filD65E89AFA6F8FC68F4C4E35D9E04776E" KeyPath="no" Source="HDF-EOS5Includes\hdfi.h" />
+              <File Id="filDEC32C03AF34898D735CCEF419A9C18A" KeyPath="no" Source="HDF-EOS5Includes\HE2_config.h" />
+              <File Id="filE5680ED2CBA5553784A3FAF2FDCDC880" KeyPath="no" Source="HDF-EOS5Includes\HE2_config.h.in" />
+              <File Id="fil86B7E5476F2E145E28D1CFF03C04B73D" KeyPath="no" Source="HDF-EOS5Includes\herr.h" />
+              <File Id="fil313D71EC0EED0DAA52CCD63536C8DC0D" KeyPath="no" Source="HDF-EOS5Includes\hfile.h" />
+              <File Id="filB75EF79C007C49A3A8672AC5F1606A26" KeyPath="no" Source="HDF-EOS5Includes\hkit.h" />
+              <File Id="filF762280EB933129242746086F6577E0C" KeyPath="no" Source="HDF-EOS5Includes\hlimits.h" />
+              <File Id="filE8114A047835A1378239C6E352E6ACA7" KeyPath="no" Source="HDF-EOS5Includes\hntdefs.h" />
+              <File Id="fil25C6200712206FA3E8EF22F0B2CF153D" KeyPath="no" Source="HDF-EOS5Includes\hproto.h" />
+              <File Id="fil5F9D54E4D0852B24F5796411E17FFA49" KeyPath="no" Source="HDF-EOS5Includes\hproto_fortran.h" />
+              <File Id="fil2ED3F8EB2945E94C2B70389C9ACE2E4A" KeyPath="no" Source="HDF-EOS5Includes\htags.h" />
+              <File Id="filD3BF72B0F9F8D8DC80E1EE21838ADE00" KeyPath="no" Source="HDF-EOS5Includes\isin.h" />
+              <File Id="filB5C52E30A3386BF424BA27770A9A3C46" KeyPath="no" Source="HDF-EOS5Includes\jchuff.h" />
+              <File Id="filBCEB360CD8DCAFE99FB22B769303CC19" KeyPath="no" Source="HDF-EOS5Includes\jconfig.h" />
+              <File Id="filFB7B33780F0F289AA92C18A0FE8FB8C9" KeyPath="no" Source="HDF-EOS5Includes\jdct.h" />
+              <File Id="fil25F7744917F9895CA38551A3CFBEE7AF" KeyPath="no" Source="HDF-EOS5Includes\jdhuff.h" />
+              <File Id="fil73A51BDA146ACBA6B34E2459B2A921BA" KeyPath="no" Source="HDF-EOS5Includes\jerror.h" />
+              <File Id="filBFD7CEB6E4B1775CE04B6E22B7B216C0" KeyPath="no" Source="HDF-EOS5Includes\jinclude.h" />
+              <File Id="fil9DBDF05C194A8BA310197ACB8A4D0724" KeyPath="no" Source="HDF-EOS5Includes\jmemsys.h" />
+              <File Id="fil2B06B4D33F4CE59E34E0FA8FE4D04881" KeyPath="no" Source="HDF-EOS5Includes\jmorecfg.h" />
+              <File Id="fil7C32FBC6F58C7F201345FD10F2333FDC" KeyPath="no" Source="HDF-EOS5Includes\jpegint.h" />
+              <File Id="fil5F261427E834DBD80C03D5D0A189C864" KeyPath="no" Source="HDF-EOS5Includes\jpeglib.h" />
+              <File Id="filBA234074A167FAE90E6B63C20BAD0227" KeyPath="no" Source="HDF-EOS5Includes\jversion.h" />
+              <File Id="filCA1E5FDF63FD6FEA959A7668B6C71F2D" KeyPath="no" Source="HDF-EOS5Includes\linklist.h" />
+              <File Id="fil8B086944A873FCFE692097B92E751577" KeyPath="no" Source="HDF-EOS5Includes\local_nc.h" />
+              <File Id="fil2F10ED0033C19EE6CE4C82899174FAC2" KeyPath="no" Source="HDF-EOS5Includes\mfan.h" />
+              <File Id="fil7CBB23DA4AC0928D5787D810062A7058" KeyPath="no" Source="HDF-EOS5Includes\mfdatainfo.h" />
+              <File Id="filEFD778DADDC8ECE92D26F1270A72E77D" KeyPath="no" Source="HDF-EOS5Includes\mfgr.h" />
+              <File Id="fil2314F9C0F15A7B56420E39034CEE4A89" KeyPath="no" Source="HDF-EOS5Includes\mfhdf.h" />
+              <File Id="fil2E4796587C5A7EB362C98093D4B75237" KeyPath="no" Source="HDF-EOS5Includes\mfhdfi.h" />
+              <File Id="fil85098D89346EA888E2AB94B2EDE2F6B5" KeyPath="no" Source="HDF-EOS5Includes\mfprivate.h" />
+              <File Id="filB2B9039E0DF0FDBDFA3A56B830AF70FF" KeyPath="no" Source="HDF-EOS5Includes\mstdio.h" />
+              <File Id="filC1A75DFE216CE076C47A839B03AFB6AE" KeyPath="no" Source="HDF-EOS5Includes\netcdf.h" />
+              <File Id="fil8CEDA7C71270CC12DA31174827181E5C" KeyPath="no" Source="HDF-EOS5Includes\proj.h" />
+              <File Id="fil1887EA2D0D8B38A69F50BAAFBECA6671" KeyPath="no" Source="HDF-EOS5Includes\ricehdf.h" />
+              <File Id="fil3E26754695FE67CFD3998E3374AFA6CC" KeyPath="no" Source="HDF-EOS5Includes\SZconfig.h" />
+              <File Id="fil871A33A92AE50F6E884DB11650B077B9" KeyPath="no" Source="HDF-EOS5Includes\szip_adpt.h" />
+              <File Id="fil3995289BEBCE27F83559F2F3456C9D26" KeyPath="no" Source="HDF-EOS5Includes\szlib.h" />
+              <File Id="filAFD4F61CF00DF559E05E8831CF748D7B" KeyPath="no" Source="HDF-EOS5Includes\tbbt.h" />
+              <File Id="filC68333FA6EE48C076FD3406C154D2E77" KeyPath="no" Source="HDF-EOS5Includes\transupp.h" />
+              <File Id="fil3DEF86E111E7BED7C3D1856743FBF1FC" KeyPath="no" Source="HDF-EOS5Includes\vattr.h" />
+              <File Id="fil3C3061722223BB0D3617A252378EE405" KeyPath="no" Source="HDF-EOS5Includes\vg.h" />
+              <File Id="fil12855E73102C0D8DBD48037FC85B9FD6" KeyPath="no" Source="HDF-EOS5Includes\zconf.h" />
+              <File Id="fil49D46B3A25E5A432337582C0546E507F" KeyPath="no" Source="HDF-EOS5Includes\zlib.h" />
+
+            </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="MISR Toolkit">
+          <Component Id="ProgramMenuDir" Guid="5AF145AF-5213-4FAC-8110-47FAE0784008">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="PYTHONSITELIBPATH" Name="PythonSiteLibDir" >
+        <Component Id='PythonLibrary' Guid='1AC44F4D-272C-478F-932D-4BAD4E963FBB'>
+          <File Id='PythonDLL' Name='MisrToolkit.pyd' DiskId='1' Source='MisrToolkit\Release\Python\MisrToolkit.pyd' KeyPath='yes' />
+        </Component>
+      </Directory>
+      <Directory Id="IDLDLMPATH" Name="IDLDlmDir" >
+        <Component Id='IDLLibrary' Guid='28c1b6a4-c74e-4a1d-afd8-d1ad9707a189'>
+          <File Id='IDLDLMDLL' Name='idl_Mtk.dll' DiskId='1' Source='MisrToolkit\Release\IDL\idl_Mtk.dll' KeyPath='yes' />
+          <File Id='IDLDLMDLM' Name='idl_Mtk.dlm' DiskId='1' Source='..\wrappers\idl\idl_Mtk_dlm.template' KeyPath='no' />
+        </Component>
+      </Directory>
+    </Directory>
+    <Feature Id='Complete' Title='MISR Toolkit' Description='Required Files;C example; Python and IDL modules.' Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+      <Feature Id='MainProgram' Title='Main Components' Description='Required files and C example.' Level='1'>
+      <ComponentRef Id='HelperLibrary' />
+      <ComponentRef Id='AssociatedDLL' />
+      <ComponentRef Id='AssociatedLIB' />
+      <ComponentRef Id='IncludeH' />
+      <ComponentRef Id='ExampleTOP' />
+      <ComponentRef Id='ExampleSUB' />
+      <ComponentRef Id='ReadmeTXT' />
+      <ComponentRef Id='ProgramMenuDir' />
+      </Feature>
+      <Feature Id='Documentation' Title='Users Guide' Description='User Guide (PDF)' Level='1'>
+        <ComponentRef Id='Manual' />
+      </Feature>
+      <Feature Id='PythonModule' Title='Python Module' Description='Python 2.7 Module' Level='0'>
+        <ComponentRef Id='PythonLibrary' />
+        <Condition Level='1'>
+          <![CDATA[Installed OR PYTHONPATH]]>
+        </Condition>
+      </Feature>
+      <Feature Id='IDLModule' Title='IDL Module' Description='IDL 8.2 Module' Level='0'>
+        <ComponentRef Id='IDLLibrary' />
+        <Condition Level='1'>
+          <![CDATA[Installed OR IDLPATH]]>
+        </Condition>
+      </Feature>
+
+    </Feature>
+    <UI Id='Mondo'>
+      <UIRef Id="WixUI_Mondo" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+      <!-- The next two lines remove the default license agreement step from the installer -->
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="SetupTypeDlg" Order="3">1</Publish>
+      <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="3">1</Publish>		
+    </UI>    
+    <InstallExecuteSequence>
+    </InstallExecuteSequence>
+    <InstallUISequence>
+    </InstallUISequence>
+  </Product>
+</Wix>

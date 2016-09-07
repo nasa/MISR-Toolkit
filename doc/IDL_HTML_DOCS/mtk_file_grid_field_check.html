@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_GRID_FIELD_CHECK</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;16061100">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_GRID_FIELD_CHECK returns MTK_SUCCESS (0) if the specified filename, gridname, and fieldname are valid.
+   Use MTK_ERROR_MESSAGE() to report the particular problem.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       grid name for file
+      fieldname      field name for grid
+
+   the call:
+   
+      <B>status = MTK_FILE_GRID_FIELD_CHECK( filename, gridname, fieldname)</B>
+   
+   returns:
+   
+      status         0 when file/grid/field are valid; invalid otherwise (see MTK_ERROR_MESSAGE())
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      grid        = 'RedBand'
+      field       = 'Red Radiance/RDQI'
+      field2      = 'Red Radiance/RDQI[10]'
+      <B>status      = MTK_FILE_GRID_FIELD_CHECK(file, grid, field</B> <B>)</B>
+      <B>status2     = MTK_FILE_GRID_FIELD_CHECK(file, grid, field2</B> <B>)</B>
+
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, 'field                 : ', field
+      print, 'field2                : ', field2
+      print, '================================================='
+      print, field, ' validity      : ', mtk_error_message(status)
+      print, field2, ' validity     : ', mtk_error_message(status2)
+
+   IDL outputs:
+   
+       file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+       grid                  : RedBand
+       field                 : Red Radiance/RDQI
+       =================================================
+       valid?                : SUCCESS
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileGridFieldCheck.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

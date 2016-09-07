@@ -1,0 +1,16 @@
+INC += CoordQuery/include/MisrCoordQuery.h
+SRC += CoordQuery/src/MtkBlsToLatLon.c
+SRC += CoordQuery/src/MtkBlsToLatLonAry.c
+SRC += CoordQuery/src/MtkBlsToSomXY.c
+SRC += CoordQuery/src/MtkBlsToSomXYAry.c
+SRC += CoordQuery/src/MtkLatLonToBls.c
+SRC += CoordQuery/src/MtkLatLonToBlsAry.c
+SRC += CoordQuery/src/MtkLatLonToSomXY.c
+SRC += CoordQuery/src/MtkLatLonToSomXYAry.c
+SRC += CoordQuery/src/MtkSomXYToBls.c
+SRC += CoordQuery/src/MtkSomXYToBlsAry.c
+SRC += CoordQuery/src/MtkSomXYToLatLon.c
+SRC += CoordQuery/src/MtkSomXYToLatLonAry.c
+SRC += CoordQuery/src/MtkPathToProjParam.c
+SRC += CoordQuery/src/MtkPathBlockRangeToBlockCorners.c
+SRC += CoordQuery/src/MtkPixelTime.c

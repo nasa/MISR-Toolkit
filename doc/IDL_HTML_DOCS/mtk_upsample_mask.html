@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Misr Toolkit: MTK_UPSAMPLE_MASK</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11135400">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_UPSAMPLE_MASK Upsample a mask by nearest neighbor resampling.
+
+-Copyright
+
+   Copyright (2013), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+
+   Given: 
+   src_mask        source mask
+   size_factor     factor by which to scale up source mask
+   
+   the call:
+   
+      <B>status = MTK_UPSAMPLE_MASK( src_mask, size_factor, resamp_mask )</B>
+
+   returns: 
+    status         0 on success; otherwise failure
+    resamp_mask    upscaled mask
+   
+   
+-Examples
+	;;
+	;; Set up input parameters
+	;;
+	src_mask = byte(replicate(1,528,384))
+	size_factor = 2
+	;;
+	;; The call
+	;;
+	<B>status = MTK_UPSAMPLE_MASK</B>( <B>src_mask, size_factor, resamp_mask</B> <B>)</B>
+	;;
+	;; Output...
+	;;
+	print, '================================================='
+	help, src_mask, resamp_mask
+	
+
+	IDL outputs:
+	=================================================
+	SRC_MASK        BYTE      = Array[528, 384]
+	RESAMP_MASK     BYTE      = Array[1056, 768]   
+     
+
+-Particulars
+   None.
+
+-Required Reading
+For important details concerning this module's function, please refer to
+the MTK routine <B>MtkUpsampleMask.c</B>.
+
+
+-Version
+   -IDL-MTK Version 1.2.4</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+This contains Ruby wrappers around the MISR toolkit. This provides easy access
+to the MISR Level 1 and Level 2 files.
+
+The top level class is MtkFile.
+
+We also provide generic wrapper for HDF-EOS. These wrappers can be used to
+read the MISR Level 3 data, or HDF-EOS files from other EOS instruments 
+(e.g., MODIS, ASTER). The top level class for the generic wrappers is HdfFile.
+
+
+

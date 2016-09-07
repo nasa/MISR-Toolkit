@@ -1,0 +1,9 @@
+INC += OrbitPath/include/MisrOrbitPath.h
+SRC += OrbitPath/src/MtkLatLonToPathList.c
+SRC += OrbitPath/src/MtkRegionToPathList.c
+SRC += OrbitPath/src/MtkRegionPathToBlockRange.c
+SRC += OrbitPath/src/MtkOrbitToPath.c
+SRC += OrbitPath/src/MtkTimeToOrbitPath.c
+SRC += OrbitPath/src/MtkTimeRangeToOrbitList.c
+SRC += OrbitPath/src/MtkPathTimeRangeToOrbitList.c
+SRC += OrbitPath/src/MtkOrbitToTimeRange.c

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_PATH_TO_PROJPARAM</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22553000">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15260600">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_PATH_TO_PROJPARAM returns projection parameters for the given path and resolution.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path      MISR path
+      res       resolution in meters
+   
+   the call:
+   
+      <B>status = MTK_PATH_TO_PROJPARAM( path, res, proj_params )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      proj_params    IDL structure containing projection parameters
+     
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path  = 160
+      res   = 275.0
+      
+      <B>status = MTK_PATH_TO_PROJPARAM( path, res, proj_params )</B>
+      
+      ;;
+      ;; Output... only print out some of the projection parameters
+      ;;
+      print, 'path                  : ', path
+      print, 'resolution (meters)   : ', res
+      print, '================================================='
+      tags   = STRTRIM(TAG_NAMES(proj_params),2)
+      FOR i = 0, N_TAGS(proj_params)-1 DO BEGIN $
+         IF N_ELEMENTS(proj_params.(i)) LE 2 THEN BEGIN $
+            nnn = STRTRIM(N_ELEMENTS(proj_params.(i)),2) &amp; $
+            print, tags[i],':',proj_params.(i),FORMAT='(A-22,A,'+nnn+'(F-15.3))'
+         ENDIF $
+      ENDFOR
+
+   IDL outputs:
+   
+      path                  : 160
+      resolution (meters)   : 275.000
+      =================================================
+      PATH                  : 160.000
+      PROJCODE              : 22.000
+      ZONECODE              : -1.000
+      SPHERECODE            : 12.000
+      ULC_BLOCK1            : 7460750.000    1090650.000
+      LRC_BLOCK1            : 7601550.000    527450.000
+      NBLOCK                : 180.000
+      NLINE                 : 512.000
+      NSAMPLE               : 2048.000
+      RESOLUTION            : 275.000
+      
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkPathToProjParam.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,51 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkWriteBinFile.c
+                     obj/MtkWriteBinFile3D.c
+                     obj/MtkWriteEnviFile.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/WriteData', file_list)
+#env.SharedLibrary('lib/WriteData', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkWriteBinFile_test
+                      MtkWriteBinFile3D_test
+                      MtkWriteEnviFile_test""")
+
+lib_depend = Split("""WriteData
+                      ReadData
+                      SetRegion
+                      OrbitPath
+                      MapQuery
+                      CoordQuery
+                      UnitConv
+                      misrcoord
+                      FileQuery
+                      Util""") + env['LIBS']
+
+lib_depend_path = Split("""lib
+                           #ReadData/lib
+                           #MapQuery/lib
+                           #CoordQuery/lib
+                           #UnitConv/lib
+                           #FileQuery/lib
+                           #SetRegion/lib
+                           #Util/lib
+                           #OrbitPath/lib
+                           #misrcoord""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

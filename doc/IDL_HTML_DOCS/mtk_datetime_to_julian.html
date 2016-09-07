@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_DATETIME_TO_JULIAN</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442700">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15401200">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_DATETIME_TO_JULIAN convert date and time (ISO 8601) to Julian date.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      datetime   ISO 8601 formatted date and time string
+   
+   the call:
+   
+      <B>status = MTK_DATETIME_TO_JULIAN( datetime, juliandate )</B>
+   
+   returns:
+   
+      status     0 on success; otherwise failure
+      juliandate Julian date
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      datetime  = '2005-12-23T18:33:18Z'
+      
+      <B>status = MTK_DATETIME_TO_JULIAN</B>( <B>datetime, juliandate</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'datetime              : ', datetime
+      print, '================================================='
+      print, 'JULIAN DATE           : ', juliandate
+
+   IDL outputs:
+   
+      datetime              : 2005-12-23T18:33:18Z
+     =================================================
+      JULIAN DATE           :        2453728.3
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkDateTimeToJulian.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

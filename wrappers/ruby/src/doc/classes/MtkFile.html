@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: MtkFile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "width=400,height=400,scrollbars=yes" )
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />MtkFile</td>
+  <td align="right">
+    <table cellspacing=0 cellpadding=2>
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../files/ext/mtk_ext_cc.html">ext/mtk_ext.cc</a>
+<a href="../files/lib/mtk_file_rb.html">lib/mtk_file.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+This is used to read a file, both for metadata and data.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000015">block</a></li>
+  <li><a href="#M000019">file_type</a></li>
+  <li><a href="#M000017">grid</a></li>
+  <li><a href="#M000016">grid_list</a></li>
+  <li><a href="#M000018">local_granule_id</a></li>
+  <li><a href="#M000013">new</a></li>
+  <li><a href="#M000014">path</a></li>
+  <li><a href="#M000020">version</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>file_name</td>
+    <td class='attr-desc'>
+File name being read
+
+</td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000013"></a><b>MtkFile.new(Filename) &rarr; MtkFile<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Create an object to read the given file.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000013_source')" id="l_M000013_source">show source</a> ]</p>
+  <div id="M000013_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 22</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">f</span>)
+    <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">f</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000015"></a><b>block &rarr; Range<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return the block range for the given file
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000015_source')" id="l_M000015_source">show source</a> ]</p>
+  <div id="M000015_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 40</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_block</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000019"></a><b>file_type &rarr; Integer<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return file type. This is an Integer equal to one of the constants defined
+in this class, e.g., MtkFile::AGP
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000019_source')" id="l_M000019_source">show source</a> ]</p>
+  <div id="M000019_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 78</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_type</span>
+    <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_file_type</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000017"></a><b>grid(grid_name) &rarr; MtkGrid<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return an <a href="MtkGrid.html">MtkGrid</a> to read the given grid.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000017_source')" id="l_M000017_source">show source</a> ]</p>
+  <div id="M000017_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 59</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grid</span>(<span class="ruby-identifier">grid_name</span>)
+    <span class="ruby-constant">MtkGrid</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">grid_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000016"></a><b>grid_list &rarr; Array<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return an Array of Strings containing the grid names.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000016_source')" id="l_M000016_source">show source</a> ]</p>
+  <div id="M000016_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 49</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grid_list</span>
+    <span class="ruby-ivar">@grid_list</span> <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@grid_list</span>)
+    <span class="ruby-ivar">@grid_list</span> = <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_grid_list</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000018"></a><b>local_granule_id &rarr; String<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return local granule ID
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000018_source')" id="l_M000018_source">show source</a> ]</p>
+  <div id="M000018_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 68</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">local_granule_id</span>
+    <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_local_granule_id</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000014"></a><b>path &rarr; Integer<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return path for the given file
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000014_source')" id="l_M000014_source">show source</a> ]</p>
+  <div id="M000014_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 31</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>
+    <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_path</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000020"></a><b>version &rarr; String<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return version, e.g., &quot;F01_0001&quot;.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000020_source')" id="l_M000020_source">show source</a> ]</p>
+  <div id="M000020_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/mtk_file.rb, line 87</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
+    <span class="ruby-constant">MtkFile</span>.<span class="ruby-identifier">file_to_version</span>(<span class="ruby-identifier">file_name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

@@ -1,0 +1,52 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkDdToDegMinSec.c
+                     obj/MtkDdToDms.c
+                     obj/MtkDdToRad.c
+                     obj/MtkDegMinSecToDd.c
+                     obj/MtkDegMinSecToDms.c
+                     obj/MtkDegMinSecToRad.c
+                     obj/MtkDmsToDd.c
+                     obj/MtkDmsToDegMinSec.c
+                     obj/MtkDmsToRad.c
+                     obj/MtkRadToDd.c
+                     obj/MtkRadToDegMinSec.c
+                     obj/MtkRadToDms.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/UnitConv', file_list)
+#env.SharedLibrary('lib/UnitConv', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkDdToDegMinSec_test
+                      MtkDdToDms_test
+                      MtkDdToRad_test
+                      MtkDegMinSecToDd_test
+                      MtkDegMinSecToDms_test
+                      MtkDegMinSecToRad_test
+                      MtkDmsToDd_test
+                      MtkDmsToDegMinSec_test
+                      MtkDmsToRad_test
+                      MtkRadToDd_test
+                      MtkRadToDegMinSec_test
+                      MtkRadToDms_test""")
+
+lib_depend = Split("""UnitConv""") + env['LIBS']
+
+
+lib_depend_path = Split("""lib""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_TIME_META_READ</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;13224100">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_TIME_META_READ retrieves time metadata from L1B2 Ellipsoid file for use with MTK_PIXEL_TIME().
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      L1B2_filename  L1B2 Ellipsoid filename
+
+   the call:
+   
+      <B>status = MTK_TIME_META_READ( L1B2_filename, timemeta )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      timemeta       time metadata structure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      L1B2_filename_aa = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      L1B2_filename_an = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AN_F03_0024.hdf'
+      <B>status           = MTK_TIME_META_READ( L1B2_filename_aa, timemeta_aa )</B>
+      <B>status           = MTK_TIME_META_READ( L1B2_filename_an, timemeta_an )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'L1B2_filename_aa      : ', L1B2_filename_aa
+      print, 'L1B2_filename_an      : ', L1B2_filename_an
+      print, '================================================='
+      help, /struct, timemeta_aa
+      help, /struct, timemeta_an
+
+   IDL outputs:
+   
+      L1B2_filename_aa      : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      L1B2_filename_an      : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AN_F03_0024.hdf
+      =================================================
+      ** Structure &lt;285fc10&gt;, 11 tags, length=22460, data length=22459, refs=1:
+         PATH            LONG                37
+         START_BLOCK     LONG                 1
+         END_BLOCK       LONG               140
+         CAMERA          BYTE      Array[3]
+         NUMBER_TRANSFORM
+                         LONG      Array[181]
+         REF_TIME        BYTE      Array[181, 2, 28]
+         START_LINE      LONG      Array[181, 2]
+         NUMBER_LINE     LONG      Array[181, 2]
+         COEFF_LINE      DOUBLE    Array[181, 2]
+         SOM_CTR_X       DOUBLE    Array[181, 2]
+         SOM_CTR_Y       DOUBLE    Array[181, 2]
+      ** Structure &lt;2878210&gt;, 11 tags, length=22460, data length=22459, refs=1:
+         PATH            LONG                37
+         START_BLOCK     LONG                30
+         END_BLOCK       LONG                50
+         CAMERA          BYTE      Array[3]
+         NUMBER_TRANSFORM
+                         LONG      Array[181]
+         REF_TIME        BYTE      Array[181, 2, 28]
+         START_LINE      LONG      Array[181, 2]
+         NUMBER_LINE     LONG      Array[181, 2]
+         COEFF_LINE      DOUBLE    Array[181, 2]
+         SOM_CTR_X       DOUBLE    Array[181, 2]
+         SOM_CTR_Y       DOUBLE    Array[181, 2]
+
+-Particulars
+   The pixel time actually varies according to camera by approximately 7 minutes.
+   To get the average or center pixel acquistion time, it is recommended to use
+   the AN camera time metadata.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkTimeMetaRead.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

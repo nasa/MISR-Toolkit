@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_LATLON_TO_PATHLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15300700">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_LATLON_TO_PATHLIST returns all paths intersecting a given latitude/longitude pair.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      lat          latitude
+      lon          longitude
+   
+   the call:
+   
+      <B>status = MTK_LATLON_TO_PATHLIST( lat, lon, path_cnt, path_list )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      path_cnt       number of paths
+      path_list      array of paths
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      lat        = 66.121646
+      lon        = 89.263022
+      <B>status = MTK_LATLON_TO_PATHLIST</B>( <B>lat, lon, path_cnt, path_list</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'latitude              : ', lat
+      print, 'longitude             : ', lon
+      print, '================================================='
+      print, '--- PATH LIST ---'
+      FOR i=0,path_cnt-1 DO print, path_list[i]
+
+   IDL outputs:
+   
+      latitude              : 66.121646
+      longitude             : 89.263022
+    =================================================
+      --- PATH LIST ---
+           7
+           8
+           9
+          10
+          11
+          12
+          13
+          14
+         146
+         147
+         148
+         149
+         150
+         151
+         152
+         153
+         154
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkLatLonToPathList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

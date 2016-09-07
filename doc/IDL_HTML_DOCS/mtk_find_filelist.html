@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FIND_FILELIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061110;16435800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FIND_FILELIST returns file names found in a directory tree, using regular expressions.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      search_dir      search directory
+      product         product name
+      camera          camera name
+      path            path
+      orbit           orbit number
+      version         version
+   
+   the call:
+   
+      <B>status = MTK_FIND_FILELIST( search_dir, product, camera, path, orbit, version, cnt, files )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      cnt            number of files found
+      files          string array of file names
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      search_dir = '../Mtk_testdata/in/'
+      product    = 'GRP_ELLIPSOID_GM'
+      camera     = '.*'
+      path       = '037'
+      orbit      = '029058'
+      version    = 'F03_0024'
+      
+      <B>status = MTK_FIND_FILELIST</B>( <B>search_dir, product, camera, path, orbit, version, cnt, files</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'search directory      : ', search_dir
+      print, 'product               : ', product
+      print, 'camera                : ', camera
+      print, 'path                  : ', path
+      print, 'orbit                 : ', orbit
+      print, 'version               : ', version
+      print, '================================================='
+      FOR i =0,cnt-1 DO $
+         PRINT, 'FILE #'+STRTRIM(i+1,2)+ $
+         '               : '+files[i]
+
+   IDL outputs:
+   
+      search directory      : ../Mtk_testdata/in/
+      product               : GRP_ELLIPSOID_GM
+      camera                : .*
+      path                  : 037
+      orbit                 : 029058
+      version               : F03_0024
+     =================================================
+      FILE #1               : MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      FILE #2               : MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AN_F03_0024.hdf
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFindFileList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

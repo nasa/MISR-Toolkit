@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_TO_GRIDLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442700">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15344500">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_TO_GRIDLIST returns a list of grid names for a MISR product file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      file      MISR file
+   
+   the call:
+   
+      <B>status = MTK_FILE_TO_GRIDLIST( file, ngrids, grid_list )</B>
+   
+   returns:
+   
+      status     0 on success; otherwise failure
+      ngrids     number of grids in file
+      grid_list  string array of grid names
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file  = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      
+      <B>status = MTK_FILE_TO_GRIDLIST</B>( <B>file, ngrids, grid_list</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, '================================================='
+      FOR i=0,ngrids-1 DO $
+         PRINT,'GRID #'+STRTRIM(i+1,2)+ $
+         '               : '+grid_list[i]
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_CF_F03_0024.hdf
+     =================================================
+      GRID #1               : BlueBand
+      GRID #2               : GreenBand
+      GRID #3               : RedBand
+      GRID #4               : NIRBand
+      GRID #5               : BRF Conversion Factors
+      GRID #6               : GeometricParameters
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileToGridList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

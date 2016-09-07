@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="next" href="mtkregression.html" />
+<link rel="prev" href="mtktimemetadata.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="mtkregression.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.8 MtkReProject </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.7 MtkTimeMetaData"
+  href="mtktimemetadata.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.9 MtkRegression"
+  href="mtkregression.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtktimemetadata.html">2.7 MtkTimeMetaData</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkregression.html">2.9 MtkRegression</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000280000000000000000"></a><a name="mtkreproject"></a>
+<br>
+2.8 MtkReProject 
+</h2>
+
+<p>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-77' xml:id='l2h-77' class="class">MtkReProject</tt></b>
+<dd>
+  Contains ReProjection Functionality.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; reproj = MtkReProject()
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-78' xml:id='l2h-78' class="method">create_geogrid</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Create a geo-grid array in decimal degress for lat/lon.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; reproj.create_geogrid(40,-120,30,-110,0.25,0.25)
+(array([[ 40.  ,  40.  ,  40.  , ...,  40.  ,  40.  ,  40.  ],
+       [ 39.75,  39.75,  39.75, ...,  39.75,  39.75,  39.75],
+       [ 39.5 ,  39.5 ,  39.5 , ...,  39.5 ,  39.5 ,  39.5 ],
+       ...,
+       [ 30.5 ,  30.5 ,  30.5 , ...,  30.5 ,  30.5 ,  30.5 ],
+       [ 30.25,  30.25,  30.25, ...,  30.25,  30.25,  30.25],
+       [ 30.  ,  30.  ,  30.  , ...,  30.  ,  30.  ,  30.  ]]), 
+       
+array([[-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ],
+       [-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ],
+       [-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ],
+       ...,
+       [-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ],
+       [-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ],
+       [-120.  , -119.75, -119.5 , ..., -110.5 , -110.25, -110.  ]]))
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-79' xml:id='l2h-79' class="method">resample_cubic_convolution</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+  Resample source data at the given coordinates using interpolation by cubic convolution.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; srcdata = numpy.ones((128,512), dtype=numpy.float32) * 0.04
+&gt;&gt;&gt; datashape = srcdata.shape
+&gt;&gt;&gt; srcmask = numpy.ones(datashape, dtype=numpy.uint8)
+&gt;&gt;&gt; a = -0.5;
+&gt;&gt;&gt; regrshape = tuple((float(dimen) * abs(a)) for dimen in datashape)
+&gt;&gt;&gt; lines = numpy.tile(numpy.linspace(4.1,((10*regrshape[0]) + 4.1), regrshape[1]), (regrshape[0],1)).astype('float32')
+&gt;&gt;&gt; samples = numpy.tile(numpy.linspace(4.1,((10*regrshape[1]) + 4.1), regrshape[0]), (regrshape[1],1)).transpose().astype('float32')
+&gt;&gt;&gt; myproj.resample_cubic_convolution(srcdata, srcmask, lines, samples, a )
+(array([[ 0.  ,  0.  ,  0.  , ...,  0.  ,  0.  ,  0.  ],
+       [ 0.04,  0.04,  0.04, ...,  0.04,  0.04,  0.04],
+       [ 0.04,  0.04,  0.04, ...,  0.04,  0.04,  0.04],
+       ...,
+       [ 0.04,  0.04,  0.04, ...,  0.04,  0.04,  0.04],
+       [ 0.04,  0.04,  0.04, ...,  0.04,  0.04,  0.04],
+       [ 0.04,  0.04,  0.04, ...,  0.04,  0.04,  0.04]], dtype=float32),
+       
+array([[0, 0, 0, ..., 0, 0, 0],
+       [1, 1, 1, ..., 1, 1, 1],
+       [1, 1, 1, ..., 1, 1, 1],
+       ...,
+       [1, 1, 1, ..., 1, 1, 1],
+       [1, 1, 1, ..., 1, 1, 1],
+       [1, 1, 1, ..., 1, 1, 1]], dtype=int8))
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-80' xml:id='l2h-80' class="method">resample_nearest_neighbor</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Performs nearest neighbor resampling.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; srcdata = numpy.ones((128,512), dtype=numpy.float32) * 20
+&gt;&gt;&gt; datashape = srcdata.shape
+&gt;&gt;&gt; regrshape = tuple( (float(dimen) * 0.5) for dimen in datashape)
+&gt;&gt;&gt; lines = numpy.tile(numpy.linspace(4.1,((10*regrshape[0]) + 4.1), regrshape[1]), (regrshape[0],1)).astype('float32')
+&gt;&gt;&gt; samples = numpy.tile(numpy.linspace(4.1,((10*regrshape[1]) + 4.1), regrshape[0]), (regrshape[1],1)).transpose().astype('float32')
+&gt;&gt;&gt; myproj.resample_nearest_neighbor(srcdata, lines, samples)
+array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       ...,
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.]], dtype=float32)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-81' xml:id='l2h-81' class="method">transform_coordinates</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+  Transforms latitude/longitude coordinates into line/sample coordinates.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; map_info = MtkRegion(39, 51, 52).snap_to_grid(39,275)
+&gt;&gt;&gt; latbuf, lonbuf = map_info.create_latlon()
+&gt;&gt;&gt; myproj.transform_coordinates(map_info, latbuf, lonbuf)
+(array([[-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       ...,
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.]], dtype=float32), array([[-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       ...,
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.],
+       [-1., -1., -1., ..., -1., -1., -1.]], dtype=float32))
+</pre></div>
+</dl>
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.7 MtkTimeMetaData"
+  href="mtktimemetadata.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="2.9 MtkRegression"
+  href="mtkregression.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtktimemetadata.html">2.7 MtkTimeMetaData</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="mtkregression.html">2.9 MtkRegression</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

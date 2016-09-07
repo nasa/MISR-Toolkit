@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_RAD_TO_DEG_MIN_SEC</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22410500">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15255800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_RAD_TO_DEG_MIN_SEC converts radians to degrees, minutes, and seconds.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      rad            radians
+
+   the call:
+   
+      <B>status = MTK_RAD_TO_DEG_MIN_SEC( rad, deg, minutes, seconds )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      deg            degrees
+      minutes        minutes
+      seconds        seconds
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      rad         = 1.14406333
+      <B>status      = MTK_RAD_TO_DEG_MIN_SEC</B>( <B>rad, deg, minutes, seconds )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'radians               : ', rad
+      print, '================================================='
+      print, 'DEGREES               : ',deg
+      print, 'MINUTES               : ',minutes
+      print, 'SECONDS               : ',seconds
+
+   IDL outputs:
+   
+      radians               :       1.14406
+    =================================================
+      DEGREES               :           65
+      MINUTES               :           33
+      SECONDS               :     0.0099999979
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkRadToDegMinSec.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

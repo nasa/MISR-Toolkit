@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link rel="STYLESHEET" href="pymtk.css" type='text/css' />
+<link rel="first" href="pymtk.html" title='MISR toolkit Python Interface' />
+<link rel='last' href='about.html' title='About this document...' />
+<link rel='help' href='about.html' title='About this document...' />
+<link rel="prev" href="mtkreproject.html" />
+<link rel="parent" href="core.html" />
+<link rel="next" href="containers.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name='aesop' content='information' />
+<title>2.9 MtkRegression </title>
+</head>
+<body>
+<div class="navigation">
+<div id='top-navigation-panel' xml:id='top-navigation-panel'>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.8 MtkReProject"
+  href="mtkreproject.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="3 Containers"
+  href="containers.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkreproject.html">2.8 MtkReProject</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="containers.html">3 Containers</a>
+</div>
+<hr /></div>
+</div>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION000290000000000000000"></a><a name="mtkregression"></a>
+<br>
+2.9 MtkRegression 
+</h2>
+
+<p>
+<dl><dt><b><span class="typelabel">class</span>&nbsp;<tt id='l2h-82' xml:id='l2h-82' class="class">MtkRegression</tt></b>
+<dd>
+  Contains Regression Functionality.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; regr = MtkRegression()
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-83' xml:id='l2h-83' class="method">downsample</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Downsamples data by averaging pixels.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; r = MtkRegion(37, 50, 60)
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+&gt;&gt;&gt; g = m.grid('BlueBand')
+&gt;&gt;&gt; f = m.grid('BlueBand').field('Blue Radiance')
+&gt;&gt;&gt; srcdata = f.read(r).data()
+&gt;&gt;&gt; srcmask = numpy.ones((srcdata.shape[0],srcdata.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; sizefactor = 2
+&gt;&gt;&gt; rsmpdata, rsmpmask = regr.downsample(srcdata,srcmask,sizefactor)
+&gt;&gt;&gt; print rsmpdata[0][90]
+315.341
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-84' xml:id='l2h-84' class="method">linear_regression_calc</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Uses linear regression to fit data.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; x = numpy.linspace(2,12,num = 5)
+&gt;&gt;&gt; y = numpy.linspace(4,24,num = 5)
+&gt;&gt;&gt; ysigma = numpy.linspace(0.1,0.6,num = 5)
+&gt;&gt;&gt; regr.linear_regression_calc(x,y,ysigma)
+(array([  0.00000000e+000,  -2.32035723e+077,   2.15126649e-314,
+         1.06717989e-287,   3.38503263e+125]), 
+array([  2.00000000e+000,  -2.68679011e+154,   2.15168741e-314,
+         2.15170772e-314,   2.32035723e+077]), 
+array([  1.00000000e+000,   3.11109040e+231,   2.15175217e-314,
+         6.94154000e-310,  -3.11109040e+231]))
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-85' xml:id='l2h-85' class="method">smooth_data</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Smooths the given array with a boxcar average.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; r = MtkRegion(37, 50, 60)
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+&gt;&gt;&gt; g = m.grid('BlueBand')
+&gt;&gt;&gt; f = m.grid('BlueBand').field('Blue Radiance')
+&gt;&gt;&gt; srcdata = f.read(r).data()
+&gt;&gt;&gt; srcmask = numpy.ones((srcdata.shape[0],srcdata.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; line_width = 3
+&gt;&gt;&gt; sample_width = 3
+&gt;&gt;&gt; regr.smooth_data(srcdata,srcmask,line_width,sample_width)
+array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       ...,
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.]], dtype=float32)
+</pre></div>
+</dl> 
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-86' xml:id='l2h-86' class="method">upsample_mask</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Upsamples a mask by nearest neighbor sampling.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; srcmask = numpy.ones((1408,624), dtype= numpy.uint8)
+&gt;&gt;&gt; size_factor = 2
+&gt;&gt;&gt; regr.upsample_mask(srcmask,size_factor)
+array([[1, 1, 1, ..., 1, 1, 1],
+       [1, 1, 1, ..., 1, 1, 1],
+       [0, 0, 0, ..., 0, 0, 0],
+       ...,
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
+</pre></div>
+</dl>
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-87' xml:id='l2h-87' class="method">coeff_calc</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Calculates linear regression coefficients for translating values.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; r = MtkRegion(37, 50, 60)
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+&gt;&gt;&gt; g1 = m.grid('BlueBand')
+&gt;&gt;&gt; f1 = g1.field('Blue Radiance')
+&gt;&gt;&gt; data1 = f1.read(r).data()
+&gt;&gt;&gt; mask1 = numpy.ones((data1.shape[0],data1.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; g2 = m.grid('GreenBand')
+&gt;&gt;&gt; f2 = g2.field('Green Radiance')
+&gt;&gt;&gt; data2 = f2.read(r).data()
+&gt;&gt;&gt; sigma2 = numpy.tile((numpy.linspace(0.1,0.6,data2.shape[0])), (data2.shape[1],1)).transpose()
+&gt;&gt;&gt; sigma2 = sigma2.astype(numpy.float32)
+&gt;&gt;&gt; mask2 = numpy.ones((data2.shape[0],data2.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; mapinfo = f2.read(r).mapinfo()
+&gt;&gt;&gt; sizefactor = 2
+&gt;&gt;&gt; regr.coeff_calc(data1, mask1, data2, sigma2, mask2, sizefactor, mapinfo)
+(&lt;MisrToolkit.MtkRegCoeff object at 0x102e99930&gt;, &lt;MisrToolkit.MtkMapInfo object at 0x7fde19304400&gt;)
+</pre></div>
+</dl> 
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-88' xml:id='l2h-88' class="method">apply_regression</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Applies regression to given data.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; r = MtkRegion(37, 50, 60)
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+&gt;&gt;&gt; g1 = m.grid('BlueBand')
+&gt;&gt;&gt; f1 = g1.field('Blue Radiance')
+&gt;&gt;&gt; data1 = f1.read(r).data()
+&gt;&gt;&gt; mask1 = numpy.ones((data1.shape[0],data1.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; g2 = m.grid('GreenBand')
+&gt;&gt;&gt; f2 = g2.field('Green Radiance')
+&gt;&gt;&gt; data2 = f2.read(r).data()
+&gt;&gt;&gt; sigma2 = numpy.tile((numpy.linspace(0.1,0.6,data2.shape[0])), (data2.shape[1],1)).transpose()
+&gt;&gt;&gt; sigma2 = sigma2.astype(numpy.float32)
+&gt;&gt;&gt; mask2 = numpy.ones((data2.shape[0],data2.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; mapinfo = f2.read(r).mapinfo()
+&gt;&gt;&gt; sizefactor = 2
+&gt;&gt;&gt; regr_coeff, regr_mapinfo = regr.coeff_calc(data1, mask1, data2, sigma2, mask2, sizefactor, mapinfo)
+&gt;&gt;&gt; regr.apply_regression(data1, mask1, mapinfo, regr_coeff, regr_mapinfo)
+(array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       ...,
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ...,  0.,  0.,  0.]], dtype=float32), 
+array([[0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       ...,
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0]], dtype=uint8))
+</pre></div>
+</dl> 
+
+<p>
+<dl><dt><table cellpadding="0" cellspacing="0"><tr valign="baseline">
+  <td><nobr><b><tt id='l2h-89' xml:id='l2h-89' class="method">resample_reg_coeff</tt></b>(</nobr></td>
+  <td><var></var>)</td></tr></table></dt>
+<dd>
+    Resamples regression coefficients at each pixel.
+
+<p>
+<div class="verbatim"><pre>
+&gt;&gt;&gt; r = MtkRegion(37, 50, 60)
+&gt;&gt;&gt; m = MtkFile('../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf')
+&gt;&gt;&gt; g1 = m.grid('BlueBand')
+&gt;&gt;&gt; f1 = g1.field('Blue Radiance')
+&gt;&gt;&gt; data1 = f1.read(r).data()
+&gt;&gt;&gt; mask1 = numpy.ones((data1.shape[0],data1.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; g2 = m.grid('GreenBand')
+&gt;&gt;&gt; f2 = g2.field('Green Radiance')
+&gt;&gt;&gt; data2 = f2.read(r).data()
+&gt;&gt;&gt; sigma2 = numpy.tile((numpy.linspace(0.1,0.6,data2.shape[0])), (data2.shape[1],1)).transpose()
+&gt;&gt;&gt; sigma2 = sigma2.astype(numpy.float32)
+&gt;&gt;&gt; mask2 = numpy.ones((data2.shape[0],data2.shape[1]), dtype= numpy.uint8)
+&gt;&gt;&gt; mapinfo = f2.read(r).mapinfo()
+&gt;&gt;&gt; sizefactor = 2
+&gt;&gt;&gt; regr_coeff, regr_mapinfo = regr.coeff_calc(data1, mask1, data2, sigma2, mask2, sizefactor, mapinfo)
+&gt;&gt;&gt; target_map_info = MtkRegion(37, 50, 60).snap_to_grid(37, 1100)
+&gt;&gt;&gt; regr.resample_reg_coeff(regr_coeff, regr_mapinfo, target_map_info)
+&lt;MisrToolkit.MtkRegCoeff object at 0x10a623a30&gt;
+</pre></div>
+</dl>                    
+
+<p>
+
+<div class="navigation">
+<div class='online-navigation'>
+<p></p><hr />
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td class='online-navigation'><a rel="prev" title="2.8 MtkReProject"
+  href="mtkreproject.html"></a></td>
+<td class='online-navigation'><a rel="parent" title="2 main Classes"
+  href="core.html"></a></td>
+<td class='online-navigation'><a rel="next" title="3 Containers"
+  href="containers.html"></a></td>
+<td align="center" width="100%">MISR Toolkit Python Interface</td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+<td class='online-navigation'><img src='blank.png'
+  border='0' height='32'  alt='' width='32' /></td>
+</tr></table>
+<div class='online-navigation'>
+<b class="navlabel">Previous:</b>
+<a class="sectref" rel="prev" href="mtkreproject.html">2.8 MtkReProject</a>
+<b class="navlabel">Up:</b>
+<a class="sectref" rel="parent" href="core.html">2 Main Classes</a>
+<b class="navlabel">Next:</b>
+<a class="sectref" rel="next" href="containers.html">3 Containers</a>
+</div>
+</div>
+<hr />
+
+</div>
+<!--End of Navigation Panel-->
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+Import('env')
+
+file_list = Split("""a_nodesa.c       ag_nodesag.c
+                     ao_nodesao.c     comments.c
+                     cvtvalue.c       fmtvalue.c
+                     lexan.c          output.c
+                     p_nodesp.c       parsact.c
+                     parser.c         prtlabel.c
+                     prtsrc.c         rdlabel.c
+                     rdvalue.c        v_nodesv.c
+                     wrtlabel.c       wrtsrc.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.Library('odl', file_list)

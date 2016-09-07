@@ -1,0 +1,11 @@
+Import('env')
+
+file_list = Split("""misr_init.c
+                     misrcoordex.c
+                     misrfor.c
+                     misrinv.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.Library('misrcoord', file_list)

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_REGION_PATH_TO_BLOCKRANGE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;90200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;13142200">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_REGION_PATH_TO_BLOCKRANGE returns a starting and ending block for a given path and region.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      region       region structure
+      path         path number
+
+   the call:
+   
+      <B>status = MTK_REGION_PATH_TO_BLOCKRANGE( region, path, start_block, end_block )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      start_block    start block for region/path
+      end_block      end block for region/path
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path        = 37
+      lat         = 66.0
+      lon         = -89.0
+      lat_extent  = 10.0
+      lon_extent  = 10.0
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_REGION_PATH_TO_BLOCKRANGE</B>( <B>region, path, start_block, end_block</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'center latitude       : ', lat
+      print, 'center longitude      : ', lon
+      print, 'latitudinal extent    : ', lat_extent
+      print, 'longitudinal extent   : ', lon_extent
+      print, '================================================='
+      print, 'STARTING BLOCK        : ', start_block
+      print, 'ENDING BLOCK          : ', end_block
+
+   IDL outputs:
+   
+      path                  : 37
+      center latitude       : 66.000
+      center longitude      : -89.000
+      latitudinal extent    : 10.000
+      longitudinal extent   : 10.000
+    =================================================
+      STARTING BLOCK        : 32
+      ENDING BLOCK          : 40
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkRegionPathToBlockRange.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

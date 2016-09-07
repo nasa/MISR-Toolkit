@@ -1,0 +1,16 @@
+INC += MapQuery/include/MisrMapQuery.h
+SRC += MapQuery/src/MtkLSToLatLon.c
+SRC += MapQuery/src/MtkLSToLatLonAry.c
+SRC += MapQuery/src/MtkLSToSomXY.c
+SRC += MapQuery/src/MtkLSToSomXYAry.c
+SRC += MapQuery/src/MtkLatLonToLS.c
+SRC += MapQuery/src/MtkLatLonToLSAry.c
+SRC += MapQuery/src/MtkSomXYToLS.c
+SRC += MapQuery/src/MtkSomXYToLSAry.c
+SRC += MapQuery/src/MtkCreateLatLon.c
+SRC += MapQuery/src/MtkGenericMapInfo.c
+SRC += MapQuery/src/MtkGCTPProjInfo.c
+SRC += MapQuery/src/MtkGCTPCreateLatLon.c
+SRC += MapQuery/src/MtkGenericMapInfoRead.c
+SRC += MapQuery/src/MtkGCTPProjInfoRead.c
+SRC += MapQuery/src/MtkChangeMapResolution.c

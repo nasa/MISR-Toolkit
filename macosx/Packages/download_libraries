@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+PREFIX=/tmp
+#
+# Create ThirdParty library directory
+#
+
+default_libdir="$PREFIX/Library/Mtk_thirdparty"
+echo mkdir -p $default_libdir
+mkdir -p $default_libdir
+
+#
+# Download ThirdParty libraries
+#
+
+cd $default_libdir
+curl -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/zlib-1.2.5.tar.gz --disable-epsv
+curl -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/jpegsrc.v6b.tar.gz --disable-epsv
+# curl -O http://www.hdfgroup.org/ftp/HDF/HDF_Current/src/hdf-4.2.8.tar.gz
+curl -O http://www.hdfgroup.org/ftp/HDF/releases/HDF4.2.8/src/hdf-4.2.8.tar.gz
+curl -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/HDF-EOS2.18v1.00.tar.Z --disable-epsv

@@ -1,0 +1,47 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkSetRegionByPathBlockRange.c
+                     obj/MtkSetRegionByUlcLrc.c
+                     obj/MtkSetRegionByLatLonExtent.c
+                     obj/MtkSetRegionByPathSomUlcLrc.c
+                     obj/MtkSnapToGrid.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/SetRegion', file_list)
+#env.SharedLibrary('lib/SetRegion', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkSetRegionByPathBlockRange_test
+                      MtkSetRegionByUlcLrc_test
+                      MtkSetRegionByLatLonExtent_test
+                      MtkSetRegionByPathSomUlcLrc_test
+                      MtkSnapToGrid_test""")
+
+lib_depend = Split("""SetRegion
+                      OrbitPath
+                      MapQuery
+                      CoordQuery
+                      UnitConv
+                      misrcoord""") + env['LIBS']
+
+lib_depend_path = Split("""lib
+                           #OrbitPath/lib
+                           #MapQuery/lib
+                           #CoordQuery/lib
+                           #UnitConv/lib
+                           #misrcoord""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

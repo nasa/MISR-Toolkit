@@ -1,0 +1,35 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkCreateGeoGrid.c
+                     obj/MtkTransformCoordinates.c
+                     obj/MtkResampleNearestNeighbor.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/SetRegion', file_list)
+#env.SharedLibrary('lib/SetRegion', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkCreateGeoGrid_test
+                      MtkTransformCoordinates
+                      MtkResampleNearestNeighbor""")
+
+lib_depend = Split("""MapQuery
+                      CoordQuery
+                      misrcoord""") + env['LIBS']
+
+lib_depend_path = Split("""lib""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_DD_TO_RAD</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15393800">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_DD_TO_RAD converts decimal degrees to radians.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      dd             decimal degrees
+
+   the call:
+   
+      <B>status = MTK_DD_TO_RAD( dd, rad )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      rad            radians
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      dd          = 65.55
+      <B>status      = MTK_DD_TO_RAD</B>( <B>dd, rad</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'decimal degrees       : ', dd
+      print, '================================================='
+      print, 'RADIANS               : ', rad
+
+   IDL outputs:
+   
+      decimal degrees       : 65.5500
+    =================================================
+      RADIANS               :        1.1440634
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkDdToRad.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+origdir=`pwd`
+/bin/echo $dirname
+scriptdir=`dirname $0`
+if [ "$scriptdir" != "scripts" ]; then
+   origdir=`dirname $origdir`
+fi
+
+#
+# Select or create ThirdParty library directory
+#
+
+default_libdir="`dirname $origdir`/Mtk_thirdparty"
+/bin/echo -n "Enter thirdparty library tarball directory ($default_libdir): "
+read libdir
+if [ ! "$libdir" ]; then
+    libdir=$default_libdir
+fi
+if [ ! -d "$libdir" ]; then
+    /bin/echo "Thirdparty library tarball directory does not exist."
+    /bin/echo -n "Do you want to create it (y/n)? "
+    read ans
+    if [ "$ans" = "y" -o "$ans" = "Y" ]; then
+	mkdir $libdir
+    else
+	exit 1
+    fi
+fi
+
+#
+# Download ThirdParty libraries
+#
+
+cd $libdir
+curl -O http://www.python.org/ftp/python/2.5.6/Python-2.5.6.tgz

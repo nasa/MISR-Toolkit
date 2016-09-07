@@ -1,0 +1,2730 @@
+%PDF-1.3
+%âãÏÓ
+2 0 obj
+<<
+/Length 5546
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 1 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 72 612 Tm
+0 g
+[(T)17.5(O)0(:)-5156.7(Design File)]TJ
+0 -2.3333 TD
+-0.0002 Tc
+0.0002 Tw
+[(FR)39.6(OM:)-3677.7(Brian Rheingans)]TJ
+6.75 -1.1667 TD
+0 Tc
+0 Tw
+(Charles Thompson)Tj
+-6.75 -2.3333 TD
+[(SUBJECT)49.8(:)-2298.8(MISR T)80.3(oolkit API Design)]TJ
+/TT4 1 Tf
+14 0 0 14 72 512.67 Tm
+[(Pur)10.1(pose)]TJ
+/TT2 1 Tf
+12 0 0 12 72 484 Tm
+[(The)-357.8(purpose)-357.3(of)-357.8(the)-358.3(MISR)-357.2(T)80(oolkit)-358.2(API)-357(is)-357.2(to)-358(simplify)-358.2(MISR)-357.2(L1B2)-358(and)-357.8(L2)-357.5(data)-357.8(product)-357.8(access.)]TJ
+0 -1.1667 TD
+[(Access)-337.1(to)-337.2(MISR)-337.2(L1B2)-337.2(and)-337(L2)-337.5(is)-337.2(not)-337.2(intuiti)24.2(v)15(e)-337(and)-337.8(can)-337.3(be)-337(relati)24.2(v)15(ely)-337.5(complicated,)-338.3(especially)-338.6(for)]TJ
+T*
+[(some)-414.2(one)-414.5(who)-414.5(is)-413.8(unf)9.7(amiliar)-415.5(with)-414.7(the)-414.2(MISR)-413.9(“stack)9.4(ed-block”)]TJ
+/TT5 1 Tf
+25.7058 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le)-414.7(format)-414.5(and)-414.5(block)-415(paradigm.)]TJ
+-26.262 -1.1667 TD
+[(There are se)24.4(v)15(eral reasons for this complication:)]TJ
+0 -2.3333 TD
+[(•)-1149.9(MISR data is in non-standard “stack)9.1(ed-block” HDF-EOS format.)]TJ
+0 -1.1667 TD
+[(•)-1149.9(MISR data is stored as blocks which must be “stitched” together)52.5(.)]TJ
+T*
+[(•)-1149.9(MISR data must often be unscaled or unpack)8.4(ed.)]TJ
+T*
+[(•)-1149.9(MISR data has e)14.4(xtra dimensions in some of the )]TJ
+/TT5 1 Tf
+20.677 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(elds predominately in L2.)Tj
+-21.2332 -1.1667 TD
+[(•)-1149.9(HDF-EOS access tools that preserv)14.4(e geolocation \(enable coordinate queries without an A)36.7(G)0(P)]TJ
+1.5 -1.1667 TD
+(lookup\) are lacking.)Tj
+-1.5 -1.1667 TD
+[(•)-1149.9(HDF-EOS support in commercial GIS is lacking, especially for the non-standard MISR)]TJ
+1.5 -1.1667 TD
+[(“stack)9.4(ed-block” format.)]TJ
+-1.5 -2.3333 TD
+[(Although,)-522.2(there)-521.5(are)-521.8(some)-522.5(applications)-522.1(that)-522.2(e)14.7(xist)-521.8(which)-522(f)10.5(acilitate)-522.9(the)-522.5(access)-521.3(of)-522(MISR)-521.4(data)]TJ
+0 -1.1667 TD
+[(\(misr_vie)24.2(w)65.5(,)-323.3(hdfscan\),)-323.8(the)-324.2(access)-323.8(routines)-324.2(used)-323.7(by)-323.3(these)-324.5(tools)-323.5(are)-324.3(inte)14.5(gral)-323.6(and)-323.7(are)-324.3(not)-323.8(separable.)]TJ
+T*
+[(Currently)64.2(,)-280(there)-280.6(is)-279.7(no)-280(independent)-281.1(simpli)]TJ
+/TT5 1 Tf
+16.473 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ed)-281.2(set)-280(of)-280.3(access)-280.5(and)-280.3(manipulation)-281.5(routines)-280(a)19.7(v)25(ailable)-280.8(to)]TJ
+-17.0291 -1.1667 TD
+[(users of MISR data. This is the moti)24(v)25(ation for de)24.4(v)15(eloping a MISR T)79.5(oolkit API.)]TJ
+0 -2.3333 TD
+[(The)-279.5(MISR)-278(L1B2)-279.7(and)-278.7(L2)-279.2(products)-278.7(are)-279.3(stored)-278.7(in)-279.7(a)-278.6(unique)-279.2(MISR)-278.9(“stack)10.2(ed-block”)-280.1(HDF-EOS2)-278.2(grid)]TJ
+0 -1.1667 TD
+[(format.)-382(This)-381.3(unique)-381.7(format)-381.1(usually)-382.2(mak)10(es)-381.2(reading)-381.5(a)-382(MISR)-380.5(product)]TJ
+/TT5 1 Tf
+28.2717 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le)-381.3(quite)-381.3(dif)]TJ
+/TT5 1 Tf
+4.5697 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(cult)-381.8(because)]TJ
+-33.9537 -1.1667 TD
+[(additional)-261.8(w)9.7(ork)-261.2(needs)-260.6(to)-261.3(be)-261.2(performed,)-261.3(such)-261.2(as)-261.2(block)-261.7(stitching)-261.5(and)-261.2(data)-262(unpacking)-261.1(and)-261.2(unscaling)]TJ
+T*
+[(to)-291.3(get)-290.8(the)-291.7(data)-291.1(into)-291.8(a)-291.2(usable)-291.1(form.)-291.2(HDF-EOS2)-290.7(grid)-290.8(is)-291.3(a)-291.2(combination)-291.8(of)-291.2(HDF4)-290.3(and)-291.2(GCTP)111.2(.)-290.8(HDF4)]TJ
+T*
+[(handles)-459.5(the)-459.2(data)-458.6(storage)-459.8(and)-458.7(GCTP)-458.8(pro)14.7(vides)-458.3(a)-459.5(means)-458.6(of)-459.5(storing)-458.8(geolocation)-460(and)-458.6(projection)]TJ
+T*
+[(metadata.)-256.9(HDF-EOS2)]TJ
+/TT5 1 Tf
+9.0925 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(les)-255.5(are)-256(designed)-255.3(to)-256.3(pro)15.5(vide)-255.8(geolocation)-256.6(without)-256(the)-255.8(use)-255.3(of)-255.3(other)-255.3(data)-256.1(sets,)]TJ
+-9.6487 -1.1667 TD
+[(such)-493.7(as)-492.8(the)-494.2(Ancillary)-493.6(Geographic)-494.6(Product)-493.3(\(A)40.2(GP\).)-492.8(The)-493.6(problem)-494.1(is)-493(there)-494(are)-494.3(no)-493.3(other)-493.6(tools)]TJ
+T*
+[(a)19.7(v)25(ailable)-316.6(that)-316.3(simultaneously)-316.5(mak)10(e)-316.2(use)-316.2(of)-315.3(the)-316.7(GCTP)-315.5(geolocation)-316.6(metadata)-316.9(and)-316.2(are)-316(a)14.7(w)10.5(are)-316(of)-316.2(the)]TJ
+T*
+[(MISR “stack)9.7(ed-block” format.)]TJ
+0 -2.3333 TD
+[(The)-702(MISR)-702.2(T)80(oolkit)-702.3(will)-702.7(pro)14.7(vide)-702.5(simpli)]TJ
+/TT5 1 Tf
+17.4722 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ed)-702(MISR)-702.2(data)-702.8(access)-702.1(and)-702(pro)14.7(vide)-702.5(geolocation)]TJ
+/TT7 1 Tf
+-17.8858 48.3692 TD
+(Jet Propulsion Laboratory)Tj
+/TT9 1 Tf
+0 -1.25 TD
+(California Institute of Technology)Tj
+ET
+q
+1 i 
+72 708 468 -72 re
+W n
+q
+90 0 0 34 73.71 676.43 cm
+/Im1 Do
+Q
+1 g
+1 G
+2 J 0 j 3 w 3.86 M []0 d
+133.71 675.43 m
+165.71 675.43 l
+B*
+0 J 0.6 w 
+166.71 712.43 m
+168.71 674.43 l
+159.71 685.43 l
+159.71 713.43 l
+b*
+Q
+1 g
+272 703 267 -66.5 re
+f
+BT
+/TT2 1 Tf
+12 0 0 12 369.15 695 Tm
+0 g
+[(INTER)39.7(OFFICE MEMORANDUM)]TJ
+3.82 -2.3333 TD
+(MISR SDS DFM-0743-A)Tj
+2.3933 -2.3333 TD
+[(No)15.5(v)15(ember 14, 2005)]TJ
+ET
+endstream
+endobj
+3 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT7 7 0 R
+/TT9 8 0 R
+>>
+/XObject <<
+/Im1 9 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+13 0 obj
+<<
+/Length 3494
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 2 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 72 712 Tm
+0 g
+[(functionality)-362.6(utilizing)-362(the)-361.7(GCTP)-361.3(metadata,)-361.9(instead)-361.6(of)-362(an)-361.2(ancillary)-362(data)-362(set)-361.7(lookup.)-361.3(It)-361.7(will)-361(only)]TJ
+0 -1.1667 TD
+[(depend)-267.3(on)-267.5(the)-267.5(HDF-EOS2,)-266.5(HDF4)-267(and)-267(GCTP)-267.2(libraries.)-267.8(It)-267.5(will)-267.7(not)-267.2(depend)-268.1(on)-266.7(the)-268.3(PGS)-266.4(T)80(oolkit.)-268.2(As)]TJ
+T*
+[(sho)25(wn)-335.3(in)-336.3(the)-335.8(follo)24.5(wing)-335.8(diagram)-336.1(the)-335.8(MISR)-335.5(T)80(oolkit)-336.5(will)-336(abstract)-336.5(the)-335.8(MISR)-335.5(grid)-336.7(“stack)10.2(ed-block”)]TJ
+T*
+[(format)-487.8(to)-488(a)-487(geolocated)-488.9(SOM)-486.7(plane)-487.8(via)-487.5(a)-487.8(series)-487.3(of)-487.8(function)-487.5(calls.)-487.5(Block)-488(stitching)-488.2(and)-487.8(data)]TJ
+T*
+[(unpacking and unscaling are performed automatically)61.2(.)]TJ
+0 -18.5 TD
+[(Since)-261.7(the)-261.7(plane)-262(is)-261.3(geolocated)-263.1(to)-261.3(a)-261.2(SOM)-261.7(projection,)-261.6(coordinate)-262.3(query)-261.5(routines)-262.5(based)-261.5(on)-261.7(the)-261.7(GCTP)]TJ
+0 -1.1667 TD
+[(metadata)-286.1(are)-286(pro)15.5(vided)-285.8(to)-285.5(map)-285.8(between)-286(plane)-285.3(line)-286.3(and)-285.3(sample,)-285.8(SOM)-284.2(x/y)-285.5(and)-285.3(geographic)-285.9(latitude/)]TJ
+T*
+[(longitude.)-257.7(In)-257.8(addition)-257.7(to)-257.2(reading)-258.1(and)-257(querying)-257.8(a)-257(plane)-257.8(of)-257.8(MISR)-256.4(data,)-257.8(other)-257.8(functions)-257.5(such)-257(as)-257.8(map)]TJ
+T*
+[(reprojection)-297.3(and)-296.2(grid)-295.8(rescaling)-297.3(are)-296(pro)14.7(vided.)-296.7(Other)-296.5(functions)-295.8(that)-297.2(operate)-296.8(on)-295.8(a)-296.2(data)-297(plane)-296.1(can)-296.5(be)]TJ
+T*
+(de)Tj
+/TT5 1 Tf
+0.9438 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ned)-582(later)-582.8(to)-582.2(pro)14.7(vide)-582.5(virtually)-582.6(an)14.7(y)-582.5(additional)-582.6(functionality)64(.)-582.5(Abstracting)-582(the)-582.5(MISR)-582.2(grid)]TJ
+-1.5 -1.1667 TD
+[(“stack)9.4(ed-block”)-375.1(format)-374.5(to)-374.7(a)-374.5(data)-374.5(plane)-375.3(not)-373.8(only)-374.7(mak)9.2(es)-373.7(MISR)-374.7(data)-374.5(access)-374.6(easier)39.9(,)-375(b)20(ut)-373.8(will)-375.2(also)]TJ
+T*
+[(pro)14.7(vided)-480(a)-480.3(frame)24.9(w)9.7(ork)-480.3(for)-479.8(additional)-481(functionality)64(.)-480(The)-480.3(MISR)-480.5(T)80(oolkit)-480.7(is)-479.7(implemented)-481.8(using)]TJ
+T*
+[(standard  C, with wrappers for languages such as C++, Ja)19.4(v)25(a, Python, F)14.8(ortran, and IDL.)]TJ
+0 -2.3333 TD
+[(Similar)-404.8(access)-404.6(routines)-405(are)-404.3(needed)-405.1(to)-403.8(enable)-405.6(reading)-404(of)-404.5(the)-405(MISR)-403.9(con)39.7(v)15(entional)-404.6(product)]TJ
+/TT5 1 Tf
+37.0833 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(les.)Tj
+-37.6395 -1.1667 TD
+[(These will be added later to pro)12.9(vide access consistenc)14.2(y across these MISR products.)]TJ
+/TT4 1 Tf
+18 0 0 18 253.98 604.66 Tm
+[(MISR T)92.8(oolkit)]TJ
+-1.5356 -7.1372 TD
+(HDF4)Tj
+5.9439 0.0461 TD
+(GCTP)Tj
+-3.9261 3.8783 TD
+(HDF-EOS2)Tj
+/TT2 1 Tf
+12 0 0 12 246.7 593.27 Tm
+(\(geolocated SOM plane\))Tj
+-0.5025 -5.0917 TD
+[(\(MISR grid/stack)10(ed block\))]TJ
+ET
+0 G
+2 J 0 j 1.08 w 3.86 M []0 d
+1 i 
+300.67 560.67 m
+300.67 589.83 l
+245.67 491.5 m
+284 527.33 l
+359.83 492.33 m
+321.5 528.17 l
+S
+endstream
+endobj
+14 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+16 0 obj
+<<
+/Length 4452
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 3 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+/TT4 1 Tf
+14 0 0 14 72 710.67 Tm
+0 g
+[(Requir)17.9(ements)]TJ
+/TT2 1 Tf
+12 0 0 12 72 682 Tm
+[(1.)-750(W)39.7(ill)-239(abstract)-239(MISR)-238(L1B2)-238(and)-238.7(L2)-239.2(data)-238.6(access)-238.8(while)-238.3(automatically)-240.1(stitching)-239(together)-239.5(the)-238.3(MISR)]TJ
+1.5 -1.1667 TD
+(blocks.)Tj
+-1.5 -2.3333 TD
+[(2.)-750(W)39.7(ill)-253.2(access)-253.8(the)-254.2(con)40.5(v)15(entional)-254.6(product)]TJ
+/TT5 1 Tf
+16.4467 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(les)-253(with)-253.8(the)-253.3(same)-253.6(or)-252.8(similar)-254.3(access)-253.8(paradigm)-253.6(and)-253.7(inter-)]TJ
+-15.5028 -1.1667 TD
+[(f)9.7(ace.)]TJ
+-1.5 -2.3333 TD
+[(3.)-750(W)39.7(ill)-255.7(return)-254.8(an)14.7(y)-255.8(MISR)-254.7(grid)-255(“stack-block)9.1(ed”)-255.6(data)-255.3(product)-255.3(or)-255.3(con)39.7(v)15(entional)-255.5(data)-256.1(product)-255.3(as)-255.3(a)-255.3(2)0(D)]TJ
+1.5 -1.1667 TD
+[(data)-392.8(plane)-392.8(preserving)-391.8(the)-392.5(nati)24.5(v)15(e)-392.8(SOM)-391.7(projection,)-392.5(along)-392.5(with)-392.2(a)-392.8(mapinfo)-392.5(structure)-392.3(to)-393(allo)24.5(w)]TJ
+T*
+(coordinate querying of the data plane.)Tj
+-1.5 -2.3333 TD
+[(4.)-750(W)39.7(ill pro)14.8(vide map reprojection functionality supporting all of the GCTP map projections.)]TJ
+T*
+[(5.)-750(W)39.7(ill)-323.2(support)-322.5(a)-323.7(wide)-322.8(range)-323.5(of)-322.8(computer)-322.8(architectures)-324.6(such)-322.8(as)-322.8(recent)-323.4(v)15(ersions)-322.8(of)-322.8(Linux,)-323(W)39.7(in-)]TJ
+1.5 -1.1667 TD
+[(do)25(ws, Mac OS X, Solaris and IRIX operating systems.)]TJ
+-1.5 -2.3333 TD
+[(6.)-750(W)39.7(ill)-367.3(depend)-367.3(only)-368(on)-366.7(the)-367.5(HDF-EOS2,)-366.5(GCTP)-367.2(and)-367.8(HDF4)-366.2(e)14.7(xternal)-367.8(libraries)-367.8(and)-367.8(not)-367.2(the)-367.5(PGS)]TJ
+1.5 -1.1667 TD
+(toolkit.)Tj
+-1.5 -2.3333 TD
+[(7.)-750(W)39.7(ill)-330.7(be)-331.2(a)-330.3(structured)-331.5(design)-330.8(to)-330.5(interf)9.7(ace)-331(with)-331.3(other)-330.3(structured)-331.5(languages)-330.6(such)-330.3(as)-331.2(F)15.3(ortran)-330.6(and)]TJ
+1.5 -1.1667 TD
+[(IDL. Support for object-oriented languages such as C++, Ja)18.4(v)25(a, Python will also be added.)]TJ
+-1.5 -2.3333 TD
+[(8.)-750(W)39.7(ill only access MISR data, not write it out to other formats.)]TJ
+T*
+[(9.)-750(Sample applications will be pro)13.2(vided to sho)24.5(w ho)25.5(w to access MISR data using this API.)]TJ
+T*
+[(10.)-250(W)39.7(ill be distrib)18.8(uted in source form under the Open Channel license.)]TJ
+T*
+[(11.)-250(W)39.7(ill)-321.5(pro)14.7(vide)-321.7(documentation,)-322.1(user)-321.5(guide)-321.7(and)-321.1(sample)-321.6(programs)-321.5(demonstrating)-322.1(and)-322(e)15.5(xplaining)]TJ
+1.5 -1.1667 TD
+(API usage.)Tj
+-1.5 -2.3333 TD
+[(12.)-250(W)39.7(ill)-248.2(be)-248.7(tested)-248.3(using)-248(unit)-248.5(tests,)-248.8(sample)-248.3(programs)-248.1(and)-248.7(a)-247.8(group)-248.7(of)-247.8(users)-248.2(f)10.5(amiliar)-249.6(with)-248(MISR)-248(data)]TJ
+1.5 -1.1667 TD
+(products.)Tj
+/TT4 1 Tf
+14 0 0 14 72 218.67 Tm
+[(A)25(pplications)]TJ
+/TT2 1 Tf
+12 0 0 12 72 198 Tm
+[(•)-1149.9(Comparison of MISR data with other geolocated data sets from se)22.6(v)15(eral sensors at a speci)]TJ
+/TT5 1 Tf
+37.0639 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(c)Tj
+-36.1201 -1.1667 TD
+(geographic location and point in time.)Tj
+-1.5 -1.1667 TD
+[(•)-1149.9(Co-re)15.2(gister multiple data sets for a speci)]TJ
+/TT5 1 Tf
+17.6464 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(c geographic re)11.5(gion, resolution and projection.)]TJ
+-18.2026 -1.1667 TD
+[(•)-1149.9(Building analysis tools which require access to MISR data sets.)]TJ
+T*
+[(•)-1149.9(Associating geographic re)14.3(gions with paths, orbits and blocks and vice-v)13.1(ersa.)]TJ
+/TT4 1 Tf
+14 0 0 14 72 112.67 Tm
+(Bene)Tj
+/TT10 1 Tf
+2.1108 0 TD
+(Þ)Tj
+/TT4 1 Tf
+0.5562 0 TD
+(ts)Tj
+/TT2 1 Tf
+12 0 0 12 72 92 Tm
+[(•)-1149.9(Enscapsulates)-210.6(lo)25.3(w-le)24.4(v)15.8(e)0(l)-210(data)-210.3(access)-209.6(routines)-210(into)-210.2(a)-209.5(simpli)]TJ
+/TT5 1 Tf
+24.2313 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ed)-210.3(and)]TJ
+/TT5 1 Tf
+2.8075 0 TD
+(ß)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(e)15(xible)-210.5(set)-209.2(of)-209.5(e)14.7(xtraction)-210.8(and)]TJ
+-26.6512 -1.1667 TD
+(manipulation functions. Eliminates the necessity to depend directly on HDF-EOS routines or)Tj
+ET
+endstream
+endobj
+17 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT10 18 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+20 0 obj
+<<
+/Length 6286
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 4 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 90 712 Tm
+0 g
+(other applications.)Tj
+-1.5 -1.1667 TD
+[(•)-1149.9(Can be used as a common basis for de)23.9(v)15(eloping tools and applications.)]TJ
+T*
+[(•)-1149.9(Supports all the GCTP projections.)]TJ
+T*
+[(•)-1149.9(Allo)24.5(ws MISR data to be accessed without an)14.2(y kno)25(wledge of the “block” dimension.)]TJ
+T*
+[(•)-1149.9(Generalized functionality can be broadened to include data sets from other EOS instruments.)]TJ
+T*
+[(•)-1149.9(Allo)24.5(ws access to MISR data through speci)]TJ
+/TT5 1 Tf
+18.4726 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(cation of geolocation information \(latitude/longi-)Tj
+-17.5287 -1.1667 TD
+(tude\).)Tj
+-1.5 -1.1667 TD
+[(•)-1149.9(A)73.8(v)25(ailable within IDL as a dynamically-loaded module \(DLM\).)]TJ
+T*
+[(•)-1149.9(Eliminates the need to rely on the Ancillary Geographic Product \(A)36.5(GP\) or other pre-calcu-)]TJ
+1.5 -1.1667 TD
+(lated geolocation information.)Tj
+-1.5 -1.1667 TD
+[(•)-1149.9(Geolocation information a)18.1(v)25(ailable at an)13.9(y resolution, not just 1100m.)]TJ
+/TT4 1 Tf
+14 0 0 14 72 542.67 Tm
+(Usage Examples)Tj
+12 0 0 12 72 514 Tm
+[(Case)-295.7(1:)-295.3(The)-295.5(sequence)-296.2(of)-295.3(steps)-295.3(to)-295.3(r)17.2(etrie)14.9(v)10(e)-296.2(and)-295.2(optionally)-296.2(r)18(epr)18(oject)-295.5(a)-295.8(geolocated)-296.5(SOM)-295.5(plane)]TJ
+T*
+[(of MISR data ar)18.2(e:)]TJ
+/TT2 1 Tf
+0 -2.3333 TD
+[(1\))-481.2(Select)-482.5(a)-482(r)0(e)15.2(gion)-481.3(indicating)-482.6(an)-482(area)-482.1(you)-480.8(w)9.7(ould)-481.3(lik)9.8(e)-482(t)0(o)-481.3(w)9.7(ork)-481.2(with.)-482.2(This)-481.3(re)15.2(gion)-482.2(de)]TJ
+/TT5 1 Tf
+35.6855 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(nes)-481.2(an)]TJ
+-36.2417 -1.1667 TD
+[(approximate)-362.8(location)-362.1(and)-361.2(area)-362.1(of)-362(interest.)-361.6(Depending)-362.3(on)-360.8(the)-362.5(MISR)-360.5(path)-362.5(that)-361.3(is)-362.2(to)-361.3(be)-362(read,)-361.8(the)]TJ
+T*
+[(plane)-238.6(of)-237.8(data)-238.6(returned)-238.5(will)-238.5(be)-238.7(snapped)-238.1(to)-238(the)-238.3(grid)-238.3(de)]TJ
+/TT5 1 Tf
+20.7097 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ned)-238.7(by)-238.3(that)-238(path’)54.7(s)-238.3(SOM)-237.5(projection.)-239.1(A)-237.8(r)0(e)15.2(gion)]TJ
+-21.2658 -1.1667 TD
+[(can)-379(be)-378.7(reused)-379.3(in)-378.8(man)15(y)-379.2(read)-379.3(data)-378.6(calls)-379.1(to)-379.7(get)-379.2(other)-378.6(parameters)-379.6(or)-378.7(paths.)-379.2(Distinct)-379.3(paths)-378.3(will)-379.3(be)]TJ
+T*
+(snapped to distinct grids. See step 4 to reproject them to the same projection.)Tj
+0 -2.3333 TD
+[(2\))-231.2(Once)-231(a)-231.2(r)0(e)14.4(gion,)-230.5(a)]TJ
+/TT5 1 Tf
+7.7767 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(lename,)-231.6(a)-231.2(gridname)-231.1(and)-231.2(a)]TJ
+/TT5 1 Tf
+10.4022 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eldname)-231.6(are)-231(determined,)-232(the)-231.7(data)-231.1(can)-231.5(be)-231.2(retrie)24.4(v)15(e)0(d)]TJ
+-19.2912 -1.1667 TD
+[(using)-336.3(a)-336.2(read)-336.8(data)-337(function.)-336.6(This)-336.3(function)-336.6(will)-336.8(snap)-336.2(the)-336.7(re)14.4(gion)-336.3(of)-336.2(interest)-336.6(to)-337.2(the)-336.7(particular)-336.4(SOM)]TJ
+T*
+[(grid)-252.5(of)-252.8(the)-253.3(path)-253.3(speci)]TJ
+/TT5 1 Tf
+8.4539 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ed)-252.8(by)-252.5(the)-253.3(MISR)-252.2(product)]TJ
+/TT5 1 Tf
+9.9292 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le.)-253(A)-252(data)-253.6(b)20(u)0(f)24.7(fer)-252.6(and)-252.8(a)-252.8(map)-252.5(info)-253.3(structure)-253.1(will)-252.7(be)]TJ
+-19.4953 -1.1667 TD
+[(returned.)-264.3(The)-264.5(data)-263.6(b)19.2(u)0(f)25.5(fer)-264.3(contains)-264.1(an)-263.7(array)-264.6(representing)-264.3(the)-264.2(geolocated)-264.8(SOM)-263.4(plane)-264.5(of)-263.7(MISR)-263.9(data)]TJ
+T*
+[(and)-375.3(the)-375.8(map)-376.7(info)-375(structure)-376.5(contains)-375.8(all)-376.3(the)-375.8(“snapped”)-375.5(re)14.4(gion)-375.5(and)-375.3(map)-376.7(information)-375.5(of)-376.2(the)-375.8(data)]TJ
+T*
+(plane.)Tj
+0 -2.3333 TD
+[(3\))-250.3(The)-251.1(map)-250(info)-250.8(structure)-250.6(can)-250.6(then)-250.8(be)-250.3(used)-250.3(to)-250.5(query)-250.6(the)-250.8(coordinates)-250.6(of)-251.2(the)-250(data)-251.1(plane.)-251.1(Y)110.5(o)0(u)-250.8(will)-250.2(be)]TJ
+0 -1.1667 TD
+(able to map between line and sample, SOM x/y and geographic latitude/longitude.)Tj
+0 -2.3333 TD
+[(4\))-307(Since)-308.3(distinct)-308.2(MISR)-307.2(paths)-307.5(are)-307.6(separate)-307.9(SOM)-306.7(projections,)-308.3(the)-307.5(grid)-307.5(cells)-308.3(do)-307.5(not)-307.2(align.)-308(A)-307(set)-307.5(of)]TJ
+0 -1.1667 TD
+[(reprojection)-357.3(routines)-357.5(enable)-357.3(the)-356.7(data)-357(planes)-357(to)-356.3(be)-357(mapped)-357(or)-357(w)10.5(arped)-356.8(to)-357.2(a)-357(n)0(e)25.5(w)-357(map)-356.7(projection.)]TJ
+T*
+[(This)-365.5(functionality)-366.8(will)-365.2(enable)-366.5(MISR)-365.5(data)-365.3(to)-365.5(be)-366.2(reprojected)-366.3(easily)-365.8(to)-365.5(other)-365.3(map)-366.7(projections)-365.8(for)]TJ
+T*
+(intercomparison with other map projected data.)Tj
+/TT4 1 Tf
+0 -2.3333 TD
+(Case 2: Locating a path/orbit/)Tj
+/TT10 1 Tf
+12.7778 0 TD
+(Þ)Tj
+/TT4 1 Tf
+0.5562 0 TD
+[(eld fr)17.8(om a r)17.7(egion, location and/or )]TJ
+/TT10 1 Tf
+14.5465 0 TD
+(Þ)Tj
+/TT4 1 Tf
+0.5562 0 TD
+(le:)Tj
+/TT2 1 Tf
+-28.4366 -2.3333 TD
+[(1\))-345.3(Using)-345.8(a)-346.2(selected)-346.5(re)14.4(gion)-345.5(from)-346.2(the)-345.8(re)14.4(gion)-345.5(selection)-346.6(routines)-345.8(or)-346.2(a)-346.1(latitude/longitude)-347.5(location,)-346.3(a)]TJ
+0 -1.1667 TD
+[(function)-261.6(returning)-262(a)-262(list)-261.5(of)-261.2(MISR)-261.4(paths)-260.8(that)-262.2(co)14.7(v)15(e)0(r)-261.5(the)-261.7(re)15.2(gion)-262.2(can)-261.5(be)-261.2(used.)-262(This)-261.3(path)-261.7(list)-261.5(can)-261.5(aid)-261.7(in)]TJ
+T*
+(MISR product )Tj
+/TT5 1 Tf
+6 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(le selection.)Tj
+-6.5562 -2.3333 TD
+[(2\))-247(Orbit)-246.7(is)-246.3(a)-247(function)-246.6(of)-247(time)-246.8(and)-247(path,)-246.7(therefore)-247.4(a)-246.2(routine)-247.5(gi)25.3(v)14.2(e)0(n)-246.2(a)-247(time)-246.8(should)-247.2(return)-246.5(the)-247.5(orbit)-246.3(and)]TJ
+0 -1.1667 TD
+[(path observ)14.4(ed at that time.)]TJ
+ET
+endstream
+endobj
+21 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT10 18 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+23 0 obj
+<<
+/Length 6737
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 5 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 72 712 Tm
+0 g
+[(3\))-302(Once)-301.8(path,)-302.5(orbit)-302.2(and)-302.8(the)-301.7(particular)-303.1(MISR)-302.2(product)]TJ
+/TT5 1 Tf
+21.52 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le)-302.2(are)-302.6(determined,)-302.8(the)]TJ
+/TT5 1 Tf
+9.1222 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(le/grid/)Tj
+/TT5 1 Tf
+2.8882 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eld)-302.8(query)]TJ
+-35.1988 -1.1667 TD
+[(routines)-278.3(can)-278.1(be)-277.8(used)-277.8(to)-278(obtain)-278.8(lists)-278.2(of)-277.8(grids)-277.5(and)]TJ
+/TT5 1 Tf
+19.3325 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(elds.)-278(From)-278(these)-278.6(lists,)-278.2(the)-278.3(name)-277.8(of)-277.8(the)]TJ
+/TT5 1 Tf
+15.6114 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eld)-278(and)]TJ
+-36.0562 -1.1667 TD
+(grid can be obtained to be used by the read routines.)Tj
+/TT4 1 Tf
+0 -2.3333 TD
+[(Case 3: Coordinate con)40.4(v)10(ersion r)17.2(outines:)]TJ
+/TT2 1 Tf
+T*
+[(1\))-486.2(Gi)25(v)15(e)0(n)-486.2(a)0(n)-487(MISR)-485.5(path,)-486.7(coordinate)-487.3(con)39.7(v)15(ersion)-486.2(between)-486.8(block,)-486.7(line,)-487.2(sample,)-486.6(SOM)-485.9(x/y)-486.3(and)]TJ
+0 -1.1667 TD
+(latitude/longitude can easily be performed.)Tj
+0 -2.3333 TD
+[(2\))-249.5(Gi)25(v)15(e)0(n)-249.5(a)-249.5(mapinfo)-250.8(structure)-249.8(returned)-250.1(from)-249.5(the)-250(read)-249.3(routines,)-250(coordinate)-250.6(con)39.7(v)15(ersion)-249.5(between)-250.1(data)]TJ
+0 -1.1667 TD
+(plane, line and sample, SOM X/Y and latitude/longitude can also be performed.)Tj
+/TT4 1 Tf
+14 0 0 14 72 542.67 Tm
+(Conceptual Diagram)Tj
+18 0 0 18 72 310 Tm
+(1\) Primary Routines)Tj
+/TT2 1 Tf
+12 0 0 12 72 280 Tm
+(Primary routines to access, query and reproject MISR data.)Tj
+/TT4 1 Tf
+14 0 0 14 72 250.67 Tm
+(1.1\) Region Selection \(SetRegion\))Tj
+/TT2 1 Tf
+12 0 0 12 72 222 Tm
+[(Before)-306(reading)-305.6(a)-305.3(geolocated)-306.4(plane)-305.3(of)-305.3(MISR)-304.7(data,)-306.1(a)-305.3(r)0(e)15.2(gion)-305.5(on)-305.8(the)-305.8(globe)-305(needs)-305.6(to)-305.5(be)-305.3(speci)]TJ
+/TT5 1 Tf
+36.2222 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ed.)-306.1(A)]TJ
+-36.7783 -1.1667 TD
+[(re)15.2(gion)-314.7(describes)-314.3(an)]TJ
+/TT12 1 Tf
+8.1475 0 TD
+[(appr)45(oximate)]TJ
+/TT2 1 Tf
+5.3242 0 TD
+[(area)-314.6(of)-314.5(interest.)-314.1(There)-315.1(is)-313.8(no)-314.2(implied)-315.7(orientation)-314.6(of)-314.5(a)-314.5(r)0(e)15.2(gion.)-628.8(It)]TJ
+-13.4717 -1.1667 TD
+[(basically)-531.6(describes)-531.8(a)-531.2(unique)-531.7(location)-532.1(\(center)-531.3(of)-531.2(the)-531.7(re)15.2(gion\))-531.7(on)-530.8(the)-531.7(globe)-531.7(and)-531.2(tw)10(o)-530.8(e)14.7(xtents)]TJ
+T*
+[(perpendicular)-282.1(to)-281.3(each)-281.8(other)54.7(.)-280.8(The)-281.1(real)-281.5(orientation)-282.1(and)-282(thus)-280.5(the)-281.7(directions)-281.6(of)-281.2(the)-281.7(e)14.7(xtent)-281.3(depends)-281.5(on)]TJ
+T*
+[(the)-251.7(orbit)-251.3(path)-251.7(that)-251.3(is)-251.3(read.)-251(The)-251.1(re)14.4(gion)-251.3(gets)]TJ
+/TT12 1 Tf
+16.9367 0 TD
+(snapped)Tj
+/TT2 1 Tf
+3.5842 0 TD
+[(to)-251.3(the)-251.7(grid)-250.8(of)-251.2(the)-251.7(particular)-252.3(path’)54.7(s)-250.8(SOM)-250.9(plane.)]TJ
+-20.5208 -1.1667 TD
+[(Re)15(gion)-367.2(selection)-368.3(can)-367.3(be)-367(done)-367.8(one)-367(of)]TJ
+/TT5 1 Tf
+15.5517 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5308 0 TD
+[(v)14.2(e)-367(dif)25(ferent)-367.6(w)10.5(ays:)-367.5(1\))-367(by)-367.5(specifying)-367(a)-367.8(bounding)-367.2(box)-367.5(via)]TJ
+-16.0825 -1.1667 TD
+[(upper)-227.3(left)-228.3(corner)-228(\(ulc\))-227.3(and)-227.8(the)-227.5(lo)24.5(wer)-227.6(right)-227.2(corner)-228(\(lrc\))-227.6(in)-228(terms)-227.5(of)-227.8(latitude)-228.5(and)-227.8(longitude)-227.7(in)-228(decimal)]TJ
+T*
+[(de)14.7(grees)-316.8(\(the)-317(orientation)-318(implied)-318.2(by)-316.7(this)-316.8(method)-317.2(is)-317.2(only)-317.2(used)-317(to)-317.2(establish)-317.2(the)-316.7(tw)10(o)-317.5(e)15.5(xtents\),)-317.5(2\))-317(by)]TJ
+T*
+[(specifying)-366.1(a)-365.3(center)-366(latitude)-366.8(and)-365.3(longitude)-366(in)-365.5(decimal)-366.6(de)15.5(grees)-366(and)-365.3(an)-365.3(e)14.7(xtent)-366.3(in)-365.5(the)-365.8(latitude)-366(and)]TJ
+T*
+[(longitude)-255.2(direction)-255(in)-254.7(meters,)-254.5(3\))-254.5(by)-254.2(specifying)-255.3(a)-254.5(center)-254.3(location)-255.5(and)-254.5(an)-254.5(e)14.7(xtent)-254.7(in)-254.7(decimal)-255(de)14.7(grees,)]TJ
+T*
+[(4\))-250.3(by)-250.8(specifying)-250.3(a)-251.2(center)-251(location)-251.3(and)-250.3(e)14.7(xtent)-250.5(in)-251.3(pix)15.3(els,)-250.8(5\))-250.3(or)-250.3(by)-250.8(specifying)-250.3(a)-251.2(MISR)-249.7(path)-250.8(and)-251.2(block)]TJ
+ET
+1 g
+0 G
+0 J 0 j 0.6 w 3.86 M []0 d
+1 i 
+108 442 54 -27 re
+B*
+117 433 54 -27 re
+B*
+126 424 54 -27 re
+B*
+135 415 54 -27 re
+B*
+252 448.26 81 -81 re
+B*
+269.11 456.22 m
+265.24 457.26 l
+264.21 453.39 l
+S
+[8.204 6.153 ]8.204 d
+344.39 436.05 m
+269.11 456.22 l
+S
+[]0 d
+347.22 431.15 m
+348.26 435.01 l
+344.39 436.05 l
+S
+[8.204 6.153 ]8.204 d
+327.05 355.86 m
+347.22 431.15 l
+S
+[]0 d
+322.15 353.04 m
+326.01 352 l
+327.05 355.86 l
+S
+[8.204 6.153 ]8.204 d
+246.87 373.21 m
+322.15 353.04 l
+S
+[]0 d
+244.04 378.11 m
+243 374.24 l
+246.87 373.21 l
+S
+[8.204 6.153 ]8.204 d
+264.21 453.39 m
+244.04 378.11 l
+S
+[]0 d
+423 460 81 -99 re
+B*
+2 J 
+288 415 m
+275.05 400.9 307.62 379.59 310.11 394.29 c
+312.01 405.48 290.63 397.56 301.97 409.39 c
+314.86 422.85 292.25 427.5 288 415 c
+447.93 406.77 m
+442.72 383.16 493.6 388.61 486.63 404.54 c
+481.32 416.67 462.5 392.27 467.4 412.47 c
+472.98 435.42 444.4 422 447.93 406.77 c
+S
+BT
+/TT4 1 Tf
+14 0 0 14 228 495.54 Tm
+0 g
+[(Region)-1928.6(SOM Plane)]TJ
+-9.8571 -0.6429 TD
+[(Stack)9.9(ed Block)-15140.2(Repr)18.2(ojected Map Plane)]TJ
+ET
+0 J 1.08 w 
+253.7 468.69 m
+260.19 461.62 l
+258.43 471.05 l
+256.07 469.87 l
+s
+253.7 468.69 m
+260.19 461.62 l
+258.43 471.05 l
+256.07 469.87 l
+f*
+2 J 0.6 w 
+255.84 470.32 m
+243 496 l
+S
+0 J 1.08 w 
+314.57 462.34 m
+315.36 452.78 l
+319.76 461.3 l
+317.16 461.82 l
+s
+314.57 462.34 m
+315.36 452.78 l
+319.76 461.3 l
+317.16 461.82 l
+f*
+2 J 0.6 w 
+317.26 462.31 m
+324 496 l
+S
+0 J 1.08 w 
+231.73 452.01 m
+241.3 451.31 l
+233.55 456.97 l
+232.64 454.49 l
+s
+231.73 452.01 m
+241.3 451.31 l
+233.55 456.97 l
+232.64 454.49 l
+f*
+2 J 0.6 w 
+184.67 440.35 m
+194.02 454.53 215.78 460.68 232.18 454.66 c
+S
+0 J 1.08 w 
+402.73 452.01 m
+412.3 451.31 l
+404.55 456.97 l
+403.64 454.49 l
+s
+402.73 452.01 m
+412.3 451.31 l
+404.55 456.97 l
+403.64 454.49 l
+f*
+2 J 0.6 w 
+355.67 440.35 m
+365.02 454.53 386.78 460.68 403.17 454.66 c
+S
+BT
+14 0 0 14 198 460 Tm
+(Read)Tj
+11.2629 0.205 TD
+(Resample)Tj
+ET
+0 J 
+276.5 429.67 50 -25.5 re
+288.5 448 45 -18 re
+268.5 404.25 50 -25.5 re
+261.67 379.17 50.83 -11.67 re
+S
+endstream
+endobj
+24 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT12 25 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+27 0 obj
+<<
+/Length 5777
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 6 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 72 712 Tm
+0 g
+[(range)-266(which)-266.2(will)-266.8(de)]TJ
+/TT5 1 Tf
+7.963 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ne)-266.2(an)-266.2(encapsulating)-267(bounding)-266.3(box)-265.8(and)-266.1(thus)-265.5(determine)-267(the)-266.7(tw)10(o)-265.8(e)14.7(xtents.)-266.3(Only)]TJ
+-8.5192 -1.1667 TD
+[(one)-237(of)-236.2(these)-237(routines)-237.5(needs)-236.5(to)-237.2(be)-236.2(called)-237.8(to)-237.2(de)]TJ
+/TT5 1 Tf
+17.793 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ne)-236.2(a)-237(r)0(e)14.4(gion.)-236.3(A)-237(r)0(e)15.2(gion)-237.2(can)-236.5(be)-237(used)-236.2(more)-237(than)-237.5(once)-236.5(in)]TJ
+-18.3492 -1.1667 TD
+[(the man)14.2(y read data calls.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 657.3301 Tm
+(MtkSetRegionByUlcLrc\(ulc_lat_dd, ulc_lon_dd)Tj
+0 -1.2 TD
+(                     lrc_lat_dd, lrc_lon_dd, &region\))Tj
+T*
+(MtkSetRegionByLatLonExtentMeters\(ctr_lat_dd, ctr_lon_dd,)Tj
+19.234 -1.2 TD
+[(lat_extent_meters,)-581.2(lon_extent_meters,)-581.2(&region\))]TJ
+-19.234 -1.2 TD
+(MtkSetRegionByLatLonExtentKilometers\(ctr_lat_dd, ctr_lon_dd,)Tj
+14.444 -1.2 TD
+[(lat_extent_kilometers,)-575.9(lon_extent_kilometers,)-575.9(&region\))]TJ
+-14.444 -1.2 TD
+(MtkSetRegionByLatLonExtentDeg\(ctr_lat_dd, ctr_lon_dd,)Tj
+T*
+(                              lat_extent_deg, lon_extent_deg, &region\))Tj
+T*
+(MtkSetRegionByLatLonExtentPixels\(ctr_lat_dd, ctr_lon_dd, resolution,)Tj
+19.234 -1.2 TD
+[(lat_extent_pixels,)-581.2(lon_extent_pixels,)-581.2(&region\))]TJ
+-19.234 -1.2 TD
+(MtkSetRegionByPathBlockRange\(path, start_block, end_block, &region\))Tj
+/TT2 1 Tf
+12 0 0 12 72 510 Tm
+[(A)-285.3(r)0(e)15.2(gion)-285.5(is)-285.5(snapped)-284.8(to)-285.5(an)-286.2(SOM)-284.2(plane)-286.1(for)-284.8(a)-285.3(g)0(i)24.5(v)15(en)-285.3(path)-285.8(and)-285.3(resolution.)-285.5(This)-285.5(is)-285.5(the)-285.8(purpose)-284.8(of)-285.3(this)]TJ
+0 -1.1667 TD
+[(routine.)-280(The)-279.5(Read)-279.5(routines)-280(belo)25(w)-278.7(calls)-280(this)-279.3(routine)-280(internally)63.7(,)-279.2(h)0(o)25(w)0(e)25.2(v)15(er)40.2(,)-280(i)0(t)-279.3(may)-280(be)-278.7(used)-279.5(e)14.7(xternally)]TJ
+T*
+[(to)-463(determine)-464.5(v)25(arious)-462.8(characteristics)-464.6(of)-462.8(the)-463.3(SOM)-462.5(plane,)-463.6(such)-462.8(as)-462.8(size,)-463.6(map)-463.3(e)15.5(xtent,)-463.8(projection)]TJ
+T*
+(paramters, etc. This routine need not be called be the user unless under special circumstances.)Tj
+/TT14 1 Tf
+10 0 0 10 72 441.33 Tm
+(MtkSnapToGrid\(path, resolution, region, mapinfo\))Tj
+/TT4 1 Tf
+14 0 0 14 72 412.67 Tm
+(1.2\) Reading a Geolocated SOM Plane \(ReadData\))Tj
+/TT2 1 Tf
+12 0 0 12 72 384 Tm
+[(There)-234.3(is)-234.7(one)-233.7(primary)-234.5(routine)-235(to)-233.8(read)-234.3(a)-234.5(geolocated)-234.8(SOM)-233.4(plane)-234.5(of)-234.5(MISR)-233.9(data)-234.5(gi)24.5(v)15(e)0(n)-233.7(a)]TJ
+/TT5 1 Tf
+33.365 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le,)-233.8(grid,)]TJ
+/TT5 1 Tf
+3.3005 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(eld)Tj
+-37.7778 -1.1667 TD
+[(and)-248.7(a)-247.8(r)0(e)15.2(gion.)-248.8(Remember)-248.6(a)-248.7(r)0(e)15.2(gion)-248.8(is)-248(an)]TJ
+/TT12 1 Tf
+15.6458 0 TD
+[(appr)45(oximate)]TJ
+/TT2 1 Tf
+5.2583 0 TD
+[(area)-248.8(of)-247.8(interest)-249.1(MtkReadData)-249(is)-248(most)-247.7(general)]TJ
+-20.9042 -1.1667 TD
+[(and)-269.5(in)-269.7(most)-269.3(cases)-269.3(will)-269.3(be)-269.5(the)-270(only)-269.7(routine)-270(required.)-538.5(It)-270(calls)-269.1(the)-270(MtkReadRa)14.2(w)-268.7(and)-269.5(MtkReadCon)39.5(v)]TJ
+T*
+[(as)-298.7(needed.)-298.5(MtkReadData)-299(is)-298.8(a)15.5(w)9.7(are)-298.5(of)-298.7(e)24.7(v)15(ery)-298.1(MISR)-298(product)-298.6(and)-298.7(parameter)-299.6(and)-298.6(implicitly)-299.7(unpacks)]TJ
+T*
+[(and)-259.5(unscales)-259.8(as)-259.5(needed.)-260.1(It)-259.2(reads)-259.3(both)-259.7(MISR)-259.7(standard)-259.8(products)-259.5(and)-259.5(con)39.7(v)15(entional)-259.6(products.)-259.5(F)14.5(o)0(r)-259.5(the)]TJ
+T*
+(standard product )Tj
+/TT5 1 Tf
+6.9424 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(les, all block stitching is done implicitly)61.1(.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 287.33 Tm
+(MtkReadData\(filename, gridname, fieldname, region, &databuf, &mapinfo\))Tj
+/TT2 1 Tf
+12 0 0 12 72 260 Tm
+[(MtkReadRa)14.2(w)-552(reads)-552.6(an)14.7(y)-552.5(nati)24.5(v)15.8(e)-552.8(grid/)]TJ
+/TT5 1 Tf
+15.5812 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eld)-553.5(from)-552(a)-552.8(MISR)-552.2(product)]TJ
+/TT5 1 Tf
+11.8727 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le)-552.2(without)-552.7(unpacking)-552.8(or)]TJ
+-28.5662 -1.1667 TD
+[(unscaling. MtkReadCon)39.5(v reads the MISR con)39(v)15(entional product )]TJ
+/TT5 1 Tf
+25.6242 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(les.)Tj
+/TT14 1 Tf
+10 0 0 10 72 219.33 Tm
+(MtkReadRaw\(filename, gridname, fieldname, region, &databuf, &mapinfo\))Tj
+0 -1.2 TD
+(MtkReadConv\(filename, gridname, fieldname, region, &databuf, &mapinfo\))Tj
+/TT2 1 Tf
+12 0 0 12 72 180 Tm
+[(In addition to the abo)13.7(v)15(e)0( routines there is a routine to read a single block at a time.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 153.33 Tm
+(MtkReadBlock\(filename, gridname, fieldname, block_number, &databuf\))Tj
+/TT4 1 Tf
+14 0 0 14 72 124.67 Tm
+(1.3\) SOM Plane Coordinate Query \(MapQuery\))Tj
+/TT2 1 Tf
+12 0 0 12 72 96 Tm
+[(After)-255.1(a)-254.5(plane)-255.3(of)-254.5(data)-254.5(is)-254.7(read,)-255.1(it)-255.2(may)-255(be)-254.5(desirable)-255.6(to)-254.7(map)-254.2(between)-255.1(line)-255.5(and)-254.5(sample)-255(in)-254.7(the)-255(plane)-255.3(and)]TJ
+0 -1.1667 TD
+[(geographic)-226(latitude/longitude)-227.5(or)-225.3(SOM)-225(x/y)64.5(.)-225(These)-226.5(routines)-225.8(pro)15.5(vide)-225.8(this)-226(mapping)-225.5(gi)24.5(v)15(e)0(n)-225.3(the)-225.8(mapinfo)]TJ
+ET
+endstream
+endobj
+28 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT12 25 0 R
+/TT14 29 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+31 0 obj
+<<
+/Length 2094
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 7 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+12 0 0 12 72 712 Tm
+0 g
+[(structure)-254(returned)-253.5(by)-252.5(MtkReadData)-254(or)-252.8(MtkReadRa)14.2(w)65.5(.)-253.3(There)-253.5(are)-253.5(tw)10(o)-252.5(sets)-253.3(of)-252.8(these)-253.6(routines,)-253.3(one)-253.7(set)]TJ
+0 -1.1667 TD
+[(con)39.7(v)15(erts a single location and the other con)37.5(v)15(erts an array of locations.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 671.33 Tm
+(MtkLSToSomXY\(mapinfo, line, sample, &x, &y\))Tj
+0 -1.2 TD
+(MtkSomXYToLS\(mapinfo, x, y, &line, &sample\))Tj
+T*
+(MtkLSToLatLon\(mapinfo, line, sample, &lat_dd, &lon_dd\))Tj
+T*
+(MtkLatLonToLS\(mapinfo, lat_dd, lon_dd, &line, &sample\))Tj
+0 -2.4 TD
+(MtkLSToSomXYAry\(mapinfo, nelement, line[], sample[], &x[], &y[]\))Tj
+0 -1.2 TD
+(MtkSomXYToLSAry\(mapinfo, nelement, x[], y[], &line[], &sample[]\))Tj
+T*
+(MtkLSToLatLonAry\(mapinfo, nelement, line[], sample[], &lat_dd[], &lon_dd[]\))Tj
+T*
+(MtkLatLonToLSAry\(mapinfo, nelement, lat_dd[], lon_dd[], &line[], &sample\))Tj
+/TT4 1 Tf
+14 0 0 14 72 546.67 Tm
+[(1.4\) Map Repr)18.3(ojection)]TJ
+/TT2 1 Tf
+12 0 0 12 72 518 Tm
+[(It)-435.8(may)-435(be)-435.3(desirable)-435.6(to)-435.5(reprojection)-436.4(a)-435.3(geolocated)-436.4(SOM)-434.2(plane)-436.1(to)-435.5(another)-435.6(map)-435(projection)-436.6(o)15(v)15(e)0(r)]TJ
+0 -1.1667 TD
+[(another)-302.3(re)15.2(gion.)-302.2(These)-302.3(routines)-302.5(allo)24.5(w)-302(the)-301.7(user)-302.3(to)-302.2(specify)-302.3(an)-302(output)-301.8(map)-302.5(projection,)-303.3(output)-301.8(re)15.2(gion)]TJ
+T*
+(and resampling method. The speci)Tj
+/TT5 1 Tf
+13.7461 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(c routine names and ar)14.8(guments are TBD.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 463.33 Tm
+(1\) Specify output region selection \(may use the routines above\))Tj
+0 -1.2 TD
+(2\) Specify output map projection using GCTP projection parameters)Tj
+T*
+(3\) Specify any grid scale changes)Tj
+T*
+(4\) Specify resampling method)Tj
+T*
+(5\) Perform reprojection operation)Tj
+ET
+endstream
+endobj
+32 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT14 29 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+34 0 obj
+<<
+/Length 4861
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 8 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+/TT4 1 Tf
+18 0 0 18 72 708 Tm
+0 g
+(2\) Secondary Routines)Tj
+/TT2 1 Tf
+12 0 0 12 72 678 Tm
+[(Secondary)-499.3(routines)-499.2(are)-499.3(mostly)-499.8(used)-498.7(internally)-499.6(by)-499.2(the)-499.2(primary)-499.5(routines.)-500(The)14.7(y)-498.3(are,)-499.3(ho)25(we)24.3(v)15(e)0(r)40.2(,)]TJ
+0 -1.1667 TD
+(accessible to the toolkit user if need be.)Tj
+/TT4 1 Tf
+14 0 0 14 72 634.67 Tm
+[(2.1\) Orbit/P)9.6(ath Query \(OrbitP)9.1(ath\))]TJ
+/TT2 1 Tf
+12 0 0 12 72 606 Tm
+[(These)-416.5(routines)-416.7(are)-416(used)-416.2(for)-416.5(MISR)-415.5(path)-416.7(selection.)-416.6(The)14.7(y)-416.7(will)-416(return)-416.5(a)-416.2(list)-416.5(of)-416.2(MISR)-415.5(paths)-416.7(that)]TJ
+T*
+[(intersect)-322(a)-320.3(g)0(i)24.5(v)15(en)-321.2(latitude/longitude)-322.5(location)-322.1(or)-320.3(a)-321.2(g)0(i)24.5(v)15(en)-320.3(re)14.4(gion)-320.5(from)-321.2(a)-321.2(r)0(e)15.2(gion)-321.3(selection)-321.6(call.)-321.6(Ev)15(en)]TJ
+T*
+[(the)-389.2(block)-388.3(range)-389.3(of)-388.7(a)-388.7(r)0(e)15.2(gion)-388.8(can)-389(be)-389.5(determined)-389.5(for)-388.2(a)-388.6(particular)-389.8(path.)-389.2(This)-388.8(will)-388.5(help)-389.2(determine)]TJ
+T*
+(which MISR paths to obtain and read with the read data routines.)Tj
+/TT14 1 Tf
+10 0 0 10 72 537.33 Tm
+(MtkLatLonToPathList\(lat_dd, lon_dd, &pathcnt, &pathlist[]\))Tj
+0 -1.2 TD
+(MtkRegionToPathList\(region, &pathcnt, &pathlist[]\))Tj
+T*
+(MtkRegionPathToBlockRange\(region, path, &start_block, &end_block\))Tj
+/TT2 1 Tf
+12 0 0 12 72 486 Tm
+[(Orbit)-265.8(selection)-266.6(is)-266.3(also)-265.8(required)-266.8(in)-265.5(order)-266.8(to)-265.5(determine)-267(a)-266.1(MISR)-265.5(product)]TJ
+/TT5 1 Tf
+28.0767 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(lename.)-265.8(A)-266.2(single)-266.3(path)-265.8(has)]TJ
+-28.6328 -1.1667 TD
+[(man)15(y)-303.3(orbits.)-303.8(Orbit)-303.3(is)-303(a)-303.7(function)-303.3(of)-302.8(time.)-304.3(These)-303.1(routines)-303.3(will)-304.3(help)-303.3(determine)-303.6(which)-303.6(orbits)-303(/)-303.8(paths)]TJ
+T*
+[(are at a gi)24.1(v)15(en time.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 431.33 Tm
+(MtkTimeToOrbitPath\(time, &orbit, &path\))Tj
+0 -1.2 TD
+(MtkTimeRangeToOrbitList\(start_time, end_time, &orbitcnt, &orbitlist\))Tj
+T*
+(MtkPathTimeRangeToOrbitList\(path, start_time, end_time, &orbitcnt, &orbitlist\))Tj
+T*
+(MtkOrbitToPath\(orbit, &path\))Tj
+/TT4 1 Tf
+14 0 0 14 72 366.67 Tm
+(2.2\) File/Grid/Field Query \(FileQuery\))Tj
+/TT2 1 Tf
+12 0 0 12 72 338 Tm
+[(Sometimes)-263.2(it)-262.7(is)-263(useful)-262(gi)24.5(v)15(e)0(n)-262.8(a)-262.8(product,)-262.8(path,)-262.5(orbit,)-263(camera)-262.9(and/or)-262.8(v)15(ersion)-262.8(to)-263(do)-262.5(a)-262(wildcard)-263.1(search)]TJ
+0 -1.1667 TD
+[(recursi)24.9(v)15(ely)-418.3(for)-417.3(a)-418.7(MISR)-417.2(product)]TJ
+/TT5 1 Tf
+13.6017 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le)-418(in)-418(a)]TJ
+/TT5 1 Tf
+3.198 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(lesystem)-417.7(or)-417.8(construct)-417.8(a)]TJ
+/TT5 1 Tf
+10.1138 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(lename)-418.3(string)-418(from)-417.8(these)]TJ
+-28.582 -1.1667 TD
+(components.)Tj
+/TT14 1 Tf
+10 0 0 10 72 283.33 Tm
+(MtkMakeFilename\(basedir, product, camera, path, orbit, version, &filename\))Tj
+0 -1.2 TD
+(MtkFindFileList\(searchdir, product, camera, path, orbit, version,)Tj
+T*
+(                &filecnt, &filename[]\))Tj
+/TT2 1 Tf
+12 0 0 12 72 232 Tm
+[(Also)-230.8(useful,)-231.2(are)-231(routines)-231.7(that)-231.3(when)-230.7(gi)24.5(v)15(e)0(n)-231.2(a)]TJ
+/TT5 1 Tf
+17.165 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(lename,)-231.6(gridname)-232(or)]TJ
+/TT5 1 Tf
+8.4413 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eldname)-231.6(return)-230.6(some)-231.7(attrib)19.5(utes)]TJ
+-26.7187 -1.1667 TD
+[(of)-287.8(the)-288.3(MISR)-287.2(product)]TJ
+/TT5 1 Tf
+8.7058 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le.)-288(These)-288.1(attrib)19.5(utes)-288.3(include)-288.3(a)-287.8(list)-288.2(of)-287.8(all)-288(the)-287.5(grids)-288.3(and/or)]TJ
+/TT5 1 Tf
+22.448 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(elds)-288(in)-288(a)]TJ
+/TT5 1 Tf
+3.6963 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le,)-288(the)]TJ
+-36.5186 -1.1667 TD
+[(path)-427.5(number)39.7(,)-426.7(block)-427.5(range)-426.8(of)-427(a)]TJ
+/TT5 1 Tf
+13.2683 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(le,)-427.2(grid)-426.7(resolution,)]TJ
+/TT5 1 Tf
+8.113 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eld)-427.2(datatype,)]TJ
+/TT5 1 Tf
+5.7138 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(eld)Tj
+/TT5 1 Tf
+1.6488 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(ll)-427.3(v)25.8(alue,)-427.8(etc.)-427(These)]TJ
+-30.9687 -1.1667 TD
+(routines can be used to query the )Tj
+/TT5 1 Tf
+13.4126 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(lenames, gridnames and )Tj
+/TT5 1 Tf
+9.8857 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(eldnames in the MISR products.)Tj
+ET
+endstream
+endobj
+35 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT14 29 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+37 0 obj
+<<
+/Length 3972
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 297.67 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 9 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+/TT14 1 Tf
+10 0 0 10 72 713.33 Tm
+0 g
+(MtkFileToPath\(filename, &path\))Tj
+0 -1.2 TD
+(MtkFileToBlockRange\(filename, &start_block, &end_block\))Tj
+T*
+(MtkFileToGridList\(filename, &gridcnt, &gridlist[]\))Tj
+T*
+(MtkFileGridToFieldList\(filename, gridname, &fieldcnt, &fieldlist[]\))Tj
+T*
+(MtkFileGridToResolution\(filename, gridname, &resolution\))Tj
+T*
+(MtkFileGridFieldToDataType\(filename, gridname, fieldname, &datatype\))Tj
+T*
+(MtkFillValueGet\(filename, gridname, fieldname, &fillvalue\))Tj
+T*
+(MtkFileLGID\(filename, &local_granuale_id\))Tj
+T*
+(MtkFileType\(filename, &filetype\))Tj
+T*
+(MtkFileVersion\(filename, &fileversion\))Tj
+/TT4 1 Tf
+14 0 0 14 72 576.67 Tm
+[(2.3\) Coordinate Con)40.1(v)10(ersion \(CoordCon)40.8(v\))]TJ
+/TT2 1 Tf
+12 0 0 12 72 548 Tm
+[(Coordinate)-451.6(con)39.7(v)15(ersion)-452(routines)-451.7(are)-451(pro)14.7(vided)-451.7(to)-451.3(perform)-451.8(much)-451.7(of)-452(the)-451.7(underlying)-451.6(geolocation)]TJ
+0 -1.1667 TD
+[(operations.)-251.1(The)14.7(y)-250.8(are)-251.8(not)-250.5(required)-251.8(by)-250.8(the)-250.8(end)-251.2(user)-250.7(for)-251.5(reading)-250.6(and)-251.2(locating)-252.1(MISR)-250.5(data,)-251.1(b)20(u)0(t)-251.3(may)-250.8(be)]TJ
+T*
+[(useful)-347.8(in)-348.8(some)-347.5(circumstances.)-349.3(The)14.7(y)-348.3(mostly)-348.2(ha)19.7(v)15(e)-347.8(to)-348(due)-348.7(with)-348(the)-348.3(MISR)-347.2(block,)-348.3(line)-348.8(and)-347.8(sample)]TJ
+T*
+[(structure)-283.1(which)-282(this)-282.7(toolkit)-283.7(attempts)-282.7(to)-283(hide.)-282.5(T)80(w)9.7(o)-282.5(particularly)-283.6(interesting)-283(routines)-282.5(to)-283(the)-282.5(end)-282.8(user)]TJ
+T*
+[(are)-364.3(MtkLatLonT)79.5(oSomXY)-363.3(and)-364.5(MtkSomXYT)80.3(oLatLon.)-364.1(Gi)25(v)15(e)0(n)-363.7(a)-364.5(MISR)-363(P)15.3(ath,)-364.2(con)39.7(v)15(ersion)-364.5(between)]TJ
+T*
+[(SOM)-235(x/y)-235.5(and)-236.2(geographic)-236(latitude/longitude)-237.5(coordinates)-235.6(can)-236.5(con)39.7(v)15(eniently)-236.3(be)-235.3(performed.)-236.3(There)-236(are)]TJ
+T*
+[(also)-234.2(tw)10(o)-234.2(sets)-233.3(of)-234.5(these)-233.6(routines,)-235(one)-233.7(set)-234.2(con)39.7(v)15(erts)-233.7(a)-234.5(single)-233.8(location)-235.5(and)-233.7(the)-234.2(other)-234.5(con)39.7(v)15(erts)-233.7(an)-234.5(array)-233.8(of)]TJ
+T*
+(locations.)Tj
+/TT14 1 Tf
+10 0 0 10 72 423.33 Tm
+(MtkPathToProjParam\(path, resolution, &projparam\))Tj
+0 -2.4 TD
+(MtkLatLonToSomXY\(path, lat_dd, lon_dd, &x, &y\))Tj
+0 -1.2 TD
+(MtkSomXYToLatLon\(path, x, y, &lat_dd, &lon_dd\))Tj
+T*
+(MtkBlsToSomXY\(path, resolution, block, line, sample, &x, &x\))Tj
+T*
+(MtkSomXYToBls\(path, resolution, x, y, &block, &line, &sample\))Tj
+T*
+(MtkLatLonToBls\(path, resolution, lat, lon, &block, &line, &sample\))Tj
+T*
+(MtkBlsToLatLon\(path, resolution, block, line, sample, &lat, &lon\))Tj
+0 -2.4 TD
+(MtkLatLonToSomXYAry\(path, nelement, lat_dd[], lon_dd[], &x[], &y[]\))Tj
+0 -1.2 TD
+(MtkSomXYToLatLonAry\(path, nelement, x[], y[], &lat_dd[], &lon_dd[]\))Tj
+T*
+(MtkBlsToSomXYAry\(path, resolution, nelement, block[], line[], sample[],)Tj
+T*
+(                 &x[], &x\))Tj
+T*
+(MtkSomXYToBlsAry\(path, resolution, nelement, x[], y[],)Tj
+T*
+(                 &block[], &line[], &sample[]\))Tj
+T*
+(MtkLatLonToBlsAry\(path, resolution, nelement, lat[], lon[],)Tj
+T*
+(                  &block[], &line[], &sample[]\))Tj
+T*
+(MtkBlsToLatLonAry\(path, resolution, nelement, block[], line[], sample[],)Tj
+T*
+(                  &lat[], &lon[]\))Tj
+/TT4 1 Tf
+14 0 0 14 72 178.67 Tm
+[(2.4\) Unit Con)40.5(v)10(ersion \(UnitCon)40.6(v\))]TJ
+/TT2 1 Tf
+12 0 0 12 72 150 Tm
+[(General)-388.8(routines)-388.3(to)-388(con)39.7(v)15(ert)-387.8(between)-388.5(decimal)-389.1(de)14.7(grees,)-387.6(radians,)-389(and)-387.8(both)-388(pack)9.4(ed)-387.8(and)-388.7(unpack)10.2(ed)]TJ
+0 -1.1667 TD
+[(de)14.7(grees, minutes, seconds.)]TJ
+ET
+endstream
+endobj
+38 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT14 29 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+40 0 obj
+<<
+/Length 2307
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 295.17 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 10 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+/TT14 1 Tf
+10 0 0 10 72 713.33 Tm
+0 g
+(MtkDmsToDd\(dms, &dd\))Tj
+0 -1.2 TD
+(MtkDdToDms\(dd, &dms\))Tj
+0 -2.4 TD
+(MtkDdToRad\(dd, &rad\))Tj
+0 -1.2 TD
+(MtkRadToDd\(rad &dd\))Tj
+0 -2.4 TD
+(MtkDmsToRad\(dms, &rad\))Tj
+0 -1.2 TD
+(MtkRadToDms\(rad, &dms\))Tj
+0 -2.4 TD
+(MtkDmsToDegMinSec\(dms, &deg, &min, &sec\))Tj
+0 -1.2 TD
+(MtkDegMinSecToDms\(deg, min, sec, &dms\))Tj
+0 -2.4 TD
+(MtkDdToDegMinSec\(dd, &deg, &min, &sec\))Tj
+0 -1.2 TD
+(MtkDegMinSecToDd\(deg, min, sec, &dd\))Tj
+0 -2.4 TD
+(MtkRadToDegMinSec\(rad, &deg, &min, &sec\))Tj
+0 -1.2 TD
+(MtkDegMinSecToRad\(deg, min, sec, &rad\))Tj
+/TT4 1 Tf
+14 0 0 14 72 492.67 Tm
+(2.5\) Memory Management \(Util\))Tj
+/TT2 1 Tf
+12 0 0 12 72 464 Tm
+[(It)-270.8(may)-270.8(be)-271.2(useful)-271.2(to)-270.5(allocate)-271.9(a)-271.2(b)20.8(uf)24.7(fer)-271(of)-270.3(memory)-271.6(for)-270.6(temporary)-271.5(w)10.5(ork.)-541.2(These)-271.5(tw)10(o)-270.8(routines)-270.8(allocate)]TJ
+0 -1.1667 TD
+[(and free 2D planes of memory of an)13.5(y speci)]TJ
+/TT5 1 Tf
+17.258 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+(ed type.)Tj
+/TT14 1 Tf
+10 0 0 10 72 423.33 Tm
+(MtkDataBufferAllocate\(nline, nsample, datatype, &databuf\))Tj
+0 -1.2 TD
+(MtkDataBufferFree\(&databuf\))Tj
+/TT2 1 Tf
+12 0 0 12 72 384 Tm
+[(Gi)25(v)15(e)0(n)-425.3(a)]TJ
+/TT5 1 Tf
+3.6983 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eldname)-425.8(of)-425.3(the)-425.8(form)-425.3(“SpectralOpticalDepth[1][2]”)-426.7(this)-426(routine)-425.8(will)-425.2(return)-425.6(the)-425.8(base)]TJ
+/TT5 1 Tf
+-4.2545 -1.1667 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eldname)-326.6(“SpectralOpticalDepth”)-327.9(and)-326.2(an)-326.2(array)-326.3(of)-326.2(indices)-325.8(“1,2”.)-652.3(This)-326.3(routine)-326.6(is)-326.3(used)-325.3(to)-326.3(access)]TJ
+-0.5562 -1.1667 TD
+(MISR product )Tj
+/TT5 1 Tf
+6 0 TD
+(Þ)Tj
+/TT2 1 Tf
+0.5562 0 TD
+[(eld that ha)19.5(v)15(e)0( multiple dimensions.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 329.33 Tm
+(MtkParseFieldname\(nfieldname, &outfieldname, &dim[]\))Tj
+/TT2 1 Tf
+12 0 0 12 72 302 Tm
+[(Routine to con)39(v)15(ert between HDF data types and MTK datatypes.)]TJ
+/TT14 1 Tf
+10 0 0 10 72 275.33 Tm
+(MtkHdfToMtkDataTypeConvert\(hdf_datatype, &mtk_datatype\))Tj
+ET
+endstream
+endobj
+41 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+/TT5 6 0 R
+/TT14 29 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+43 0 obj
+<<
+/Length 4131
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 295.17 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 11 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+/TT4 1 Tf
+14 0 0 14 72 710.67 Tm
+0 g
+[(Component Ov)10.5(er)9.8(view)]TJ
+ET
+1 g
+0 G
+2 J 0 j 0.6 w 3.86 M []0 d
+1 i 
+269.33 677.67 54 -36 re
+B*
+214.83 678 54.5 -36 re
+B*
+BT
+12 0 0 12 88.33 327.7 Tm
+0 g
+(Bold indicates functional component)Tj
+ET
+1 g
+160.83 678 54 -36 re
+B*
+BT
+14 0 0 14 254.28 618.2 Tm
+0 g
+(C API interface)Tj
+-5.675 2.7743 TD
+(IDL)Tj
+/TT2 1 Tf
+3.7529 -0.0429 TD
+(C++)Tj
+3.9436 -0.06 TD
+[(Ja)19.4(v)25(a)]TJ
+ET
+1 g
+72.83 389.17 453.67 -36 re
+B*
+375.26 353.17 m
+375.26 389.17 l
+299.65 353.17 m
+299.65 389.17 l
+S
+BT
+/TT4 1 Tf
+14.7 0 0 14 161.22 366.17 Tm
+0 g
+(HDF-EOS)Tj
+10.8816 0.0593 TD
+(GCTP)Tj
+4.1435 0.55 TD
+[(MISR geor)17.7(egistration)]TJ
+-0.0238 -1.0736 TD
+[(inf)25.5(o \(DPS A)24.6(ppendix A\))]TJ
+ET
+207 595.33 171 -25.83 re
+S
+BT
+12 0 0 12 89.17 313.5 Tm
+[(Number r)18.2(efers to design memo section)]TJ
+13.82 0 0 14 228.13 577.5 Tm
+(Geolocated Som Plane)Tj
+ET
+q
+72 686.17 468 -383.67 re
+W n
+162 595.33 45 -153 re
+378 595.33 36 -153 re
+414 595.33 36 -153 re
+513 595.33 27 -198 re
+486 595.33 27 -198 re
+300 487.33 78 -45 re
+315 442.33 m
+207 442.33 l
+225 487.33 m
+297 487.33 l
+225 568.33 m
+225 487.33 l
+261 550.33 m
+261 568.33 l
+292.83 550.33 m
+261 550.33 l
+292.83 487.33 m
+292.83 550.33 l
+297 487.33 m
+315 487.33 l
+S
+Q
+BT
+14 0 0 14 125.83 416 Tm
+[(Coordinate Con)39.9(v)10(ersion)]TJ
+6.9643 3.3336 TD
+(ReadBlock)Tj
+0.5357 4.2257 TD
+(ReadRaw)Tj
+/TT2 1 Tf
+5.655 -0.0593 TD
+(ReadData)Tj
+-0.595 -3.6907 TD
+(Read)Tj
+0 -1.0593 TD
+[(Con)39.9(v)15.7(entional)]TJ
+/TT4 1 Tf
+0 14 -14 0 528.34 431 Tm
+(Memory Management)Tj
+0.8929 1.8457 TD
+[(Units Con)40.9(v)10(ersion)]TJ
+1.4286 22.5593 TD
+(Region Selection)Tj
+/TT2 1 Tf
+0 3.0957 TD
+[(Orbit/P)14.8(ath Query)]TJ
+-1.7264 3.095 TD
+(File/Field/Grid Query)Tj
+1.6071 -23.9286 TD
+(Map Reprojection)Tj
+/TT4 1 Tf
+0 2.9164 TD
+(SOM Plane)Tj
+0 -1 TD
+(Coordinate Query)Tj
+-2.5471 -4.0536 TD
+(BLS, SOM, Lat/Lon)Tj
+0 -1 TD
+[(Coordinate Con)39.9(v)10(ersion)]TJ
+ET
+0 J 1.08 w 
+442.49 399.33 m
+441 404.52 l
+439.51 399.33 l
+441 399.33 l
+s
+442.49 399.33 m
+441 404.52 l
+439.51 399.33 l
+441 399.33 l
+f*
+439.51 395.33 m
+441 390.15 l
+442.49 395.33 l
+441 395.33 l
+s
+439.51 395.33 m
+441 390.15 l
+442.49 395.33 l
+441 395.33 l
+f*
+0.6 w 
+441 395.83 m
+441 398.83 l
+S
+1.08 w 
+352.49 399.33 m
+351 404.52 l
+349.51 399.33 l
+351 399.33 l
+s
+352.49 399.33 m
+351 404.52 l
+349.51 399.33 l
+351 399.33 l
+f*
+349.51 395.33 m
+351 390.15 l
+352.49 395.33 l
+351 395.33 l
+s
+349.51 395.33 m
+351 390.15 l
+352.49 395.33 l
+351 395.33 l
+f*
+0.6 w 
+351 395.83 m
+351 398.83 l
+S
+1.08 w 
+308.64 431.3 m
+306 440.52 l
+303.36 431.3 l
+306 431.3 l
+s
+308.64 431.3 m
+306 440.52 l
+303.36 431.3 l
+306 431.3 l
+f*
+303.36 399.37 m
+306 390.15 l
+308.64 399.37 l
+306 399.37 l
+s
+303.36 399.37 m
+306 390.15 l
+308.64 399.37 l
+306 399.37 l
+f*
+0.6 w 
+306 399.87 m
+306 430.8 l
+S
+1.08 w 
+290.64 431.3 m
+288 440.52 l
+285.36 431.3 l
+288 431.3 l
+s
+290.64 431.3 m
+288 440.52 l
+285.36 431.3 l
+288 431.3 l
+f*
+285.36 399.37 m
+288 390.15 l
+290.64 399.37 l
+288 399.37 l
+s
+285.36 399.37 m
+288 390.15 l
+290.64 399.37 l
+288 399.37 l
+f*
+0.6 w 
+288 399.87 m
+288 430.8 l
+S
+BT
+/TT2 1 Tf
+10 0 0 10 209.17 586 Tm
+(1.2)Tj
+-4.617 -0.05 TD
+(1.1)Tj
+21.75 -0.083 TD
+(1.3)Tj
+3.592 -0.033 TD
+(1.4)Tj
+ET
+1.08 w 
+91.49 399.33 m
+90 404.52 l
+88.51 399.33 l
+90 399.33 l
+s
+91.49 399.33 m
+90 404.52 l
+88.51 399.33 l
+90 399.33 l
+f*
+88.51 395.33 m
+90 390.15 l
+91.49 395.33 l
+90 395.33 l
+s
+88.51 395.33 m
+90 390.15 l
+91.49 395.33 l
+90 395.33 l
+f*
+0.6 w 
+90 395.83 m
+90 398.83 l
+S
+BT
+10 0 0 10 119.5 585.3401 Tm
+(2.1)Tj
+-4.558 -0.017 TD
+(2.2)Tj
+37.833 0 TD
+[(2.3)-2250(2.4)]TJ
+6.333 0.083 TD
+(2.5)Tj
+ET
+q
+72 686.17 468 -383.67 re
+W n
+2 J 
+486 595.33 m
+450 595.33 l
+486 397.33 m
+117 397.33 l
+72 595.33 45 -198 re
+117 595.33 45 -152.67 re
+S
+Q
+1 g
+2 J 
+376.5 678 54 -36 re
+B*
+430.67 678 54.5 -36 re
+B*
+485 677.83 54 -36 re
+B*
+323 677.83 54 -35.83 re
+B*
+BT
+14 0 0 14 330.49 655.6 Tm
+0 g
+[(Python)-1622.4(F90)]TJ
+8.1793 0.0286 TD
+[(Perl)-1841.3(Matlab)]TJ
+ET
+q
+72 686.17 468 -383.67 re
+W n
+72.5 677.83 466.5 -73.5 re
+S
+Q
+endstream
+endobj
+44 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT4 5 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+48 0 obj
+<<
+/Length 170
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 295.17 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 12 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+ET
+endstream
+endobj
+49 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+51 0 obj
+<<
+/Length 2943
+>>
+stream
+1 g
+/GS1 gs
+0 792 612 -791.94 re
+f
+BT
+/TT2 1 Tf
+10 0 0 10 295.17 36 Tm
+0 g
+0 Tc
+0 Tw
+(- 13 -)Tj
+33.9411 33.9411 -33.9411 33.9411 279.89 343.84 Tm
+0 1 1 rg
+(Draft 6)Tj
+ET
+0 G
+0 J 0 j 1.08 w 3.86 M []0 d
+1 i 
+218 348 18 58 re
+S
+BT
+/TT9 1 Tf
+0 4.01 -4.01 0 228 367 Tm
+0 g
+(Mtk Library)Tj
+ET
+277 104 18 58 re
+S
+BT
+0 4.01 -4.01 0 287 124 Tm
+(User Input)Tj
+ET
+273 422 18 58 re
+S
+BT
+0 4.01 -4.01 0 283 429 Tm
+(Coordinate Conversion)Tj
+ET
+274 257 18 58 re
+S
+BT
+0 4.01 -4.01 0 284 267 Tm
+(Data Plane Retrieval)Tj
+ET
+276 622 18 58 re
+S
+BT
+0 4.01 -4.01 0 286 628 Tm
+(Data Plane Manipulation)Tj
+ET
+330 66 18 58 re
+S
+BT
+0 4.01 -4.01 0 338 77 Tm
+(Region Description)Tj
+1.4963 -0.9975 TD
+(\(any method\))Tj
+ET
+330 139 18 58 re
+S
+BT
+0 4.01 -4.01 0 338 153 Tm
+(Data Description)Tj
+-2.2444 -0.9975 TD
+(HDF-EOS File/Grid/Field)Tj
+ET
+330 226 18 58 re
+S
+BT
+0 4.01 -4.01 0 340 245 Tm
+(Read Raw)Tj
+ET
+330 293 18 58 re
+S
+BT
+0 4.01 -4.01 0 340 312 Tm
+(Read Data)Tj
+ET
+330 592 18 58 re
+S
+BT
+0 4.01 -4.01 0 340 609 Tm
+(Reprojection)Tj
+ET
+q
+72 720 540 -719.94 re
+W n
+330 660 18 58 re
+S
+Q
+BT
+0 4.01 -4.01 0 340 672 Tm
+(Change grid scale)Tj
+ET
+330 382 18 58 re
+S
+BT
+0 4.01 -4.01 0 340 406 Tm
+(GCTP)Tj
+ET
+331 461 18 58 re
+S
+BT
+0 4.01 -4.01 0 339 474 Tm
+(MISR Coordinate)Tj
+1.2469 -0.9975 TD
+(Conversions)Tj
+ET
+448 222 18 58 re
+S
+BT
+0 4.01 -4.01 0 458 236 Tm
+(Lat/Lon to SOM)Tj
+ET
+448 283 18 58 re
+S
+BT
+0 4.01 -4.01 0 458 297 Tm
+(SOM to Lat/Lon)Tj
+ET
+448 343 18 58 re
+S
+BT
+0 4.01 -4.01 0 456 357 Tm
+(Lat/Lon to Other)Tj
+-0.2494 -0.9975 TD
+(GCTP Projection)Tj
+ET
+448 403 18 58 re
+S
+BT
+0 4.01 -4.01 0 456 410 Tm
+(Other GCTP Projection)Tj
+3.2419 -0.9975 TD
+(to Lat/Lon)Tj
+ET
+447 478 18 58 re
+S
+BT
+0 4.01 -4.01 0 455 488 Tm
+(Block, Line, Sample)Tj
+2.9925 -0.9975 TD
+(to SOM)Tj
+ET
+447 538 18 58 re
+S
+BT
+0 4.01 -4.01 0 455 560 Tm
+(SOM to)Tj
+-2.9925 -0.9975 TD
+(Block, Line, Sample)Tj
+ET
+447 598 18 58 re
+S
+BT
+0 4.01 -4.01 0 455 609 Tm
+(Plane Line, Sample)Tj
+2.7431 -0.9975 TD
+(to SOM)Tj
+ET
+447 659 18 58 re
+S
+BT
+0 4.01 -4.01 0 455 681 Tm
+(SOM to)Tj
+-2.7431 -0.9975 TD
+(Plane Line, Sample)Tj
+ET
+q
+72 720 540 -719.94 re
+W n
+448 2 18 58 re
+S
+Q
+BT
+0 4.01 -4.01 0 456 8 Tm
+(Set Region by ULC/LRC)Tj
+3.99 -0.9975 TD
+(Lat/Lon)Tj
+ET
+448 66 18 58 re
+S
+BT
+0 4.01 -4.01 0 456 74 Tm
+(Set Region by Center)Tj
+0.7481 -0.9975 TD
+(Lat/Lon and Extent)Tj
+ET
+448 128 18 58 re
+S
+BT
+0 4.01 -4.01 0 456 139 Tm
+(Set Region by Path)Tj
+0.4988 -0.9975 TD
+(and Block Range)Tj
+ET
+q
+72 720 540 -719.94 re
+W n
+2 J 
+277 133 m
+236 377 l
+274 286 m
+236 377 l
+276 651 m
+236 377 l
+330 95 m
+295 133 l
+330 168 m
+295 133 l
+330 255 m
+292 286 l
+330 322 m
+292 286 l
+330 621 m
+294 651 l
+330 689 m
+294 651 l
+273 451 m
+236 377 l
+330 411 m
+291 451 l
+331 490 m
+291 451 l
+448 251 m
+348 411 l
+448 312 m
+348 411 l
+448 372 m
+348 411 l
+448 432 m
+348 411 l
+447 507 m
+349 490 l
+447 567 m
+349 490 l
+447 627 m
+349 490 l
+447 688 m
+349 490 l
+448 31 m
+348 95 l
+448 95 m
+348 95 l
+448 157 m
+348 95 l
+S
+1 g
+612 0.06 m
+612 720 l
+612 0.06 l
+f
+Q
+endstream
+endobj
+52 0 obj
+<<
+/ProcSet [/PDF /Text ]
+/Font <<
+/TT2 4 0 R
+/TT9 8 0 R
+>>
+/ExtGState <<
+/GS1 10 0 R
+>>
+>>
+endobj
+9 0 obj
+<<
+/Type /XObject
+/Subtype /Image
+/Width 752
+/Height 272
+/BitsPerComponent 1
+/ColorSpace /DeviceGray
+/Length 25569
+>>
+stream
+ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                          ?ÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                          ÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                           ÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                           ÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                           ÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                           ÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                            ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                             ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ?ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ?ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ?ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ?ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ?ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿð         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿü         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿü         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð        ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿü         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿø        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿà        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€        ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿü         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿð         ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                               ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       @                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       `                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       `                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       p                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       x                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       x                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       |                       ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       |                       ?ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ~                       ?ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà                              ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       €                      ÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       À                      ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       À                      ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       à                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ð                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ð                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ø                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ü                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ü                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       þ                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       þ                     ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿ                     ?ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿ€                    ?ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿ€                    ÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÀ                    ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿà                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿà                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿð                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿø                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿø                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿü                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿþ                   ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿþ                   ÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ          ÿÿÿÿÿà       ÿÿ                  ÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ          ÿÿÿÿÿà       ÿÿ€                 ÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü          ÿÿÿÿÿà       ÿÿ€                 ÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü          ÿÿÿÿÿà       ÿÿÀ                 ÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü          ÿÿÿÿÿà       ÿÿÀ                 ?ÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø          ÿÿÿÿÿà       ÿÿà                 ÿÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà          ÿÿÿÿÿà       ÿÿð                ÿÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ          ÿÿÿÿÿà       ÿÿð                ÿÿÿÿÿÿÿÿ          ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ           ÿÿÿÿÿà       ÿÿø                ÿÿÿÿÿÿÿÿ           ÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ           ÿÿÿÿÿà       ÿÿü                ÿÿÿÿÿÿÿÿÿ           ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà           ÿÿÿÿÿà       ÿÿü               ÿÿÿÿÿÿÿÿÿ                      ÿÿþÿÿÿü                      ÿÿÿÿÿà       ÿÿþ               ?ÿÿÿÿÿÿÿÿÿ                      ?ÿÿÿÿÿÿø                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ?ÿÿýÿÿÿø                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿÿÿÿÿð                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿþÿÿÿð                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿÿÿÿÿà                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿýÿÿÿÀ                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿÿÿÿÿÀ                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿþÿÿÿ€                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿÿÿÿÿ€                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                      ÿÿýÿÿÿ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ÿÿÿÿÿþ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ÿÿþÿÿþ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ÿÿÿÿü                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ÿýÿÿü                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                      ?ÿÿÿÿø                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                      ?ÿþÿÿð                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                      ÿÿÿÿð                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                      ÿýÿÿà                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      ÿÿÿÿà                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      ÿþÿÿÀ                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      ÿÿÿÿ€                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      ÿýÿÿ€                      ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                      ÿÿÿÿ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                      ÿþÿÿ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                       ÿÿÿþ                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð                       ÿýÿü                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð                       ÿÿü                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø                       ?þÿø                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü                       ?ÿÿø                       ?ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü                       ýÿð                       ?ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ                       ÿÿà                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       þÿà                       ÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ÿÿÀ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                      ýÿÀ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      ÿÿ€                      ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                      þÿ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿð                      ÿÿ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø                      ýþ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü                       ÿþ                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ                       ~ü                       ÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                       ø                       ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÀ                      =ø                      ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                      ?ð                      ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿø                      ð                      ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ                      à                      ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ€                     À                      ÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                     À                     ÿÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþ                     €                     ÿÿÿÿÿÿÿÿà       ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿà                    €                     ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿý                     ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿýÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿþÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+endstream
+endobj
+10 0 obj
+<<
+/Type /ExtGState
+/SA false
+/SM 0.02
+/OP false
+/op false
+/OPM 1
+/BG2 /Default
+/UCR2 /Default
+/HT /Default
+/TR2 /Default
+>>
+endobj
+53 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 750
+/CapHeight 662
+/Descent -250
+/Flags 34
+/FontBBox [-168 -218 1000 898]
+/FontName /Times-Roman
+/ItalicAngle 0
+/StemV 84
+/XHeight 450
+/StemH 84
+>>
+endobj
+54 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 750
+/CapHeight 676
+/Descent -250
+/Flags 262178
+/FontBBox [-168 -218 1000 935]
+/FontName /Times-Bold
+/ItalicAngle 0
+/StemV 133
+/XHeight 461
+/StemH 139
+>>
+endobj
+55 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 750
+/CapHeight 662
+/Descent -250
+/Flags 34
+/FontBBox [-168 -218 1000 898]
+/FontName /Times-Roman
+/ItalicAngle 0
+/StemV 84
+/XHeight 450
+/StemH 84
+>>
+endobj
+56 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 770
+/CapHeight 718
+/Descent -229
+/Flags 262176
+/FontBBox [-170 -228 1003 962]
+/FontName /Helvetica-Bold
+/ItalicAngle 0
+/StemV 133
+/XHeight 532
+/StemH 140
+>>
+endobj
+57 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 770
+/CapHeight 718
+/Descent -229
+/Flags 32
+/FontBBox [-166 -225 1000 931]
+/FontName /Helvetica
+/ItalicAngle 0
+/StemV 88
+/XHeight 523
+/StemH 88
+>>
+endobj
+58 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 750
+/CapHeight 676
+/Descent -250
+/Flags 262178
+/FontBBox [-168 -218 1000 935]
+/FontName /Times-Bold
+/ItalicAngle 0
+/StemV 133
+/XHeight 461
+/StemH 139
+>>
+endobj
+59 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 750
+/CapHeight 653
+/Descent -250
+/Flags 98
+/FontBBox [-169 -217 1010 883]
+/FontName /Times-Italic
+/ItalicAngle -15
+/StemV 76
+/XHeight 441
+/StemH 76
+>>
+endobj
+60 0 obj
+<<
+/Type /FontDescriptor
+/Ascent 753
+/CapHeight 562
+/Descent -246
+/Flags 35
+/FontBBox [-28 -250 628 805]
+/FontName /Courier
+/ItalicAngle 0
+/StemV 51
+/XHeight 426
+/StemH 51
+>>
+endobj
+4 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 149
+/Widths [250 0 0 0 0 0 0 0 333 333 0 564 250 333 250 278 
+500 500 500 500 500 500 500 500 500 500 278 0 0 0 0 0 
+0 722 667 667 722 611 556 722 722 333 389 722 611 889 722 722 
+556 722 667 556 611 722 0 944 722 722 0 333 0 333 0 500 
+0 444 500 444 500 444 333 500 500 278 278 500 278 778 500 500 
+500 500 333 389 278 500 500 722 500 500 444 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 333 444 444 350 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Times-Roman
+/FontDescriptor 53 0 R
+>>
+endobj
+5 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 121
+/Widths [250 0 0 0 0 0 0 0 333 333 0 0 250 333 250 278 
+0 500 500 500 500 500 0 0 0 0 333 0 0 0 0 0 
+0 722 667 722 722 667 611 778 778 389 0 0 667 944 722 778 
+611 778 722 556 667 722 0 0 0 0 0 0 0 0 0 0 
+0 500 556 444 556 444 333 500 556 278 333 556 278 833 556 500 
+556 556 444 389 333 556 500 722 500 500 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Times-Bold
+/FontDescriptor 54 0 R
+>>
+endobj
+6 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 222
+/LastChar 223
+/Widths [556 556 ]
+/Encoding /MacRomanEncoding
+/BaseFont /Times-Roman
+/FontDescriptor 55 0 R
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 121
+/Widths [278 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 556 0 611 0 0 0 
+667 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 556 611 0 0 556 0 0 0 278 0 0 278 0 611 611 
+611 0 389 556 333 611 0 0 0 556 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Helvetica-Bold
+/FontDescriptor 56 0 R
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 121
+/Widths [278 0 0 0 0 0 0 0 333 333 0 0 278 333 0 278 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 667 722 722 667 611 778 722 278 0 0 556 833 0 778 
+667 0 722 667 611 722 0 0 0 0 0 0 0 0 0 0 
+0 556 556 500 556 556 278 556 556 222 222 500 222 833 556 556 
+556 0 333 500 278 556 500 722 500 500 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Helvetica
+/FontDescriptor 57 0 R
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 222
+/LastChar 222
+/Widths [556 ]
+/Encoding /MacRomanEncoding
+/BaseFont /Times-Bold
+/FontDescriptor 58 0 R
+>>
+endobj
+25 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 97
+/LastChar 120
+/Widths [500 0 0 500 444 0 0 0 278 0 0 0 722 500 500 500 
+0 389 389 278 0 0 0 444 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Times-Italic
+/FontDescriptor 59 0 R
+>>
+endobj
+29 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/FirstChar 32
+/LastChar 121
+/Widths [600 0 0 0 0 0 600 0 600 600 0 0 600 0 0 0 
+0 600 600 600 600 600 0 0 0 0 0 0 0 0 0 0 
+0 600 600 600 600 600 600 600 600 600 0 600 600 600 0 600 
+600 0 600 600 600 600 600 0 600 600 0 600 0 600 0 600 
+0 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 0 600 600 600 600 600 600 600 600 ]
+/Encoding /WinAnsiEncoding
+/BaseFont /Courier
+/FontDescriptor 60 0 R
+>>
+endobj
+1 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 3 0 R
+/Contents 2 0 R
+>>
+endobj
+12 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 14 0 R
+/Contents 13 0 R
+>>
+endobj
+15 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 17 0 R
+/Contents 16 0 R
+>>
+endobj
+19 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 21 0 R
+/Contents 20 0 R
+>>
+endobj
+22 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 24 0 R
+/Contents 23 0 R
+>>
+endobj
+26 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 28 0 R
+/Contents 27 0 R
+>>
+endobj
+30 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 32 0 R
+/Contents 31 0 R
+>>
+endobj
+33 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 35 0 R
+/Contents 34 0 R
+>>
+endobj
+36 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 38 0 R
+/Contents 37 0 R
+>>
+endobj
+39 0 obj
+<<
+/Type /Page
+/Parent 11 0 R
+/Resources 41 0 R
+/Contents 40 0 R
+>>
+endobj
+42 0 obj
+<<
+/Type /Page
+/Parent 46 0 R
+/Resources 44 0 R
+/Contents 43 0 R
+>>
+endobj
+47 0 obj
+<<
+/Type /Page
+/Parent 46 0 R
+/Resources 49 0 R
+/Contents 48 0 R
+>>
+endobj
+50 0 obj
+<<
+/Type /Page
+/Parent 46 0 R
+/Resources 52 0 R
+/Contents 51 0 R
+>>
+endobj
+61 0 obj
+<<
+/S /D
+>>
+endobj
+62 0 obj
+<<
+/Nums [0 61 0 R ]
+>>
+endobj
+11 0 obj
+<<
+/Type /Pages
+/Kids [1 0 R 12 0 R 15 0 R 19 0 R 22 0 R 26 0 R 30 0 R 33 0 R 36 0 R 39 0 R]
+/Count 10
+/Parent 45 0 R
+>>
+endobj
+46 0 obj
+<<
+/Type /Pages
+/Kids [42 0 R 47 0 R 50 0 R]
+/Count 3
+/Parent 45 0 R
+>>
+endobj
+45 0 obj
+<<
+/Type /Pages
+/Kids [11 0 R 46 0 R ]
+/Count 13
+/MediaBox [0 0 612 792]
+>>
+endobj
+63 0 obj
+<<
+/CreationDate (D:20051114142446-08'00')
+/ModDate (D:20051114142446-08'00')
+/Producer (PSNormalizer.framework)
+>>
+endobj
+64 0 obj
+<<
+/Type /Catalog
+/Pages 45 0 R
+/PageLabels 62 0 R
+>>
+endobj
+xref
+0 65
+0000000000 65535 f 
+0000085479 00000 n 
+0000000016 00000 n 
+0000005614 00000 n 
+0000082588 00000 n 
+0000083147 00000 n 
+0000083609 00000 n 
+0000083783 00000 n 
+0000084169 00000 n 
+0000055137 00000 n 
+0000080857 00000 n 
+0000086636 00000 n 
+0000085560 00000 n 
+0000005788 00000 n 
+0000009335 00000 n 
+0000085644 00000 n 
+0000009454 00000 n 
+0000013959 00000 n 
+0000084608 00000 n 
+0000085728 00000 n 
+0000014091 00000 n 
+0000020430 00000 n 
+0000085812 00000 n 
+0000020562 00000 n 
+0000027352 00000 n 
+0000084778 00000 n 
+0000085896 00000 n 
+0000027484 00000 n 
+0000033314 00000 n 
+0000085017 00000 n 
+0000085980 00000 n 
+0000033459 00000 n 
+0000035606 00000 n 
+0000086064 00000 n 
+0000035738 00000 n 
+0000040652 00000 n 
+0000086148 00000 n 
+0000040784 00000 n 
+0000044809 00000 n 
+0000086232 00000 n 
+0000044930 00000 n 
+0000047290 00000 n 
+0000086316 00000 n 
+0000047422 00000 n 
+0000051606 00000 n 
+0000086861 00000 n 
+0000086773 00000 n 
+0000086400 00000 n 
+0000051714 00000 n 
+0000051936 00000 n 
+0000086484 00000 n 
+0000052033 00000 n 
+0000055029 00000 n 
+0000080998 00000 n 
+0000081195 00000 n 
+0000081397 00000 n 
+0000081594 00000 n 
+0000081800 00000 n 
+0000081995 00000 n 
+0000082197 00000 n 
+0000082397 00000 n 
+0000086568 00000 n 
+0000086596 00000 n 
+0000086953 00000 n 
+0000087085 00000 n 
+trailer
+<<
+/Size 65
+/Root 64 0 R
+/Info 63 0 R
+/ID [<82928ddd26da6ca391659138ba15f863><82928ddd26da6ca391659138ba15f863>]
+>>
+startxref
+87155
+%%EOF

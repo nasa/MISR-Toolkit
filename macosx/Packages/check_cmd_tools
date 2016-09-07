@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# echo `make --version`
+if  ( make --version 2> /dev/null | grep  -q GNU  ) ;  then
+  echo "GNU Make FOUND!" ;
+  exit 0
+  break;
+else
+  exit 1
+fi
+exit 1

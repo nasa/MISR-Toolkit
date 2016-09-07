@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_GRID_TO_FIELDLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15352000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_GRID_TO_FIELDLIST returns a string array of fields associated with a given grid.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      file      MISR file
+      grid      name of grid
+   
+   the call:
+   
+      <B>status = MTK_FILE_GRID_TO_FIELDLIST( file, grid, nfields, fieldlist )</B>
+   
+   returns:
+   
+      status    0 on success; otherwise failure
+      nfields   number of fields
+      fieldlist string array of field names
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file  = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      grid  = 'RedBand'
+      
+      <B>status = MTK_FILE_GRID_TO_FIELDLIST( file, grid, nfields, fieldlist</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, '================================================='
+      FOR i = 0, nfields-1 DO $
+         PRINT, 'FIELD #'+    $
+         STRTRIM(i+1,2)+      $
+         '              : '+fieldlist[i]
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : RedBand
+     =================================================
+      FIELD #1              : Red Radiance/RDQI
+      FIELD #2              : Red Radiance
+      FIELD #3              : Red RDQI
+      FIELD #4              : Red DN
+      FIELD #5              : Red Equivalent Reflectance
+      FIELD #6              : Red Brf
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileGridToFieldList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

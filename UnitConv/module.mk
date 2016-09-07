@@ -1,0 +1,13 @@
+INC += UnitConv/include/MisrUnitConv.h
+SRC += UnitConv/src/MtkDdToDegMinSec.c
+SRC += UnitConv/src/MtkDdToDms.c
+SRC += UnitConv/src/MtkDdToRad.c
+SRC += UnitConv/src/MtkDegMinSecToDd.c
+SRC += UnitConv/src/MtkDegMinSecToDms.c
+SRC += UnitConv/src/MtkDegMinSecToRad.c
+SRC += UnitConv/src/MtkDmsToDd.c
+SRC += UnitConv/src/MtkDmsToDegMinSec.c
+SRC += UnitConv/src/MtkDmsToRad.c
+SRC += UnitConv/src/MtkRadToDd.c
+SRC += UnitConv/src/MtkRadToDegMinSec.c
+SRC += UnitConv/src/MtkRadToDms.c

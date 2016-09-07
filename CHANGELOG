@@ -1,0 +1,165 @@
+1.4.4 (Tue 19, Aug 2014)
+Fixed data type size bug on IDL.
+Added compatability for older HDF4.
+Fixed python test target with over-written LD_LIBRARY_PATH.
+Fixed python build broken by XCode 5.1
+Added applications target to OS X Installer.
+Added IDL target to OS X Installer.
+
+
+1.4.3 (Tue 13, May 2014)
+Added applications to default make and make install.
+
+1.4.2 (Thu 10, Apr 2014)
+Updated ftp paths for download_libraries script.
+Fixed numerous warnings in clang and gcc.
+Minor bugfixes.
+Fixes for Visual Studio 2010 support.
+Added Windows Installer sub-packages.
+Code Readability Improvements in IDL wrapper.
+Added additional functions to function table.
+Added Makefile arch flags to work around issues on x86_64 linux.
+
+1.4.1 (Tue 18, Feb 2014)
+Updated Mac installer intro.
+Fixed MtkRegionToPathList for large regions.
+Added Windows Binary Installer.
+
+1.4.0 (Thu 30, Jan 2014)
+Added Mac Installer. 
+Support for field attributes added. 
+Added support for TC_CLOUD, TC_CLOUD_DIAG.
+Added support for RCCM firstlook.
+Changes to fix orbit / time functions dealing with orbits 995-1000.
+Added MtkFileAttrList / MtkFileAttrGet
+
+
+1.4.0RC1 (Tuesday 5, Nov 2013)
+Added documentation, Python wrappers, IDL wrappers for Regression and ReProject functionality.
+Cursory support for win32 WIX installer.
+Applications moved to applications directory.
+Added support for OS X 10.8
+Documentation updates
+Various bugfixes
+
+1.3.0 (Internal)
+Removed Universal Binaries for Mac builds
+Updated Leap Seconds Table
+Added support for OS X 10.7
+Update Depenency Versions and download scripts
+
+1.2.3   (Fri, 22, Aug 2008)
+
+Added MtkSurfaceBRFRegression utility.
+Added BRF Regression C routines, Python and IDL support not yet available.
+Added Map Reprojection C routines, Python and IDL support not yet available.
+Fixed bugs in MtkSnapToGrid.
+Fixed error handling bug in MtkRegionToPathList.
+Updated orbit predition table.
+Fixed memory leaks in Python API.
+Fixed unscaling for LandBRF and LandHDRF 
+
+1.2.0	(Fri, 10, Nov 2006)
+
+New Mac OSX Universal Binary (Intel/PPC) architecture
+Patched HDF-EOS/HDF library to work in Linux64 and Mac OSX (Universal Binary)
+Added a script to download HDF-EOS/HDF libraries
+Improved HDF-EOS/HDF library installation
+Added MtkDateTimeToJulian and MtkJulianToDateTime
+Added MtkTimeMetaRead and MtkPixelTime to retrieve pixel acquisition time
+Document slicing of field extra-dimension using bracket notation when reading
+Enhanced C examples
+Fixed IDL on Linux64
+Reworked Python interface
+Updated Mtk Python to use NumPy 1.0
+Fixed error messaging and handling in Python
+Add URC and LLC coordinates to MTKt_MapInfo and MTKt_BlockCorners structures
+Changed functionality of MtkFileGridFieldCheck
+Added MtkVersion function to report Mtk release version
+Added MtkGeoRegion to MtkMapinfo structure to report the bounds of a data plane
+ in terms of geographic latitide/longitude
+Fixed some bounds checking problems in MapQuery
+Added ability to read block metadata
+Added the routine MtkCreateLatLon to compute latitude and longitude data planes
+Added MtkWriteEnviFile to write an IDL ENVI file given a Mtk data buffer and
+ mapinfo
+Added MtkWriteBinFile3D
+ 
+1.1.2	(Thu, 6 Jul 2006)
+
+Added new routines MtkFileAttrList and MtkFileGridList
+Added support for reading a stacked blockrange in Python
+Added MtkFileAttrGet, MtkGridAttrGet, MtkFileAttrList and MtkGridAttrList
+ to command line utilities
+Added MtkFileToOrbit, MtkFileCoreMetaDataGet and MtkFileCoreMetaDataQuery
+ to command line utilities
+Fixed problem with Python recognizing Equivalent Reflectance
+Fixed Equivalent Reflectance computation bug (was missing sun distance squared)
+Fixed time format bug in Python
+Changed MtkDataPlane Python object to have a method to retrieve MtkMapInfo
+ and removed the coordinate conversion methods.  They are in MtkMapInfo now.
+Added MtkFileAttrList and MtkGridAttrList to IDL wrappers
+Removed deprecated SetRegion functions
+Fixed all issue regarding Mtk, Python and NumPy on 64-bit Linux
+
+1.1.1	(Thu, 15 Jun 2006)
+
+Python reference counting
+C++ header file support
+Update readmisr.py
+
+1.1.0	(Mon, 12 Jun 2006)
+
+New Python bindings.
+New Win32 support.
+New Linux64 support.
+Added core metadata query and retrieval functionality.
+Changed time string format to be ISO 8601 complaint.
+Added MtkPathBlockRangeToBlockCorners.c.
+Added MtkFileAttrGet.c.
+Added MtkOrbitToTimeRange.c.
+Added MtkFileGridFieldCheck.c.
+Added MtkSetRegionByLatLonExtent.c.
+Deprecated MtkSetRegionByLatLonExtentMeters.c,
+ MtkSetRegionByLatLonExtentKilometers.c,MtkSetRegionByLatLonExtentDegrees.c,
+ and MtkSetRegionByLatLonExtentPixels.c
+Fixed MtkReadL1B2 M_PI and BRF fill value problems.
+Added thirdparty library build scripts.
+
+1.0.4	(Mon, 17 Apr 2006)
+
+Beta release
+
+Fixed Linux build problem with MtkReadL1B2.c.
+Improved MtkDataBufferAllocate and MtkDataBufferAllocate3D unit tests.
+Fixed Mtk_c_env.csh and Mtk_c_env.sh scripts.
+Added #!/usr/bin/env sh to depend.sh script.
+Added USE_BSD to get M_PI in MtkReadL1B2.c.
+Added MtkJulianToCal.c and MtkCalToJulian.c.
+Added MtkOrbitToTime.c.
+Fixed IDL example3.pro and add readmisr.pro.
+Added scripts to automate installing hdf/hdfeos/zlib/jpeg.
+
+1.0.3	(Wed, 1 Mar 2006)
+
+Beta release
+
+Added Equivalent Reflectance as a virtual computed field to the L1B2 set of
+routines.
+Fixed a dimlist error with IDL example3.pro.
+Fixed precision problems found during Win32 port.
+Increased the precision of the longitude of the ascending node.
+Improved the install rules in the Makefile.
+Fixed a bug in MtkReadConv regarding lrc_sample coordinates.
+
+1.0.2	(Tue, 31 Jan 2006)
+
+Initial beta release
+
+1.0.1	(Wed, 30 Nov 2005)
+
+Alpha release
+
+1.0.0	(Tue, 15 Nov 2005)
+
+Initial alpha release

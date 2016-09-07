@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_READBLOCK</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060131;470300">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061110;14151500">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_READBLOCK returns a single block of MISR data given file, grid, field, and block number.
+   See Particulars below regarding extra dimensions in some fields.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      gridname       grid name
+      fieldname      field name
+      blocknum       block number
+
+   the call:
+   
+      <B>status = MTK_READBLOCK( filename, gridname, fieldname, blocknum, databuf )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      databuf        data array
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      gridname    = 'RedBand'
+      fieldname   = 'Red Radiance/RDQI'
+      blocknum    = 40
+      <B>status      = MTK_READBLOCK</B>( <B>filename, gridname, fieldname, blocknum, databuf</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', filename
+      print, 'grid                  : ', gridname
+      print, 'field                 : ', fieldname
+      print, 'block number          : ', blocknum
+      print, '================================================='
+      help, databuf
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+      grid                  : RedBand
+      field                 : Red Radiance/RDQI
+      block number          : 40
+    =================================================
+      DATABUF         UINT      = Array[2048, 512]
+
+-Particulars
+   The MISR Toolkit read functions always return a 2-D data plane buffer.  Some fields in the MISR data products
+   are multi-dimensional.  In order to read one of these fields, the slice to read needs to be specified.
+   A bracket notation on the fieldname is used for this purpose.  For example fieldname = “RetrAppMask[0][5]”.
+
+   Additional dimensions can be determined by the routine <B>mtk_file_grid_field_to_dimlist()</B> or by the
+   <B><U><I>MISR Data Product Specification (DPS) Document</I></U></B>.  The actually definition of the indices are not described in the
+   MISR product files and thus not described by the MISR Toolkit.  These will have to be looked up in the
+   MISR DPS.  All indices are 0-based.
+
+   Example with 1-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'RegParamsAer'
+      basefieldname = 'RegBestEstimateSpectralOptDepth'
+      blocknum     = 40
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RegBestEstimateSpectralOptDepth[1]'
+      <B>status      = MTK_READBLOCK</B>( <B>filename, gridname, fieldname, blocknum, databuf )</B>
+
+      <B>status      = MTK_READBLOCK(</B> <B>filename, gridname, basefieldname, blocknum, databuf )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+   Example with 2-dimensional field:
+      filename      = '../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P037_O029058_F09_0017.hdf'
+      gridname      = 'SubregParamsAer'
+      basefieldname = 'RetrAppMask'
+      blocknum     = 40
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST(filename, gridname, basefieldname, ndim, dimnames, dimsizes)</B>
+      print, ndim
+      print, dimnames
+      print, dimsizes
+
+      fieldname = 'RetrAppMask[0][5]'
+      <B>status      = MTK_READBLOCK</B>( <B>filename, gridname, fieldname, blocknum, databuf )</B>
+
+      <B>status      = MTK_READBLOCK</B>( <B>filename, gridname, basefieldname, blocknum, databuf )</B>
+      % MTK_READDATA: MISSING FIELD DIMENSION
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkReadBlock.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

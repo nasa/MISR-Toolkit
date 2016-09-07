@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_DMS_TO_DD</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404900">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15390000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_DMS_TO_DD converts packed degrees/minutes/seconds to decimal degrees.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      packed_dms     packed degrees/minutes/seconds
+
+   the call:
+   
+      <B>status = MTK_DMS_TO_DD( packed_dms, dd )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      dd             decimal degrees
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      packed_dms  = 65033000.010
+      <B>status      = MTK_DMS_TO_DD</B>( <B>packed_dms, dd )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'packed dms            : ', packed_dms
+      print, '================================================='
+      print, 'DECIMAL DEGREES       : ',dd,FORMAT='(A,F15.3)'
+
+   IDL outputs:
+   
+      packed dms            :   6.50330e+07
+    =================================================
+      DECIMAL DEGREES       :          65.550
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkDmsToDd.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

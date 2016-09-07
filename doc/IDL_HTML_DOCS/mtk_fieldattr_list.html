@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FIELDATTR_GET</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20140121">
+	<META NAME="CHANGEDBY" CONTENT="Sebastian Val">
+	<META NAME="CHANGED" CONTENT="20140121">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FIELDATTR_LIST lists the attributes for a specified field.
+
+-Copyright
+
+   Copyright (2014), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      filename       MISR product file
+      fieldname      name of a field within the file
+
+   the call:
+   
+      <B>status = MTK_FIELDATTR_LIST( filename, fieldname, attrcnt, attrlist )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      attrcnt        number of attributes in attrlist
+      attrlist       field attribute list
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_TC_CLOUD_P110_O074017_F01_0001.hdf'
+      field        = 'CloudMotionCrossTrack'
+      <B>status      = MTK_FIELDATTR_LIST( file, field, attrcnt, attrlist</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'field                 : ', field
+      print, '================================================='
+      print, 'attribute count       : ', attrcnt
+      print, 'attribute list        : ', attrlist
+
+   IDL outputs:
+   
+       file                  : /Users/sval/Mtk_testdata/in/MISR_AM1_TC_CLOUD_P110_O074017_F01_0001.hdf
+       field                 : CloudMotionCrossTrack
+       =================================================
+       attribute count       :            7
+       attribute list        :  _FillValue scale_factor add_offset valid_min valid_max units long_name
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFieldAttrList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.4.0</PRE>
+</BODY>
+</HTML>

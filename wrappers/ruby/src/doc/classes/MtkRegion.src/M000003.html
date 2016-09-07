@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>path_list (MtkRegion)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style>
+.ruby-comment    { color: green; font-style: italic }
+.ruby-constant   { color: #4433aa; font-weight: bold; }
+.ruby-identifier { color: #222222;  }
+.ruby-ivar       { color: #2233dd; }
+.ruby-keyword    { color: #3333FF; font-weight: bold }
+.ruby-node       { color: #777777; }
+.ruby-operator   { color: #111111;  }
+.ruby-regexp     { color: #662222; }
+.ruby-value      { color: #662222; font-style: italic }
+  .kw { color: #3333FF; font-weight: bold }
+  .cmt { color: green; font-style: italic }
+  .str { color: #662222; font-style: italic }
+  .re  { color: #662222; }
+</style>
+</head>
+<body bgcolor="white">
+<pre>/* call-seq:
+ *   region.path_list -&gt; Array
+ *
+ * Returns a list of paths that cross over a given region.
+ *
+ */
+
+static VALUE mtk_region_path_list(VALUE self)
+{
+  MTKt_Region* r;
+  Data_Get_Struct(self, MTKt_Region, r);
+  int pathcnt;
+  int* pathlist;
+  MTKt_status status = MtkRegionToPathList(*r, &amp;pathcnt, &amp;pathlist);
+  if(status != MTK_SUCCESS)
+    rb_raise(rb_eRuntimeError, &quot;MtkRegionToPathList failed&quot;);
+  VALUE res = rb_ary_new();
+  for(int i = 0; i &lt; pathcnt; ++i)
+    rb_ary_push(res, INT2NUM(pathlist[i]));
+  free(pathlist);
+  return res;
+}</pre>
+</body>
+</html>

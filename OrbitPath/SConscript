@@ -1,0 +1,53 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkLatLonToPathList.c
+                     obj/MtkRegionToPathList.c
+                     obj/MtkRegionPathToBlockRange.c
+                     obj/MtkOrbitToPath.c
+                     obj/MtkTimeToOrbitPath.c
+                     obj/MtkTimeRangeToOrbitList.c
+                     obj/MtkPathTimeRangeToOrbitList.c
+                     obj/MtkOrbitToTimeRange.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/OrbitPath', file_list)
+#env.SharedLibrary('lib/OrbitPath', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkLatLonToPathList_test
+                      MtkRegionToPathList_test
+                      MtkRegionPathToBlockRange_test
+                      MtkOrbitToPath_test
+                      MtkTimeToOrbitPath_test
+                      MtkTimeRangeToOrbitList_test
+                      MtkPathTimeRangeToOrbitList_test
+                      MtkOrbitToTimeRange_test""")
+
+lib_depend = Split("""SetRegion
+                      OrbitPath
+                      CoordQuery
+                      UnitConv
+                      Util
+                      misrcoord""") + env['LIBS']
+
+lib_depend_path = Split("""lib
+                           #SetRegion/lib
+                           #CoordQuery/lib
+                           #UnitConv/lib
+                           #Util/lib
+                           #misrcoord""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

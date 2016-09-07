@@ -1,0 +1,25 @@
+This directory is for the Mtk Mac OS X Installer. The Packages directory contains the needed files to create OS X metapackage installers (.mpkg) using the Packages app ( http://s.sudre.free.fr/Software/Packages/about.html )
+
+IMPORTANT: You MUST "make clean" in the Mtk source directory right before using the build command in Packages or the created mpkg will be broken.
+
+NOTE: By default the scripts install_manager, download_libraries, and install_hdf+hdfeos in the macosx/Packages directory used by this system have a "PREFIX=/tmp".
+      When distributing for general use, these prefixes should be changed to be blank ( "PREFIX=" )
+ 
+To bundle for release, you should put the Packages created mpkg into a sparse R/W DMG file and then convert that DMG to a R/O Compressed DMG.
+Example release steps follow:
+
+1) Create Sparse RW DMG file.
+hdiutil create -size 100M -type SPARSE -volname "MtkInstaller" -fs HFS+ MtkInstaller.dmg.sparseimage
+
+2) Attach to image. Note disk and mounted volume name from output (ex. /dev/disk2s1 and /Volumes/MtkInstaller)
+hdiutil attach MtkInstaller.dmg.sparseimage
+
+3) Copy in mpkg installer
+cp -R Packages/build/Mtk_Packages.mpkg /Volumes/MtkInstaller/
+
+4) Detech from image.
+hdiutil detach -force {mounted disk} (ex. hdiutil detach -force /dev/disk2s1)
+
+5) Create compressed read only image from writable sparse image.
+hdiutil convert "MtkInstaller.dmg.sparseimage" -format UDZO -o "MtkInstaller.dmg" -ov -imagekey zlib-level=9
+

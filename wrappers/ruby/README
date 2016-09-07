@@ -1,0 +1,40 @@
+This directory contains wrappers to allow the MISR Toolkit to be used in Ruby.
+
+The software is documented, see "doc/index.html" for a detailed description 
+of the library.
+
+To Install this package:
+
+1. You need to have NArray installed (can be acquired at
+   http://www.ir.isas.jaxa.jp/~masa/ruby/index-e.html).
+
+2. Also, the MISR toolkit and supporting library needs to be built and
+   installed.
+
+3. Set the environment variable MTKHOME to the base of the MISR Toolkit
+   installation.
+
+4. If you haven't done so already, source the hdfeos_env.sh found in the
+   HDF-EOS library installation. This will set the environment variables
+   HDFEOS_INC, HDFEOS_LIB, HDFINC, HDFLIB.
+
+5. Install RubyGems if it isn't already on your system (see 
+   http://docs.rubygems.org).
+
+6. If you wish to run the units tests while installing the gem (i.e.,
+   use the -t option), you need to do a separate download of the MISR
+   toolkit test data - the test data is not included in the MISR
+   toolkit download. You then need to set the environment variable
+   MTKTESTHOME to the directory with the test data before running the
+   unit tests.
+
+   This step can be skipped if you don't want to run the unit tests.
+
+7. From this directory, type "gem install MisrToolkit". This needs to be run
+   as root, either login as root or run "sudo gem install MisrToolkit".
+
+8. Documentation is available as for any Ruby gem - point to 
+   http://localhost:8808 if you are running gem_server, or just point 
+   directly to the doc directory for the gem (do "gem environment gemdir", 
+   if you don't know where the gems are installed on your system).
+

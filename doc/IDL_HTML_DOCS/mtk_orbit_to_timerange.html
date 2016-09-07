@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_ORBIT_TO_TIMERANGE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;16050600">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_ORBIT_TO_TIMERANGE returns the start time and end time for a given orbit, expressed in the form <I>yyyy</I>-<I>mm</I>-<I>dd</I>T<I>hh</I>:<I>mm</I>:<I>ss</I>Z.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      orbit          orbit number
+
+   the call:
+   
+      <B>status = MTK_ORBIT_TO_TIMERANGE( orbit, start_time, end_time )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      start_time     start time for the specified orbit
+      end_time       end time for the specified orbit
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      orbit       = 32467
+      <B>status      = MTK_ORBIT_TO_TIMERANGE(</B> <B><FONT FACE="monospace">orbit, start_time, end_time</FONT></B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'orbit                 : ', orbit
+      print, '================================================='
+      print, 'start time            : ', start_time
+      print, 'end time              : ', end_time
+
+   IDL outputs:
+
+       orbit                 :        34267
+       =================================================
+       start time            : 2006-01-24T19:56:46Z
+       end time              : 2006-01-24T21:35:46Z
+   
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkOrbitToTimeRange.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

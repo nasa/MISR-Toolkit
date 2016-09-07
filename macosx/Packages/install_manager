@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+PREFIX=/tmp
+
+./download_libraries
+./install_hdf+hdfeos
+source $PREFIX/usr/local/hdfeoslibs/bin/hdfeos_env.sh
+cd Mtk
+MTK_INSTALLDIR=$PREFIX/Library/Mtk-1.4.4
+export MTK_INSTALLDIR
+make cmdutil
+make python
+cd wrappers/python
+
+# BEGIN XCode 5.1 specific workaround to address Apple breakage.
+do_workaround=0
+numclang=`g++ -E -dM - < /dev/null | grep clang | wc -l`
+
+if [ $numclang -gt 0 ]
+then
+  clang_major=`g++ -E -dM - < /dev/null | grep clang_major | awk '{print $3}'`
+  if [ $clang_major -eq 5 ]
+  then
+    clang_minor=`g++ -E -dM - < /dev/null | grep clang_minor | awk '{print $3}'`
+      if [ $clang_minor -eq 1 ]
+      then
+        do_workaround=1
+      fi
+  fi
+  echo "Found clang."
+  echo "Major version: $clang_major"
+  echo "Minor Version: $clang_minor"
+fi
+
+if [ $do_workaround -eq 1 ]
+then
+  ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future python setup.py install
+else
+  python setup.py install
+fi
+# END XCode 5.1 specific workaround
+
+cd ../..
+make applications
+if test -n "$(find /Applications/exelis -maxdepth 1 -name 'idl*' -print -quit 2> /dev/null)"
+then
+    make idl
+fi
+make install
+

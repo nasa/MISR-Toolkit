@@ -1,0 +1,10 @@
+INC += Regression/include/MisrRegression.h
+SRC += Regression/src/MtkRegressionCoeffAllocate.c
+SRC += Regression/src/MtkRegressionCoeffFree.c
+SRC += Regression/src/MtkLinearRegressionCalc.c
+SRC += Regression/src/MtkSmoothData.c
+SRC += Regression/src/MtkRegressionCoeffCalc.c
+SRC += Regression/src/MtkResampleRegressionCoeff.c
+SRC += Regression/src/MtkApplyRegression.c
+SRC += Regression/src/MtkDownsample.c
+SRC += Regression/src/MtkUpsampleMask.c

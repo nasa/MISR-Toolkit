@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+
+origdir=`pwd`
+scriptdir=`dirname $0`
+if [ "$scriptdir" != "scripts" ]; then
+   origdir=`dirname $origdir`
+fi
+default_installdir="`dirname $origdir`/Mtk_thirdparty"
+/bin/echo -n "Enter Mtk thirdparty download directory ($default_installdir): "
+read installdir
+if [ ! "$installdir" ]; then
+    installdir=$default_installdir
+fi
+
+#
+# Extract Python Binary
+#
+
+default_pyfile="${installdir}/Python-2.5.6.tgz"
+pyfile=""
+while [ ! -f "$pyfile" ]; do
+    /bin/echo -n "Enter Python 2.5 .tgz file ($default_pyfile): "
+    read pyfile
+    if [ ! "$pyfile" ]; then
+	pyfile="$default_pyfile"
+    fi
+    if [ ! -f "$pyfile" ]; then
+	/bin/echo "$pyfile does not exist."
+    fi
+done
+pydir_name=`basename $pyfile .tgz`
+
+#
+# Extract and Move
+#
+
+tar -zxvf $pyfile -C $installdir
+mkdir -p $installdir/pythonDocTools
+cp -R $installdir/$pydir_name/Doc $installdir/pythonDocTools/
+
+#
+# Clean up
+#
+
+rm -rf $installdir/$pydir_name
+rm $pyfile
+
+echo "The Python Documentation tools have been installed to $installdir/pythonDocTools"
+echo "Please setenv or export PYDOCDIR to $installdir/pythonDocTools to enable make doc for python"
+
+exit 0

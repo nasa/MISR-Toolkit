@@ -1,0 +1,151 @@
+#!/usr/bin/env sh
+
+PREFIX=/tmp
+#
+# Determine Architecture
+#
+
+arch=`uname -s -m`
+if [ "$arch" = "Darwin Power Macintosh" ]; then
+    default_arch_flags="-arch ppc"
+    mathlib="-lmx"
+elif [ "$arch" = "Darwin i386" ]; then
+    default_arch_flags="-arch i386"
+    mathlib="-lmx"
+elif [ "$arch" = "Darwin x86_64" ]; then
+    default_arch_flags="-arch x86_64"
+    mathlib="-lmx"
+else
+    default_arch_flags=
+    mathlib="-lm"
+fi
+/bin/echo "Machine architecture is determined as $arch, using CFLAGS=\"$default_arch_flags\""
+arch_flags="$default_arch_flags"
+
+#
+# Select and create Mtk installation directory
+#
+
+default_installdir="$PREFIX/usr/local/hdfeoslibs"
+installdir="$default_installdir"
+/bin/echo "Install directory $installdir does not exist."
+mkdir -p $installdir/bin $installdir/lib $installdir/include $installdir/man/man1
+
+#
+# Select ThirdParty library directory
+#
+
+default_libdir="$PREFIX/Library/Mtk_thirdparty"
+libdir="$default_libdir"
+
+#
+# Select zlib
+#
+
+default_zlibfile="${libdir}/zlib-1.2.5.tar.gz"
+zlibfile="$default_zlibfile"
+
+#
+# Select jpeg
+#
+
+default_jpegfile="${libdir}/jpegsrc.v6b.tar.gz"
+jpegfile="$default_jpegfile"
+
+#
+# Select HDF
+#
+
+default_hdffile="${libdir}/hdf-4.2.8.tar.gz"
+hdffile="$default_hdffile"
+
+#
+# Select HDF-EOS
+#
+
+default_hdfeosfile="${libdir}/HDF-EOS2.18v1.00.tar.Z"
+hdfeosfile=""
+hdfeosfile="$default_hdfeosfile"
+
+#
+# Create temporary build directory
+#
+
+mkdir /tmp/Mtk.$$
+
+#
+# Install zlib
+#
+
+libbasename=`basename $zlibfile .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $zlibfile
+cd /tmp/Mtk.$$/$libbasename
+CFLAGS="-O2 -fPIC -fno-common $arch_flags" ./configure --prefix=$installdir
+make
+make test
+make install
+
+#
+# Install jpeg
+#
+
+libbasename=`basename $jpegfile .tar.gz`
+libbasename=`/bin/echo $libbasename | sed 's/src.v/-/'`
+cd /tmp/Mtk.$$
+tar xzvf $jpegfile
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$arch_flags" --prefix=$installdir
+make test
+make install
+make install-lib
+ranlib $installdir/lib/libjpeg.a
+
+#
+# Install HDF
+#
+
+libbasename=`basename $hdffile .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $hdffile
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir
+make 
+make check
+make install
+
+#
+# Install HDF-EOS
+#
+
+libbasename=`basename $hdfeosfile .tar.Z`
+cd /tmp/Mtk.$$
+tar xzvf $hdfeosfile
+cd /tmp/Mtk.$$/hdfeos
+./configure --with-pic --prefix=$installdir --enable-install-include --with-jpeg=$installdir --with-zlib=$installdir --with-hdf4=$installdir
+make
+make install
+
+#
+# Create an environ script to source - (this step should be done in the hdfeos make install targeti, but it's broke)
+#
+
+echo "export HDFINC=${installdir}/include" > ${installdir}/bin/hdfeos_env.sh
+echo "export HDFLIB=${installdir}/lib" >> ${installdir}/bin/hdfeos_env.sh
+echo 'export HDFEOS_INC=$HDFINC' >> ${installdir}/bin/hdfeos_env.sh
+echo 'export HDFEOS_LIB=$HDFLIB' >> ${installdir}/bin/hdfeos_env.sh
+
+echo "setenv HDFINC ${installdir}/include" > ${installdir}/bin/hdfeos_env.csh
+echo "setenv HDFLIB ${installdir}/lib" >> ${installdir}/bin/hdfeos_env.csh
+echo 'setenv HDFEOS_INC $HDFINC' >> ${installdir}/bin/hdfeos_env.csh
+echo 'setenv HDFEOS_LIB $HDFLIB' >> ${installdir}/bin/hdfeos_env.csh
+
+#
+# Clean up
+#
+
+rm -rf /tmp/Mtk.$$
+
+echo "The HDF-EOS, HDF, jpeg and zlib libraries have been installed in $installdir"
+
+exit 0

@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>MisrToolkitDLL</ProjectName>
+    <ProjectGuid>{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}</ProjectGuid>
+    <RootNamespace>MisrToolkit</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MisrToolkit</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MisrToolkit</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\Regression\include;..\..\..\ReProject\include;..\..\..\CoordQuery\include;..\..\..\FileQuery\include;..\..\..\MapQuery\include;..\..\..\OrbitPath\include;..\..\..\ReadData\include;..\..\..\SetRegion\include;..\..\..\UnitConv\include;..\..\..\Util\include;..\..\..\WriteData\include;..\..\..\misrcoord;..\..\..\odl;..\..\HDF-EOS5Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MISRTOOLKIT_EXPORTS;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>hdfeos.lib;gctp.lib;tre.lib;hm426m.lib;hd426m.lib;xdr_for_dll.lib;libjpeg.lib;libszip.lib;zlib.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCR90D; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>..\..\HDF-EOS5Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\Regression\include;..\..\..\ReProject\include;..\..\..\CoordQuery\include;..\..\..\FileQuery\include;..\..\..\MapQuery\include;..\..\..\OrbitPath\include;..\..\..\ReadData\include;..\..\..\SetRegion\include;..\..\..\UnitConv\include;..\..\..\Util\include;..\..\..\WriteData\include;..\..\..\misrcoord;..\..\..\odl;..\..\HDF-EOS5Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_DEPRECATE;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>hdfeos.lib;gctp.lib;tre.lib;hm426m.lib;hd426m.lib;xdr_for_dll.lib;libjpeg.lib;libszip.lib;zlib.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\..\HDF-EOS5Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCR90; LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\odl\a_nodesa.c" />
+    <ClCompile Include="..\..\..\odl\ag_nodesag.c" />
+    <ClCompile Include="..\..\..\odl\ao_nodesao.c" />
+    <ClCompile Include="..\..\..\odl\comments.c" />
+    <ClCompile Include="..\..\..\odl\cvtvalue.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\dirent.c" />
+    <ClCompile Include="..\..\..\odl\fmtvalue.c" />
+    <ClCompile Include="..\..\..\odl\lexan.c" />
+    <ClCompile Include="..\..\..\misrcoord\misr_init.c" />
+    <ClCompile Include="..\..\..\misrcoord\misrcoordex.c" />
+    <ClCompile Include="..\..\..\misrcoord\misrfor.c" />
+    <ClCompile Include="..\..\..\misrcoord\misrinv.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkApplyRegression.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkBlsToLatLon.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkBlsToLatLonAry.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkBlsToSomXY.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkBlsToSomXYAry.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkCache.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkCalToJulian.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkChangeMapResolution.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkCoreMetaDataFree.c" />
+    <ClCompile Include="..\..\..\ReProject\src\MtkCreateGeoGrid.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkCreateLatLon.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDataBufferAllocate.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDataBufferAllocate3D.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDataBufferFree.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDataBufferFree3D.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDataBufferImport.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkDateTimeToJulian.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDdToDegMinSec.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDdToDms.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDdToRad.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDegMinSecToDd.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDegMinSecToDms.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDegMinSecToRad.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDmsToDd.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDmsToDegMinSec.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkDmsToRad.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkDownsample.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFieldAttrGet.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFieldAttrList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileAttrGet.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileAttrList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileBlockMetaFieldList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileBlockMetaFieldRead.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileBlockMetaList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileCoreMetaDataGet.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileCoreMetaDataQuery.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileCoreMetaDataRaw.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridFieldCheck.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridFieldToDataType.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridFieldToDimList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridToFieldList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridToNativeFieldList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileGridToResolution.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileLGID.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileToBlockRange.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileToGridList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileToOrbit.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileToPath.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileType.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MinSpace</Optimization>
+    </ClCompile>
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFileVersion.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFillValueGet.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkFindFileList.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkGridAttrGet.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkGridAttrList.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkHdfToMtkDataTypeConvert.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkJulianToCal.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkJulianToDateTime.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkLatLonToBls.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkLatLonToBlsAry.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLatLonToLS.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLatLonToLSAry.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkLatLonToPathList.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkLatLonToSomXY.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkLatLonToSomXYAry.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkLinearRegressionCalc.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLSToLatLon.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLSToLatLonAry.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLSToSomXY.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkLSToSomXYAry.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkMakeFilename.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkOrbitToPath.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkOrbitToTimeRange.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkParseFieldname.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkPathBlockRangeToBlockCorners.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkPathTimeRangeToOrbitList.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkPathToProjParam.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkPixelTime.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkRadToDd.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkRadToDegMinSec.c" />
+    <ClCompile Include="..\..\..\UnitConv\src\MtkRadToDms.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadBlock.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadBlockRange.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadConv.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadData.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadL1B2.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadL2Land.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadL2TCCloud.c" />
+    <ClCompile Include="..\..\..\ReadData\src\MtkReadRaw.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkRegionPathToBlockRange.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkRegionToPathList.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkRegressionCoeffAllocate.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkRegressionCoeffCalc.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkRegressionCoeffFree.c" />
+    <ClCompile Include="..\..\..\ReProject\src\MtkResampleCubicConvolution.c" />
+    <ClCompile Include="..\..\..\ReProject\src\MtkResampleNearestNeighbor.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkResampleRegressionCoeff.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSetRegionByGenericMapInfo.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSetRegionByLatLonExtent.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSetRegionByPathBlockRange.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSetRegionByPathSomUlcLrc.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSetRegionByUlcLrc.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkSmoothData.c" />
+    <ClCompile Include="..\..\..\SetRegion\src\MtkSnapToGrid.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkSomXYToBls.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkSomXYToBlsAry.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkSomXYToLatLon.c" />
+    <ClCompile Include="..\..\..\CoordQuery\src\MtkSomXYToLatLonAry.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkSomXYToLS.c" />
+    <ClCompile Include="..\..\..\MapQuery\src\MtkSomXYToLSAry.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkStringListFree.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkTaiJdToTai.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkTaiJdToUtcJd.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkTaiToTaiJd.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkTaiToUtc.c" />
+    <ClCompile Include="..\..\..\FileQuery\src\MtkTimeMetaRead.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkTimeRangeToOrbitList.c" />
+    <ClCompile Include="..\..\..\OrbitPath\src\MtkTimeToOrbitPath.c" />
+    <ClCompile Include="..\..\..\ReProject\src\MtkTransformCoordinates.c" />
+    <ClCompile Include="..\..\..\Regression\src\MtkUpsampleMask.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkUtcJdToTaiJd.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkUtcJdToUtc.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkUtcToTai.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkUtcToUtcJd.c" />
+    <ClCompile Include="..\..\..\Util\src\MtkVersion.c" />
+    <ClCompile Include="..\..\..\WriteData\src\MtkWriteBinFile.c" />
+    <ClCompile Include="..\..\..\WriteData\src\MtkWriteBinFile3D.c" />
+    <ClCompile Include="..\..\..\WriteData\src\MtkWriteEnviFile.c" />
+    <ClCompile Include="..\..\..\odl\output.c" />
+    <ClCompile Include="..\..\..\odl\p_nodesp.c" />
+    <ClCompile Include="..\..\..\odl\parsact.c" />
+    <ClCompile Include="..\..\..\odl\parser.c" />
+    <ClCompile Include="..\..\..\odl\prtlabel.c" />
+    <ClCompile Include="..\..\..\odl\prtsrc.c" />
+    <ClCompile Include="..\..\..\odl\rdlabel.c" />
+    <ClCompile Include="..\..\..\odl\rdvalue.c" />
+    <ClCompile Include="..\..\..\Util\src\strcasestr.c" />
+    <ClCompile Include="..\..\..\Util\src\strncasecmp.c" />
+    <ClCompile Include="..\..\..\odl\v_nodesv.c" />
+    <ClCompile Include="..\..\..\odl\wrtlabel.c" />
+    <ClCompile Include="..\..\..\odl\wrtsrc.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\FileQuery\include\dirent_win32.h" />
+    <ClInclude Include="..\..\..\misrcoord\errormacros.h" />
+    <ClInclude Include="..\..\..\ReadData\include\MisrCache.h" />
+    <ClInclude Include="..\..\..\CoordQuery\include\MisrCoordQuery.h" />
+    <ClInclude Include="..\..\..\include\MisrError.h" />
+    <ClInclude Include="..\..\..\FileQuery\include\MisrFileQuery.h" />
+    <ClInclude Include="..\..\..\MapQuery\include\MisrMapQuery.h" />
+    <ClInclude Include="..\..\..\OrbitPath\include\MisrOrbitPath.h" />
+    <ClInclude Include="..\..\..\misrcoord\misrproj.h" />
+    <ClInclude Include="..\..\..\include\MisrProjParam.h" />
+    <ClInclude Include="..\..\..\ReadData\include\MisrReadData.h" />
+    <ClInclude Include="..\..\..\SetRegion\include\MisrSetRegion.h" />
+    <ClInclude Include="..\..\..\include\MisrToolkit.h" />
+    <ClInclude Include="..\..\..\UnitConv\include\MisrUnitConv.h" />
+    <ClInclude Include="..\..\..\Util\include\MisrUtil.h" />
+    <ClInclude Include="..\..\..\WriteData\include\MisrWriteData.h" />
+    <ClInclude Include="..\..\..\odl\odldef.h" />
+    <ClInclude Include="..\..\..\odl\odldef_prototypes.h" />
+    <ClInclude Include="..\..\..\odl\odlinter.h" />
+    <ClInclude Include="..\..\..\odl\odlparse.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

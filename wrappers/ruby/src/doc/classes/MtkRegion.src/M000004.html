@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>block_range (MtkRegion)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style>
+.ruby-comment    { color: green; font-style: italic }
+.ruby-constant   { color: #4433aa; font-weight: bold; }
+.ruby-identifier { color: #222222;  }
+.ruby-ivar       { color: #2233dd; }
+.ruby-keyword    { color: #3333FF; font-weight: bold }
+.ruby-node       { color: #777777; }
+.ruby-operator   { color: #111111;  }
+.ruby-regexp     { color: #662222; }
+.ruby-value      { color: #662222; font-style: italic }
+  .kw { color: #3333FF; font-weight: bold }
+  .cmt { color: green; font-style: italic }
+  .str { color: #662222; font-style: italic }
+  .re  { color: #662222; }
+</style>
+</head>
+<body bgcolor="white">
+<pre>/* call-seq:
+ *   region.block_range(path) -&gt; Range
+ *
+ * Returns a block range that covers the region for the given path.
+ *
+ */
+
+static VALUE mtk_region_block_range(VALUE self, VALUE path)
+{
+  MTKt_Region* r;
+  Data_Get_Struct(self, MTKt_Region, r);
+  int start_block, end_block;
+  MTKt_status status = MtkRegionPathToBlockRange(*r, NUM2INT(path), 
+						 &amp;start_block, &amp;end_block);
+  if(status != MTK_SUCCESS)
+    rb_raise(rb_eRuntimeError, &quot;MtkRegionPathToBlockRange failed&quot;);
+  VALUE rarg[2];
+  rarg[0] = INT2NUM(start_block);
+  rarg[1] = INT2NUM(end_block);
+  VALUE res = rb_class_new_instance(2, rarg, 
+	    rb_const_get(rb_cObject, rb_intern(&quot;Range&quot;)));
+  return res;
+}</pre>
+</body>
+</html>

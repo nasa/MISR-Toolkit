@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_SOMXY_TO_LATLON</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22553100">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;12575700">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_SOMXY_TO_LATLON converts from Space Oblique Mercator (SOM) X and Y coordinates to decimal latitude
+   and longitude or a given MISR path.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path      MISR path
+      somx      SOM X in meters
+      somy      SOM Y in meters
+   
+   the call:
+   
+      <B>status = MTK_SOMXY_TO_LATLON( path, somx, somy, lat, lon )</B>
+   
+   returns:
+   
+      status  0 on success; otherwise failure
+      lat     decimal latitude
+      lon     decimal longitude
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path  = 230
+      somx  = 17145920.0
+      somy  = 222090.0
+      
+      <B>status = MTK_SOMXY_TO_LATLON( path, somx, somy, lat, lon</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'SOM X                 : ', somx
+      print, 'SOM Y                 : ', somy
+      print, '================================================='
+      print, 'LATITUDE              : ', lat
+      print, 'LONGITUDE             : ', lon 
+
+   IDL outputs:
+   
+      path                  : 230
+      SOM X                 : 1.71459e+07
+      SOM Y                 : 222090.
+      =================================================
+      LATITUDE              : 26.737612
+      LONGITUDE             : -54.149627
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkSomXYToLatLon.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

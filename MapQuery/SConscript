@@ -1,0 +1,55 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkLSToLatLon.c
+                     obj/MtkLSToLatLonAry.c
+                     obj/MtkLSToSomXY.c
+                     obj/MtkLSToSomXYAry.c
+                     obj/MtkLatLonToLS.c
+                     obj/MtkLatLonToLSAry.c
+                     obj/MtkSomXYToLS.c
+                     obj/MtkSomXYToLSAry.c
+                     obj/MtkCreateLatLon.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/MapQuery', file_list)
+#env.SharedLibrary('lib/MapQuery', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkLSToLatLon_test
+                      MtkLSToLatLonAry_test
+                      MtkLSToSomXY_test
+                      MtkLSToSomXYAry_test
+                      MtkLatLonToLS_test
+                      MtkLatLonToLSAry_test
+                      MtkSomXYToLS_test
+                      MtkSomXYToLSAry_test
+                      MtkCreateLatLon_test""")
+
+lib_depend = Split("""SetRegion
+                      MapQuery
+                      CoordQuery
+                      UnitConv
+                      misrcoord
+                      Util""") + env['LIBS']
+
+lib_depend_path = Split("""#SetRegion/lib
+                           #CoordQuery/lib
+                           #Util/lib
+                           lib
+                           #UnitConv/lib
+                           #misrcoord""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

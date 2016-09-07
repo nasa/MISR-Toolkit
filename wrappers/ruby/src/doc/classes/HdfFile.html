@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: HdfFile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "width=400,height=400,scrollbars=yes" )
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />HdfFile</td>
+  <td align="right">
+    <table cellspacing=0 cellpadding=2>
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../files/ext/mtk_ext_cc.html">ext/mtk_ext.cc</a>
+<a href="../files/lib/hdf_file_rb.html">lib/hdf_file.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+This class is used to read an HDF-EOS file.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000039">grid</a></li>
+  <li><a href="#M000038">grid_list</a></li>
+  <li><a href="#M000037">new</a></li>
+  <li><a href="#M000040">vdata</a></li>
+  <li><a href="#M000041">vdata_list</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000037"></a><b>HdfFile.new(filename) &rarr; HdfFile<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Open the given filename.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000037_source')" id="l_M000037_source">show source</a> ]</p>
+  <div id="M000037_source" class="dyn-source">
+<pre>
+/* call-seq:
+ *   HdfFile.new(filename) -&gt; HdfFile
+ *
+ * Open the given filename.
+ *
+ */
+
+static VALUE hdf_init(VALUE self, VALUE name_obj)
+{
+  try {
+    HdfFile* h;
+    Data_Get_Struct(self, HdfFile, h);
+    h-&gt;open(RSTRING(StringValue(name_obj))-&gt;ptr);
+  } catch (const std::exception&amp; e) {
+    rb_raise(rb_eRuntimeError, &quot;%s&quot;, e.what());
+  }
+}
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000039"></a><b>grid(grid_name) &rarr; HdfGrid<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Open a grid
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000039_source')" id="l_M000039_source">show source</a> ]</p>
+  <div id="M000039_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_file.rb, line 20</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grid</span> (<span class="ruby-identifier">name</span>)
+    <span class="ruby-constant">HdfGrid</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000038"></a><b>grid_list &rarr; Array<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return a list of grid name
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000038_source')" id="l_M000038_source">show source</a> ]</p>
+  <div id="M000038_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_file.rb, line 11</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grid_list</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">grid_list_raw</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">','</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000040"></a><b>vdata(vdata_name) &rarr; HdfVdata<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Open a vdata
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000040_source')" id="l_M000040_source">show source</a> ]</p>
+  <div id="M000040_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_file.rb, line 29</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vdata</span> (<span class="ruby-identifier">name</span>)
+    <span class="ruby-constant">HdfVdata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000041"></a><b>vdata_list &rarr; Array<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return a list of vdata names
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000041_source')" id="l_M000041_source">show source</a> ]</p>
+  <div id="M000041_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_file.rb, line 38</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vdata_list</span>
+    <span class="ruby-identifier">res</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">vdata_list_raw</span>
+<span class="ruby-comment cmt"># Strip out vdata that we don't want to list.</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">find_all</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-operator">!</span>(<span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^_/</span> <span class="ruby-operator">||</span> 
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/HDFEOSVersion/</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\w+:\w+$/</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^_/</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/StructMetadata\.0/</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/coremetadata/</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

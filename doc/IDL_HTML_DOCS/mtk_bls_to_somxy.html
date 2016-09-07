@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_BLS_TO_SOMXY</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22541500">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15254000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_BLS_TO_SOMXY converts from block, line, and sample to Space Oblique Mercator (SOM) X and Y 
+   coordinates for a given MISR path and resolution.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      path      MISR path
+      res       resolution in meters
+      block     block number (1-based)
+      line      block fractional line (x.0 represents pixel center)
+      sample    block fractional sample (x.0 represents pixel center)
+   
+   the call:
+   
+      <B>status = MTK_BLS_TO_SOMXY( path, res, block, line, sample, somx, somy )</B>
+   
+   returns:
+   
+      status  0 on success; otherwise failure
+      somx    SOM X in meters
+      somy    SOM Y in meters
+      
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      path  = 230
+      res   = 1100.0
+      block = 69
+      line  = 100.2
+      samp  = 89.9
+      
+      <B>status = MTK_BLS_TO_SOMXY( path, res, block, line, samp, somx, somy )</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'path                  : ', path
+      print, 'resolution (meters)   : ', res
+      print, 'block number          : ', block
+      print, 'block line            : ', line
+      print, 'block sample          : ', samp
+      print, '================================================='
+      print, 'SOM X                 : ', somx, FORMAT = '(A,F15.3)'
+      print, 'SOM Y                 : ', somy, FORMAT = '(A,F15.3)'
+
+   IDL outputs:
+   
+      path                  : 230
+      resolution (meters)   : 1100.000
+      block number          : 69
+      block line            : 100.2000
+      block sample          : 89.9000
+      =================================================
+      SOM X                 : 17145919.997
+      SOM Y                 :   222089.993
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkBlsToSomXY.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

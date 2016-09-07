@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_WRITE_ENVI_FILE</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;22404800">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061103;11133000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_WRITE_ENVI_FILE writes an IDL ENVI file given a data buffer and a map info structure.
+   All geolocation information and projection parameters are written to the ENVI file.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      envifilename   ENVI file name to write
+      databuf        data buffer
+      mapinfo        map info structure
+      filename       MISR product file
+      gridname       grid name
+      fieldname      field name
+
+   the call:
+   
+      <B>status = MTK_WRITE_ENVI_FILE( envifilename, databuf, mapinfo, filename, gridname, fieldname )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      envifilename= '../Mtk_testdata/out/Ellipsoid_Red_P037_O029058_AA'
+      filename    = '../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf'
+      gridname    = 'RedBand'
+      fieldname   = 'Red Radiance/RDQI'
+      lat         = 66.0
+      lon         = -89.0
+      lat_extent  = 1.5
+      lon_extent  = 1.0
+      <B>status      = MTK_SETREGION_BY_LATLON_EXTENT</B>( <B>lat, lon, lat_extent, lon_extent, &quot;degrees&quot;, region</B> <B>)</B>
+      <B>status      = MTK_READDATA</B>( <B>filename, gridname, fieldname, region, databuf, mapinfo )</B>
+      <B>status      = MTK_WRITE_ENVI_FILE( envifilename, databuf, mapinfo, filename, gridname, fieldname )</B>
+      
+   IDL outputs:
+   
+      None.
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkWriteEnviFile.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

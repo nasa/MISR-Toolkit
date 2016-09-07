@@ -1,0 +1,70 @@
+# -*- Perl -*-
+# OPeNDAP server configuration file.
+# Blank lines are ignored; comments must start with `#' in the first column.
+
+# Where are the data you want to serve? Give the path to the data as the
+# value of data_root. If you want to serve two or more directory trees
+# either use symbolic links to combine them or set up two or more
+# servers. If you want to serve data that also happens to be accessible from
+# your web server's DocumentRoot directory leave data_root commented out;
+# without a value for data _root, the server will use your web server's 
+# DocumentRoot directory by default.
+# data_root /home/jimg/workspace/
+
+# Set the server time out. This is different from the httpd time out (which
+# does not apply to an OPeNDAP server). The value is in seconds; a value of
+# zero disables the time out feature.
+timeout 0
+
+# Compressed files are decompressed first before serving. Where should these
+# decompressed files be cached?
+cache_dir /usr/tmp
+
+# How big a cache? If you're serving some large files, make sure this is at
+# least big enough to hold one of them! The size is given in MegaBytes.
+cache_size 500
+
+# Email address of the person in charge of this server. 
+maintainer support@unidata.ucar.edu
+
+# Where is the curl executable on your system. If curl is not installed in
+# one of /bin:/usr/bin (i.e., PATH as set in nph-dods), uncomment the
+# following and give the full path to the curl program.
+
+#curl /usr/bin/curl
+
+# Where are the helper applications used for the .info, .html and .asc
+# responses?
+usage /usr/sciflo/sciflo/bin/dap_usage
+www_int /usr/sciflo/sciflo/bin/dap_www_int
+asciival /usr/sciflo/sciflo/bin/dap_asciival
+
+
+# List the handlers whose regular expressions should not be used when
+# building the HTML interface to this server. This includes any overly
+# inclusive regular expression like '.*' which matches anything. These regexs
+# will make README files, et c., show up as datasets. Typically only the
+# JGOFS server every has these regular expressions. Each handler name should
+# be quoted, separated by whitespace (not a comma). 
+
+#exclude "/usr/sciflo/sciflo/bin/jg_handler"
+
+# Match various handlers with pathnames. In *most* cases this means filename
+# extensions, but in fact the entire path is used. For help with the regexs,
+# see a good book on Perl such as the one by Larry Wall.
+
+# MISR dap handler
+handler MISR_AM1_.*\.(HDF|hdf|EOS|eos)(.Z|.gz|.bz2)?$ /data/svn_workspace/ber/df2/Toolkit/Mtk_dap/wrappers/opendap/dap_misr_handler
+
+# Look for common file extensions. 
+handler .*\.(HDF|hdf|EOS|eos)(.Z|.gz|.bz2)?$ /usr/sciflo/sciflo/bin/dap_hdf4_handler
+handler .*\.(NC|nc|cdf|CDF)(.Z|.gz|.bz2)?$ /usr/sciflo/sciflo/bin/dap_nc_handler
+handler .*\.(dat|bin)$ /usr/sciflo/sciflo/bin/dap_ff_handler
+handler .*\.(pvu)(.Z|.gz)?$ /usr/sciflo/sciflo/bin/dap_dsp_handler
+
+# For JGOFS datasets, match either the dataset name or the absence of an
+# extension. The later case is sort of risky, but if you have lots of JGOFS
+# datasets might be appealing.
+handler .*/test$ /usr/sciflo/sciflo/bin/jg_handler
+# handler .*/[^/]+$ /usr/sciflo/sciflo/bin/jg_handler
+

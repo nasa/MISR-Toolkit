@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9F6D2213-35EE-4327-88AB-A810495AF1D9}</ProjectGuid>
+    <RootNamespace>Python</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\Python\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\Python\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MisrToolkit</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.pyd</TargetExt>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MisrToolkit</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.pyd</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include;..\..\..\include;..\..\..\CoordQuery\include;..\..\..\FileQuery\include;..\..\..\MapQuery\include;..\..\..\OrbitPath\include;..\..\..\ReadData\include;..\..\..\SetRegion\include;..\..\..\UnitConv\include;..\..\..\Util\include;..\..\..\WriteData\include;..\..\..\misrcoord;..\..\..\odl;..\..\..\Regression\include;..\..\..\ReProject\include;..\..\..\odl;..\..\HDF-EOS5Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PYTHON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>MisrToolkit.lib;hdfeos.lib;gctp.lib;tre.lib;hd426m.lib;hm426m.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Python27\libs;..\debug;..\..\HDF-EOS5Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Python27\include;C:\Python27\Lib\site-packages\numpy\core\include;..\..\..\include;..\..\..\CoordQuery\include;..\..\..\FileQuery\include;..\..\..\MapQuery\include;..\..\..\OrbitPath\include;..\..\..\ReadData\include;..\..\..\SetRegion\include;..\..\..\UnitConv\include;..\..\..\Util\include;..\..\..\WriteData\include;..\..\..\misrcoord;..\..\..\odl;..\..\..\Regression\include;..\..\..\ReProject\include;..\..\..\odl;..\..\HDF-EOS5Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PYTHON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>MisrToolkit.lib;hdfeos.lib;gctp.lib;tre.lib;hd426m.lib;hm426m.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Python27\libs;..\release;..\..\HDF-EOS5Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\wrappers\python\pycoordquery.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyfilequery.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyhelpers.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pymisrtoolkit.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkBlockCorners.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkDataPlane.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkField.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkFile.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkFileId.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkGeoBlock.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkGeoCoord.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkGeoRegion.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkGrid.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkMapInfo.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkProjParam.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkRegCoeff.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkRegion.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkRegression.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkReProject.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkSomCoord.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkSomRegion.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyMtkTimeMetaData.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyorbitpath.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyunitconv.c" />
+    <ClCompile Include="..\..\..\wrappers\python\pyutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\wrappers\python\pyMtk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MisrToolkitLib\MisrToolkitLib.vcxproj">
+      <Project>{ab7e34c3-2ac9-4106-a029-26bceb81a5df}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

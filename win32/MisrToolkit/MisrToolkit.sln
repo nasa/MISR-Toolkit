@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MisrToolkitDLL", "MisrToolkit\MisrToolkit.vcxproj", "{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MisrToolkitLib", "MisrToolkitLib\MisrToolkitLib.vcxproj", "{AB7E34C3-2AC9-4106-A029-26BCEB81A5DF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IDL", "IDL\IDL.vcxproj", "{731F2416-88AC-4174-94AC-CD360BC1A06B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Python", "Python\Python.vcxproj", "{9F6D2213-35EE-4327-88AB-A810495AF1D9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MisrToolkitTest", "MisrToolkitTest\MisrToolkitTest.vcxproj", "{0085CEFE-34F7-479B-9FD5-53DC57A82CBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}.Debug|Win32.Build.0 = Debug|Win32
+		{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}.Release|Win32.ActiveCfg = Release|Win32
+		{2779F72B-5D14-4B83-A5D5-CBA23933FF0B}.Release|Win32.Build.0 = Release|Win32
+		{AB7E34C3-2AC9-4106-A029-26BCEB81A5DF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AB7E34C3-2AC9-4106-A029-26BCEB81A5DF}.Debug|Win32.Build.0 = Debug|Win32
+		{AB7E34C3-2AC9-4106-A029-26BCEB81A5DF}.Release|Win32.ActiveCfg = Release|Win32
+		{AB7E34C3-2AC9-4106-A029-26BCEB81A5DF}.Release|Win32.Build.0 = Release|Win32
+		{731F2416-88AC-4174-94AC-CD360BC1A06B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{731F2416-88AC-4174-94AC-CD360BC1A06B}.Debug|Win32.Build.0 = Debug|Win32
+		{731F2416-88AC-4174-94AC-CD360BC1A06B}.Release|Win32.ActiveCfg = Release|Win32
+		{731F2416-88AC-4174-94AC-CD360BC1A06B}.Release|Win32.Build.0 = Release|Win32
+		{9F6D2213-35EE-4327-88AB-A810495AF1D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F6D2213-35EE-4327-88AB-A810495AF1D9}.Debug|Win32.Build.0 = Debug|Win32
+		{9F6D2213-35EE-4327-88AB-A810495AF1D9}.Release|Win32.ActiveCfg = Release|Win32
+		{9F6D2213-35EE-4327-88AB-A810495AF1D9}.Release|Win32.Build.0 = Release|Win32
+		{0085CEFE-34F7-479B-9FD5-53DC57A82CBD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0085CEFE-34F7-479B-9FD5-53DC57A82CBD}.Debug|Win32.Build.0 = Debug|Win32
+		{0085CEFE-34F7-479B-9FD5-53DC57A82CBD}.Release|Win32.ActiveCfg = Release|Win32
+		{0085CEFE-34F7-479B-9FD5-53DC57A82CBD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

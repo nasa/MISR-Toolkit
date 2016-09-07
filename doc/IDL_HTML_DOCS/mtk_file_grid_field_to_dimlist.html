@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_FILE_GRID_FIELD_TO_DIMLIST</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21442600">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;15353000">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_FILE_GRID_FIELD_TO_DIMLIST returns dimension names and sizes for a given file, grid, and field.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      file           MISR product file
+      grid           grid name
+      field          field name
+
+   the call:
+   
+      <B>status = MTK_FILE_GRID_FIELD_TO_DIMLIST( file, grid, field, ndims, dimnames, dimsizes )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      ndims          number of dimensions associated with field
+      dimnames       array of dimension names
+      dimsizes       array of dimension lengths
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      file        = '../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf'
+      grid        = 'SubregParamsLnd'
+      field       = 'LandBRF'
+      <B>status      = MTK_FILE_GRID_FIELD_TO_DIMLIST</B>( <B>file, grid, field, ndims, dimnames, dimsizes</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'file                  : ', file
+      print, 'grid                  : ', grid
+      print, 'field                 : ', field
+      print, '================================================='
+      FOR i=0,ndims-1 DO $
+         PRINT, 'DIMENSION #'+STRTRIM(i+1,2)+ $
+         '          : NAME = '+dimnames[i]+', VALUE = '+ $
+         STRTRIM(dimsizes[i],2)
+
+   IDL outputs:
+   
+      file                  : ../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf
+      grid                  : SubregParamsLnd
+      field                 : LandBRF
+    =================================================
+      DIMENSION #1          : NAME = NBandDim, VALUE = 4
+      DIMENSION #2          : NAME = NCamDim, VALUE = 9
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkFileGridFieldToDimList.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

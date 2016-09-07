@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: HdfGrid</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "width=400,height=400,scrollbars=yes" )
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />HdfGrid</td>
+  <td align="right">
+    <table cellspacing=0 cellpadding=2>
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../files/ext/mtk_ext_cc.html">ext/mtk_ext.cc</a>
+<a href="../files/lib/hdf_grid_rb.html">lib/hdf_grid.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+This class is used to read an HDF-EOS grid.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000023">field_list</a></li>
+  <li><a href="#M000024">field_rank</a></li>
+  <li><a href="#M000025">field_read</a></li>
+  <li><a href="#M000022">field_size</a></li>
+  <li><a href="#M000021">new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000021"></a><b>hdf_file.grid(grid_name) &rarr; HdfGrid<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+An <a href="HdfGrid.html">HdfGrid</a> is created through <a
+href="HdfFile.html#M000039">HdfFile#grid</a>
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show source</a> ]</p>
+  <div id="M000021_source" class="dyn-source">
+<pre>
+/* call-seq:
+ *   hdf_file.grid(grid_name) -&gt; HdfGrid
+ *
+ * An HdfGrid is created through HdfFile#grid
+ *
+ */
+
+static VALUE grid_init(VALUE self, VALUE hdf_val, VALUE name_obj)
+{
+  try {
+    HdfGrid* g;
+    Data_Get_Struct(self, HdfGrid, g);
+    g-&gt;open(hdf_val, RSTRING(StringValue(name_obj))-&gt;ptr);
+    return self;
+  } catch (const std::exception&amp; e) {
+    rb_raise(rb_eRuntimeError, &quot;%s&quot;, e.what());
+  }
+}
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000023"></a><b>field_list &rarr; Array<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return a list of field name
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000023_source')" id="l_M000023_source">show source</a> ]</p>
+  <div id="M000023_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_grid.rb, line 12</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_list</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">field_list_raw</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">','</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000024"></a><b>field_rank &rarr; Integer<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return the rank of the given field
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000024_source')" id="l_M000024_source">show source</a> ]</p>
+  <div id="M000024_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_grid.rb, line 21</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_rank</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">field_size</span>(<span class="ruby-identifier">name</span>).<span class="ruby-identifier">length</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000025"></a><b>field_read(field_name, :start => start, :stride => stride, :edge => edge) &rarr; NArray<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Read a field. This can be passed the optional arguments :start, :stride,
+and :edge. These should be Arrays of the size <a
+href="HdfGrid.html#M000024">field_rank</a>(field_name) if passed, given the
+start, stride, and edge.
+</p>
+<p>
+:edge is the number of values to read, it is the dimension of the NArray
+that is returned. As a convenience, if edge[i] is the value true instead of
+an Integer, it is set to read that entire dimension
+</p>
+<p>
+If :stride is not given, the default is to use a stride of 1. If none of
+the optional arguments are given, the default is to read the whole field.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000025_source')" id="l_M000025_source">show source</a> ]</p>
+  <div id="M000025_source" class="dyn-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/hdf_grid.rb, line 39</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">field_read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">option</span> = {})
+    <span class="ruby-identifier">rank</span> = <span class="ruby-identifier">field_rank</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">start</span> = <span class="ruby-identifier">option</span>[<span class="ruby-identifier">:start</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rank</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">stride</span> = <span class="ruby-identifier">option</span>[<span class="ruby-identifier">:stride</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rank</span>, <span class="ruby-value">1</span>)
+    <span class="ruby-identifier">edge</span> = <span class="ruby-identifier">option</span>[<span class="ruby-identifier">:edge</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rank</span>, <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-identifier">size</span> = <span class="ruby-identifier">field_size</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">rank</span>
+      <span class="ruby-identifier">edge</span>[<span class="ruby-identifier">i</span>] = (<span class="ruby-identifier">size</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">start</span>[<span class="ruby-identifier">i</span>]) <span class="ruby-operator">/</span> <span class="ruby-identifier">stride</span>[<span class="ruby-identifier">i</span>] <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">edge</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">TrueClass</span>))
+    <span class="ruby-keyword kw">end</span>
+
+<span class="ruby-comment cmt"># narray is in fortan order, so reverse edge because raw stuff works with C </span>
+<span class="ruby-comment cmt"># order</span>
+    
+    <span class="ruby-identifier">narray</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">field_type</span>(<span class="ruby-identifier">name</span>)
+             <span class="ruby-keyword kw">when</span> <span class="ruby-value">5</span>
+               <span class="ruby-constant">NArray</span>.<span class="ruby-identifier">sfloat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">edge</span>.<span class="ruby-identifier">reverse</span>)
+             <span class="ruby-keyword kw">when</span> <span class="ruby-value">6</span>
+               <span class="ruby-constant">NArray</span>.<span class="ruby-identifier">float</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">edge</span>.<span class="ruby-identifier">reverse</span>)
+             <span class="ruby-keyword kw">when</span> <span class="ruby-value">20</span>, <span class="ruby-value">21</span>
+               <span class="ruby-constant">NArray</span>.<span class="ruby-identifier">byte</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">edge</span>.<span class="ruby-identifier">reverse</span>)
+             <span class="ruby-keyword kw">when</span> <span class="ruby-value">22</span>,<span class="ruby-value">23</span>
+               <span class="ruby-constant">NArray</span>.<span class="ruby-identifier">sint</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">edge</span>.<span class="ruby-identifier">reverse</span>)
+             <span class="ruby-keyword kw">when</span> <span class="ruby-value">24</span>, <span class="ruby-value">25</span>
+               <span class="ruby-constant">NArray</span>.<span class="ruby-identifier">int</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">edge</span>.<span class="ruby-identifier">reverse</span>)
+             <span class="ruby-keyword kw">else</span>
+               <span class="ruby-identifier">throw</span> <span class="ruby-constant">RuntimeError</span>(<span class="ruby-value str">&quot;Unrecognized type&quot;</span>)
+             <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">set_cache</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">start</span>, <span class="ruby-identifier">stride</span>, <span class="ruby-identifier">edge</span>)
+    <span class="ruby-identifier">field_read_raw</span>(<span class="ruby-identifier">narray</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">start</span>, <span class="ruby-identifier">stride</span>, <span class="ruby-identifier">edge</span>)
+
+<span class="ruby-comment cmt"># Now, put the C array into a fortran array</span>
+
+    <span class="ruby-identifier">narray</span>.<span class="ruby-identifier">transpose</span>(<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">narray</span>.<span class="ruby-identifier">rank</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">reverse</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000022"></a><b>field_size("Field name") => [dim1_size, dim2_size, ...]<br />
+</b>
+  </div>
+  <div class="description">
+  <p>
+Return the field size for the given grid field.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show source</a> ]</p>
+  <div id="M000022_source" class="dyn-source">
+<pre>
+/* call-seq:
+ *  field_size(&quot;Field name&quot;) =&gt; [dim1_size, dim2_size, ...]
+ *
+ * Return the field size for the given grid field.
+ */
+static VALUE grid_field_size(VALUE self, VALUE name_obj)
+{
+  try {
+    HdfGrid* g;
+    Data_Get_Struct(self, HdfGrid, g);
+    g-&gt;populate_field_info(RSTRING(StringValue(name_obj))-&gt;ptr);
+    VALUE res = rb_ary_new();
+    for(int i = 0; i &lt; g-&gt;rank(); ++i)
+      rb_funcall(res, rb_intern(&quot;push&quot;), 1, INT2FIX(g-&gt;dim()[i]));
+    return res;
+  } catch (const std::exception&amp; e) {
+    rb_raise(rb_eRuntimeError, &quot;%s&quot;, e.what());
+  }
+}
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>MISR Toolkit: MTK_MAKE_FILENAME</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Unix)">
+	<META NAME="CREATED" CONTENT="20060130;21440200">
+	<META NAME="CHANGEDBY" CONTENT="Brian Rheingans">
+	<META NAME="CHANGED" CONTENT="20061102;12533200">
+	<STYLE>
+	<!--
+		P { color: #000000 }
+		PRE { color: #000000 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR">
+<P ALIGN=CENTER><A HREF="IDL_MTK_Index.html">List of Routines By
+Functionality</A>&nbsp;|&nbsp; <A HREF="../html/index.html">MISR
+Toolkit: Main Page</A> 
+</P>
+<PRE>-Abstract
+
+   MTK_MAKE_FILENAME returns a MISR product file name given a base directory, product, camera, path, orbit,
+   and version.  Pass an empty string for any unwanted fields, such as camera.
+
+-Copyright
+
+   Copyright (2005), California Institute of Technology.
+   U.S. Government sponsorship acknowledged.
+
+-I/O
+   
+   Given:
+   
+      directory       directory
+      product         product name
+      camera          camera name
+      path            path number
+      orbit           orbit number
+      version         version
+   
+   the call:
+   
+      <B>status = MTK_MAKE_FILENAME( directory, product, camera, path, orbit, version, out_filename )</B>
+   
+   returns:
+   
+      status         0 on success; otherwise failure
+      out_filename   output file name
+
+-Examples
+
+      ;;
+      ;; Set up input parameters
+      ;;
+      directory   = '../Mtk_testdata/in/'
+      product    = 'GRP_ELLIPSOID_GM'
+      camera     = 'AA'
+      path       = '037'
+      orbit      = '029058'
+      version    = 'F03_0024'
+      
+      <B>status = MTK_MAKE_FILENAME</B>( <B>directory, product, camera, path, orbit, version, out_filename</B> <B>)</B>
+      
+      ;;
+      ;; Output...
+      ;;
+      print, 'directory             : ', directory
+      print, 'product               : ', product
+      print, 'camera                : ', camera
+      print, 'path                  : ', path
+      print, 'orbit                 : ', orbit
+      print, 'version               : ', version
+      print, '================================================='
+      print, 'OUT FILE NAME         : ',out_filename
+
+   IDL outputs:
+   
+      directory             : ../Mtk_testdata/in/
+      product               : GRP_ELLIPSOID_GM
+      camera                : AA
+      path                  : 037
+      orbit                 : 029058
+      version               : F03_0024
+     =================================================
+      OUT FILE NAME         : ../Mtk_testdata/in/MISR_AM1_GRP_ELLIPSOID_GM_P037_O029058_AA_F03_0024.hdf
+
+-Particulars
+   None.
+
+-Required Reading
+   For important details concerning this module's function, please refer to
+   the MTK routine <B>MtkMakeFilename.c</B>.
+
+-Version
+   -IDL-MTK Version 1.2.0</PRE>
+</BODY>
+</HTML>

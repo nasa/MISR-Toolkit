@@ -1,0 +1,91 @@
+Import('env')
+
+env.BuildDir('obj', 'src', duplicate=0)
+
+file_list = Split("""obj/MtkFileType.c
+                     obj/MtkFileLGID.c
+                     obj/MtkFileVersion.c
+                     obj/MtkFillValueGet.c
+                     obj/MtkFileAttrList.c
+                     obj/MtkFileAttrGet.c
+                     obj/MtkGridAttrList.c
+                     obj/MtkGridAttrGet.c
+                     obj/MtkFieldAttrList.c
+                     obj/MtkFieldAttrGet.c
+                     obj/MtkFileToPath.c
+                     obj/MtkFileToOrbit.c
+                     obj/MtkFileToBlockRange.c
+                     obj/MtkFileToGridList.c
+                     obj/MtkFileGridToFieldList.c
+                     obj/MtkFileGridToNativeFieldList.c
+                     obj/MtkFileGridFieldToDimList.c
+                     obj/MtkFileGridFieldCheck.c
+                     obj/MtkFileGridFieldToDataType.c
+                     obj/MtkFileGridToResolution.c
+                     obj/MtkFileCoreMetaDataRaw.c
+                     obj/MtkFileCoreMetaDataQuery.c
+                     obj/MtkFileCoreMetaDataGet.c
+                     obj/MtkCoreMetaDataFree.c
+                     obj/MtkMakeFilename.c
+                     obj/MtkFindFileList.c
+                     obj/MtkFileBlockMetaList.c
+                     obj/MtkFileBlockMetaFieldList.c
+                     obj/MtkFileBlockMetaFieldRead.c
+                     obj/MtkTimeMetaRead.c""")
+
+obj = env.SharedObject(file_list)
+Return('obj')
+
+env.StaticLibrary('lib/FileQuery', file_list)
+#env.SharedLibrary('lib/FileQuery', file_list)
+
+#---------------------------------------------------------------------
+# Unit Tests
+#---------------------------------------------------------------------
+
+unit_tests = Split("""MtkFileType_test
+                      MtkFileLGID_test
+                      MtkFileVersion_test
+                      MtkFillValueGet_test
+                      MtkFileAttrGet_test
+                      MtkGridAttrGet_test
+                      MtkFileToPath_test
+                      MtkFileToOrbit_test
+                      MtkFileToBlockRange_test
+                      MtkFileToGridList_test
+                      MtkFileGridToFieldList_test
+                      MtkFileGridToNativeFieldList_test
+                      MtkFileGridFieldToDimList_test
+                      MtkFileGridFieldCheck_test
+                      MtkFileGridFieldToDataType_test
+                      MtkFileGridToResolution_test
+                      MtkFileCoreMetaDataRaw_test
+                      MtkFileCoreMetaDataQuery_test
+                      MtkFileCoreMetaDataGet_test
+                      MtkCoreMetaDataFree_test
+                      MtkMakeFilename_test
+                      MtkFindFileList_test
+                      MtkFileAttrList_test
+                      MtkGridAttrList_test
+                      MtkFieldAttrList_test
+                      MtkFieldAttrGet_test
+                      MtkFileBlockMetaList_test
+                      MtkFileBlockMetaFieldList_test
+                      MtkFileBlockMetaFieldRead_test
+                      MtkTimeMetaRead_test""")
+
+lib_depend = Split("""FileQuery
+                      Util
+                      odl""") + env['LIBS']
+
+lib_depend_path = Split("""lib
+                           #Util/lib
+                           #odl""") + env['LIBPATH']
+
+if env['RUN_UNIT_TESTS']:
+   for file in unit_tests:
+      test = env.Object('obj/' + file + '.c')
+      test_exec = env.Program('bin/' + file, test, LIBS= lib_depend,
+                 LIBPATH= lib_depend_path)
+      test_alias = env.Alias('test',[test_exec],test_exec[0].abspath)
+      AlwaysBuild(test_alias)

@@ -1,0 +1,5 @@
+<map id="hchunk_def_struct" name="hchunk_def_struct">
+<area shape="rect" id="node2" href="$uniontag__model__info.html" title="{tag_model_info\n|+ nt\l+ ndim\l+ dims\l+ dim\l|}" alt="" coords="5,57,117,178"/>
+<area shape="rect" id="node3" href="$uniontag__comp__info.html" title="{tag_comp_info\n|+ quality\l+ force_baseline\l+ jpeg\l+ nt\l+ sign_ext\l+ fill_one\l+ start_bit\l+ bit_len\l+ nbit\l+ skp_size\land 9 more...\l|}" alt="" coords="143,5,263,229"/>
+<area shape="rect" id="node4" href="$structdim__def__struct.html" title="{dim_def_struct\n|+ dim_length\l+ chunk_length\l+ distrib_type\l|}" alt="" coords="287,64,400,171"/>
+</map>

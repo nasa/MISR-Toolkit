@@ -1,0 +1,9 @@
+<map id="Aggregate_Node" name="Aggregate_Node">
+<area shape="rect" id="node2" href="$struct_parameter___node.html" title="{Parameter_Node\n|+ name\l+ comment\l+ node_kind\l+ value_kind\l+ value_count\l+ columns\l+ rows\l|}" alt="" coords="83,451,207,616"/>
+<area shape="rect" id="node3" href="$struct_value___node.html" title="{Value_Node\n||}" alt="" coords="201,693,297,771"/>
+<area shape="rect" id="node4" href="$struct_value___data.html" title="{Value_Data\n|+ type\l+ valid\l+ format\l+ precision\l+ length\l+ string\l+ value\l|}" alt="" coords="343,451,435,616"/>
+<area shape="rect" id="node5" href="$struct_o_d_l_real.html" title="{ODLReal\n|+ number\l|}" alt="" coords="257,229,335,307"/>
+<area shape="rect" id="node6" href="$struct_o_d_l_units.html" title="{ODLUnits\n|+ designator\l+ exponent\l|}" alt="" coords="307,6,403,98"/>
+<area shape="rect" id="node7" href="$struct_o_d_l_integer.html" title="{ODLInteger\n|+ number\l|}" alt="" coords="360,229,451,307"/>
+<area shape="rect" id="node8" href="$struct_o_d_l_date.html" title="{ODLDate\n|+ year\l+ doy\l+ month\l+ day\l+ zone_hours\l+ zone_minutes\l+ hours\l+ minutes\l+ seconds\l+ nanoseconds\l|}" alt="" coords="475,163,591,373"/>
+</map>

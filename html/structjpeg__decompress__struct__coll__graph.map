@@ -1,0 +1,18 @@
+<map id="jpeg_decompress_struct" name="jpeg_decompress_struct">
+<area shape="rect" id="node2" href="$structjpeg__color__quantizer.html" title="{jpeg_color_quantizer\n||+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="5,214,149,335"/>
+<area shape="rect" id="node3" href="$struct_j_q_u_a_n_t___t_b_l.html" title="{JQUANT_TBL\n|+ quantval\l+ sent_table\l|}" alt="" coords="204,6,311,98"/>
+<area shape="rect" id="node6" href="$structjpeg__component__info.html" title="{jpeg_component_info\n|+ component_id\l+ component_index\l+ h_samp_factor\l+ v_samp_factor\l+ quant_tbl_no\l+ dc_tbl_no\l+ ac_tbl_no\l+ width_in_blocks\l+ height_in_blocks\l+ DCT_scaled_size\land 10 more...\l|}" alt="" coords="319,163,468,387"/>
+<area shape="rect" id="node4" href="$struct_j_h_u_f_f___t_b_l.html" title="{JHUFF_TBL\n|+ bits\l+ huffval\l+ sent_table\l|}" alt="" coords="492,221,588,328"/>
+<area shape="rect" id="node5" href="$structjpeg__inverse__dct.html" title="{jpeg_inverse_dct\n|+ inverse_DCT\l|+ JMETHOD()\l}" alt="" coords="612,236,735,313"/>
+<area shape="rect" id="node7" href="$structjpeg__source__mgr.html" title="{jpeg_source_mgr\n|+ next_input_byte\l+ bytes_in_buffer\l|+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="759,199,887,350"/>
+<area shape="rect" id="node8" href="$structjpeg__d__coef__controller.html" title="{jpeg_d_coef_controller\n|+ coef_arrays\l|+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="911,214,1068,335"/>
+<area shape="rect" id="node9" href="$structjpeg__marker__struct.html" title="{jpeg_marker_struct\n|+ marker\l+ original_length\l+ data_length\l+ data\l|}" alt="" coords="1092,214,1228,335"/>
+<area shape="rect" id="node10" href="$structjpeg__color__deconverter.html" title="{jpeg_color_deconverter\n||+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="1314,229,1475,321"/>
+<area shape="rect" id="node11" href="$structjpeg__entropy__decoder.html" title="{jpeg_entropy_decoder\n|+ insufficient_data\l|+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="1500,229,1655,321"/>
+<area shape="rect" id="node12" href="$structjpeg__marker__reader.html" title="{jpeg_marker_reader\n|+ read_restart_marker\l+ saw_SOI\l+ saw_SOF\l+ next_restart_num\l+ discarded_bytes\l|+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="1679,199,1833,350"/>
+<area shape="rect" id="node13" href="$structjpeg__d__main__controller.html" title="{jpeg_d_main_controller\n||+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="1857,229,2017,321"/>
+<area shape="rect" id="node14" href="$structjpeg__upsampler.html" title="{jpeg_upsampler\n|+ need_context_rows\l|+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="2041,229,2191,321"/>
+<area shape="rect" id="node15" href="$structjpeg__input__controller.html" title="{jpeg_input_controller\n|+ has_multiple_scans\l+ eoi_reached\l|+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="2215,207,2365,343"/>
+<area shape="rect" id="node16" href="$structjpeg__d__post__controller.html" title="{jpeg_d_post_controller\n||+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="2391,229,2548,321"/>
+<area shape="rect" id="node17" href="$structjpeg__decomp__master.html" title="{jpeg_decomp_master\n|+ is_dummy_pass\l|+ JMETHOD()\l+ JMETHOD()\l}" alt="" coords="2573,229,2723,321"/>
+</map>

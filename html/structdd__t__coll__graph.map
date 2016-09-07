@@ -1,0 +1,6 @@
+<map id="dd_t" name="dd_t">
+<area shape="rect" id="node2" href="$structddblock__t.html" title="{ddblock_t\n|+ dirty\l+ myoffset\l+ ndds\l+ nextoffset\l|}" alt="" coords="5,199,96,321"/>
+<area shape="rect" id="node3" href="$structfilerec__t.html" title="{filerec_t\n|+ path\l+ file\l+ maxref\l+ access\l+ refcount\l+ attach\l+ version_set\l+ f_cur_off\l+ last_op\l+ cache\l+ dirty\l+ f_end_off\l+ ddnull_idx\l+ an_num\l|}" alt="" coords="137,422,239,690"/>
+<area shape="rect" id="node4" href="$structtbbt__node.html" title="{tbbt_node\n|+ data\l+ key\l|}" alt="" coords="183,214,264,306"/>
+<area shape="rect" id="node5" href="$structversion__t.html" title="{version_t\n|+ majorv\l+ minorv\l+ release\l+ string\l+ modified\l|}" alt="" coords="289,192,372,328"/>
+</map>

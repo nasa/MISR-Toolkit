@@ -1,0 +1,7 @@
+<map id="MTKt_MapInfo" name="MTKt_MapInfo">
+<area shape="rect" id="node2" href="$struct_m_t_kt___misr_proj_param.html" title="MISR Projection Parameters. " alt="" coords="5,222,155,461"/>
+<area shape="rect" id="node3" href="$struct_m_t_kt___geo_region.html" title="Geographic Region. " alt="" coords="179,303,308,380"/>
+<area shape="rect" id="node4" href="$struct_m_t_kt___geo_coord.html" title="Geographic Coordinates. " alt="" coords="183,6,305,98"/>
+<area shape="rect" id="node5" href="$struct_m_t_kt___som_region.html" title="SOM Region. " alt="" coords="333,303,464,380"/>
+<area shape="rect" id="node6" href="$struct_m_t_kt___som_coord.html" title="SOM Coordinates. " alt="" coords="336,6,461,98"/>
+</map>

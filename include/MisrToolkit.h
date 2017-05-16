@@ -17,7 +17,7 @@
 #ifndef MISRTOOLKIT_H
 #define MISRTOOLKIT_H
 
-#define MTK_VERSION "1.4.4"
+#define MTK_VERSION "1.4.5"
 
 #ifdef __cplusplus
 extern "C"

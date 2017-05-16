@@ -94,13 +94,13 @@ MTKt_status MtkFieldAttrListFid(
   int32 sds_index = 0;         /* SDS index/offset for field */  
   int32 rank;                  /* Number of dimensions for field */
   int32 data_type;             /* Field data type */
-  char name[MAX_NC_NAME];      /* SDS field name */
+  char name[H4_MAX_NC_NAME];   /* SDS field name */
   intn hdf_status;             /* HDF return status */
-  char attr_name[MAX_NC_NAME]; /* Name of attribute */
+  char attr_name[H4_MAX_NC_NAME]; /* Name of attribute */
   int32 attr_index = 0;        /* Index of attribute */
   int32 hdf_datatype;          /* Attribute data type */
   char **attrlist_tmp = NULL;  
-  int32 dim_sizes[MAX_VAR_DIMS];
+  int32 dim_sizes[H4_MAX_VAR_DIMS];
  
   if (fieldname == NULL || 
       num_attrs == NULL || attrlist == NULL)

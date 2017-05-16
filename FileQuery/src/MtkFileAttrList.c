@@ -85,7 +85,7 @@ MTKt_status MtkFileAttrListFid(
   intn hdf_status;
   int32 num_datasets;
   int32 num_global_attrs = 0;
-  char attr_name[MAX_NC_NAME];
+  char attr_name[H4_MAX_NC_NAME];
   int32 attr_index = 0;
   int32 hdf_datatype;
   int32 count;

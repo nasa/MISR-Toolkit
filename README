@@ -25,7 +25,7 @@ There are also bindings for Python and IDL.
 Complete documentation and function reference
 ---------------------------------------------
 
-Use a browser to view online documentation: https://nasa.github.io/MISR-Toolkit/html/index.html
+Use a browser to view online documentation: ${MTKHOME}/doc/index.html
 
 
 Third Party Library Dependencies
@@ -126,7 +126,7 @@ and before the "make install" step for the MISR Toolkit.
              /usr/local/Mtk-1.4.X, otherwise choose another location
              and disregard sudo
 
-          sudo make install
+          sudo MTK_INSTALLDIR=$MTK_INSTALLDIR make install
 
        Or - C library and command-line utilites
 
@@ -228,3 +228,10 @@ By default OS X swallows click-events on change of focus.
     "defaults write org.x.x11 wmclickthrough -bool true"
   Then, once at a shell prompt, restart X11/XQuartz and retry
   "make testidl".
+
+IDL is not compatible with XQuartz versions greater than 2.7.9
+  If IDL tests return an error of "Error: attempt to add non-widget child "dsm"
+    to parent "idl" which supports only widgets"" then you can either downgrade
+    to XQuartz 2.7.9 or follow the procedure described at goo.gl/RvXOXy to add
+    /opt/X11/lib/flat_namespace to the DYLD_LIBRARY_PATH set by your idl
+    launcher script (e.g. /Applications/exelis/idl85/bin/idl)

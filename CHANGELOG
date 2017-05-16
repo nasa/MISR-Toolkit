@@ -1,3 +1,10 @@
+1.4.5 (Mon 15, May 2017)
+Updated HDF and HDF-EOS download locations.
+Added .gitignore files for empty directories to source.
+Changed netcdf #defines to use HDF specific versions.
+Fixed library ordering in applications Makefile.
+Silenced missing .d files in Makefile.
+
 1.4.4 (Tue 19, Aug 2014)
 Fixed data type size bug on IDL.
 Added compatability for older HDF4.

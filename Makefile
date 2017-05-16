@@ -141,7 +141,7 @@ ETAGS :=	etags
 TAR :=		tar
 
 CFLAGS := 	$(OPTFLAG) $(ARCH_CFLAGS) $(ADDITIONAL_CFLAGS)
-CFLAGS +=	-Wall -pedantic -fPIC -std=c99 -fno-common
+CFLAGS +=	-Wall -pedantic -fPIC -std=c99 -fno-common -D_DEFAULT_SOURCE
 CFLAGS += 	-I$(MTKHOME)/include
 CFLAGS += 	$(patsubst %, -I$(MTKHOME)/%/include, $(MODULES))
 CFLAGS +=	-I$(MTKHOME)/misrcoord -I$(MTKHOME)/odl
@@ -710,4 +710,4 @@ help:
 # Include auto generated header dependencies
 #------------------------------------------------------------------------------
 
-include $(DEPEND)
+-include $(DEPEND)

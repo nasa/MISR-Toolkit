@@ -118,7 +118,7 @@ done
 # Select HDF
 #
 
-default_hdffile="${libdir}/hdf-4.2.8.tar.gz"
+default_hdffile="${libdir}/hdf-4.2.10.tar.gz"
 hdffile=""
 while [ ! -f "$hdffile" ]; do
     /bin/echo -n "Enter HDF library directory/file ($default_hdffile): "
@@ -190,7 +190,7 @@ libbasename=`basename $hdffile .tar.gz`
 cd /tmp/Mtk.$$
 tar xzvf $hdffile
 cd /tmp/Mtk.$$/$libbasename
-./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir --disable-netcdf --disable-shared
 make 
 make check
 make install

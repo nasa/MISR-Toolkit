@@ -2,7 +2,7 @@
 #include "errormacros.h"	   /* Error macros */
 
 int nb;
-int nl;
+int nl_var;
 int ns;
 float absOffset[NBLOCK]; 
 float relOffset[NBLOCK-1]; 
@@ -53,12 +53,12 @@ const double	   lrc_coord[]     /* Lower right corner coord. in meters */
 /* Set number of blocks, lines and samples */
 
   nb = nblock;
-  nl = nline;
+  nl_var = nline;
   ns = nsample;
 
 /* Compute pixel size in ulc/lrc units (meters) */
 
-  sx = (lrc[0] - ulc[0]) / nl;
+  sx = (lrc[0] - ulc[0]) / nl_var;
   sy = (lrc[1] - ulc[1]) / ns;
 
 /* Adjust ulc to be in the center of the pixel */

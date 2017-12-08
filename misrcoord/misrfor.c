@@ -3,7 +3,7 @@
 #include <math.h>		   /* Prototype for floor */
 
 extern int nb;
-extern int nl;
+extern int nl_var;
 extern int ns;
 extern float absOffset[NBLOCK];
 extern double ulc[2];
@@ -42,7 +42,7 @@ float*		   sample	   /* Input sample */
 
 /* Compute block and check range */
 
-  b = (int)(floor((i + 0.5) / nl)) + 1;
+  b = (int)(floor((i + 0.5) / nl_var)) + 1;
   if (b < 1 || b > nb) {
     sprintf(msg, "block is out of range (1 < %d < %d)", b, nb);
     WRN_LOG_JUMP(msg);
@@ -50,9 +50,9 @@ float*		   sample	   /* Input sample */
 
 /* Compute line and check range */
 
-  l = (float)(i - ((b - 1) * nl));
-  if (l < -0.5 || l > nl - 0.5) {
-    sprintf(msg, "line is out of range (0 < %e < %d)", l, nl);
+  l = (float)(i - ((b - 1) * nl_var));
+  if (l < -0.5 || l > nl_var - 0.5) {
+    sprintf(msg, "line is out of range (0 < %e < %d)", l, nl_var);
     WRN_LOG_JUMP(msg);
   }
 

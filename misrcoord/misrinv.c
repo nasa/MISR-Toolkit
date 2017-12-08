@@ -2,7 +2,7 @@
 #include "errormacros.h"	   /* Error macros */
 
 extern int nb;
-extern int nl;
+extern int nl_var;
 extern int ns;
 extern float absOffset[NBLOCK];
 extern double ulc[2];
@@ -32,8 +32,8 @@ double*		   y		   /* Output SOM Y coordinate */
     WRN_LOG_JUMP(msg);
   }
 
-  if (line < -0.5 || line > nl - 0.5) {
-    sprintf(msg, "line is out of range (0 < %e < %d)", line, nl);
+  if (line < -0.5 || line > nl_var - 0.5) {
+    sprintf(msg, "line is out of range (0 < %e < %d)", line, nl_var);
     WRN_LOG_JUMP(msg);
   }
 
@@ -44,7 +44,7 @@ double*		   y		   /* Output SOM Y coordinate */
 
 /* Compute SOM x/y coordinates in ulc/lrc units (meters) */
 
-  n = (int)((block - 1) * nl * sx);
+  n = (int)((block - 1) * nl_var * sx);
   *x = (double)(xc + n + (line * sx));
   *y = (double)(yc + ((sample + absOffset[block-1]) * sy));
 

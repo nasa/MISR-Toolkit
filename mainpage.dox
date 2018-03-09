@@ -70,7 +70,7 @@
 
   \section avail Availability
 
-  Source code and Microsoft Windows dll's are available via the <a href="http://www.openchannelsoftware.org/projects/MISR_Visualization_and_Analysi">Open Channel Foundation MISR Visualization and Analysis Tools webpage</a>
+  Source code and Microsoft Windows dll's are available at <a href="https://github.com/nasa/MISR-Toolkit/releases">Releases</a> on the <a href="https://github.com/nasa/MISR-Toolkit">MISR Toolkit GitHub</a>
 
   \section depend Third Party Library Dependencies
 

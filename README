@@ -24,7 +24,7 @@ It's core interface is C. There are also bindings for Python (2.7 and 3.x suppor
 Complete documentation and function reference
 ---------------------------------------------
 
-Use a browser to view online documentation: ${MTKHOME}/doc/index.html
+Use a browser to view online documentation: https://nasa.github.io/MISR-Toolkit/html/doc/index.html
 
 
 Third Party Library Dependencies

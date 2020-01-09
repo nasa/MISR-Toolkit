@@ -1,4 +1,4 @@
 <map id="comp_model_info_tag" name="comp_model_info_tag">
-<area shape="rect" id="node2" href="$structcomp__model__stdio__info__t.html" title="{comp_model_stdio_info_t\n|+ pos\l|}" alt="" coords="5,64,179,141"/>
-<area shape="rect" id="node3" href="$structfunclist__t.html" title="{funclist_t\n|+ stread\l+ stwrite\l+ seek\l+ inquire\l+ read\l+ write\l+ endaccess\l+ info\l+ reset\l|}" alt="" coords="203,5,300,200"/>
+<area shape="rect" id="node2" href="$structcomp__model__stdio__info__t.html" title="{comp_model_stdio_info_t\n|+ pos\l|}" alt="" coords="5,64,176,141"/>
+<area shape="rect" id="node3" href="$structfunclist__t.html" title="{funclist_t\n|+ stread\l+ stwrite\l+ seek\l+ inquire\l+ read\l+ write\l+ endaccess\l+ info\l+ reset\l|}" alt="" coords="201,5,297,200"/>
 </map>

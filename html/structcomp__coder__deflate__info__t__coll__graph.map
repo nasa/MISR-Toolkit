@@ -1,4 +1,4 @@
 <map id="comp_coder_deflate_info_t" name="comp_coder_deflate_info_t">
-<area shape="rect" id="node2" href="$structz__stream__s.html" title="{z_stream_s\n|+ next_in\l+ avail_in\l+ total_in\l+ next_out\l+ avail_out\l+ total_out\l+ msg\l+ zalloc\l+ zfree\l+ opaque\l+ data_type\l+ adler\l+ reserved\l|}" alt="" coords="30,147,121,400"/>
-<area shape="rect" id="node3" href="$structinternal__state.html" title="{internal_state\n|+ dummy\l|}" alt="" coords="25,5,127,83"/>
+<area shape="rect" id="node2" href="$structz__stream__s.html" title="{z_stream_s\n|+ next_in\l+ avail_in\l+ total_in\l+ next_out\l+ avail_out\l+ total_out\l+ msg\l+ zalloc\l+ zfree\l+ opaque\l+ data_type\l+ adler\l+ reserved\l|}" alt="" coords="29,147,120,400"/>
+<area shape="rect" id="node3" href="$structinternal__state.html" title="{internal_state\n|+ dummy\l|}" alt="" coords="25,5,124,83"/>
 </map>

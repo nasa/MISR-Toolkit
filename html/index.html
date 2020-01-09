@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">MISR Toolkit
-   &#160;<span id="projectnumber">1.4.5</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
   </td>
  </tr>
@@ -46,7 +46,7 @@
 </div>
 <h1><a class="anchor" id="intro"></a>
 Introduction</h1>
-<p>The MISR Toolkit is a simplified programming interface to access MISR L1B2, L2, conventional and ancillary data products. It is an interface built upon HDF-EOS that knows about MISR data products. It has the ability to: </p>
+<p>The MISR Toolkit is a simplified programming interface to access MISR L1B2, L2, and MISR-HR, conventional and ancillary data products. It is an interface built upon HDF-EOS that knows about MISR data products. It has the ability to: </p>
 <ul>
 <li>
 Specify regions to read based on geographic location and extent or the more traditional path and block range </li>
@@ -61,7 +61,7 @@ Retrieve pixel acquistion time from L1B2 product files </li>
 <li>
 Read a slice of a multi-dimensional field into an 2-D data plane (eg. RetrAppMask[0][5]) </li>
 <li>
-Convert MISR product files to IDL ENVI files </li>
+Convert MISR product files to IDL ENVI files *Note: Recent versions of ENVI no longer support SOM projections </li>
 </ul>
 <h1><a class="anchor" id="userguid"></a>
 Users Guide and Interface Documents</h1>
@@ -89,18 +89,8 @@ Function Summary</h1>
 </ul>
 <h1><a class="anchor" id="support"></a>
 Architecture and Language Support</h1>
-<h2><a class="anchor" id="linux32"></a>
-Linux32 Fedora Core 19 or later</h2>
-<ul>
-<li>
-C functions (source only) </li>
-<li>
-IDL bindings (source only) </li>
-<li>
-Python bindings (source only) </li>
-</ul>
 <h2><a class="anchor" id="linux64"></a>
-Linux64 Fedora Core 19 or later</h2>
+CentOS 7 or later (64-bit)</h2>
 <ul>
 <li>
 C functions (source only) </li>
@@ -110,7 +100,7 @@ IDL bindings (source only) </li>
 Python bindings (source only) </li>
 </ul>
 <h2><a class="anchor" id="macintel"></a>
-MacOS X 10.6.8 or later (Intel)</h2>
+MacOS X 10.14.6 or later (Intel)</h2>
 <ul>
 <li>
 C functions (source only) </li>
@@ -119,8 +109,8 @@ IDL bindings (source only) </li>
 <li>
 Python bindings (source only) </li>
 </ul>
-<h2><a class="anchor" id="win32"></a>
-Windows XP 32-bit</h2>
+<h2><a class="anchor" id="win64"></a>
+Windows 10 (64-bit)</h2>
 <ul>
 <li>
 C functions (dll &amp; source) </li>
@@ -134,24 +124,28 @@ Availability</h1>
 <p>Source code and Microsoft Windows dll's are available at <a href="https://github.com/nasa/MISR-Toolkit/releases">Releases</a> on the <a href="https://github.com/nasa/MISR-Toolkit">MISR Toolkit GitHub</a></p>
 <h1><a class="anchor" id="depend"></a>
 Third Party Library Dependencies</h1>
-<p>The MISR Toolkit depends on the following libraries. Download links are provided for your reference, but it is highly recommended that you use the script "download_libraries" in the source bundle "scripts" directory. Python users will still need to download <a href="http://www.numpy.org">NumPy</a> 1.2 or later and install it according to NumPy instructions.</p>
+<p>The MISR Toolkit depends on the following libraries. Download links are provided for your reference, but it is highly recommended that you use the script "download_libraries" in the source bundle "scripts" directory. Python users will still need to download <a href="http://www.numpy.org">NumPy</a> 1.15 or later and install it according to NumPy instructions.</p>
 <ul>
 <li>
-HDF-EOS2.18v1.00 <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a> </li>
+HDF-EOS2.18v1.00 <a href="https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases">Download</a> </li>
 <li>
-hdf4.2.8 <a href="http://www.hdfgroup.org/ftp/HDF/releases/HDF4.2.8/src/">Download</a> </li>
+hdf4.2.10 <a href="https://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.10/src">Download</a> </li>
 <li>
-jpegsrc.v6b <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a> </li>
+hdf5-1.8.16 <a href="https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.16/src">Download</a> </li>
 <li>
-zlib-1.2.5 <a href="ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/latest_release/">Download</a> </li>
+netcdf-4.4.0 <a href="ftp://ftp.unidata.ucar.edu/pub/netcdf/">Download</a> </li>
 <li>
-NumPy 1.2 or later Python module <a href="http://www.numpy.org">Download</a> </li>
+jpegsrc.v6b <a href="https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases">Download</a> </li>
+<li>
+zlib-1.2.5 <a href="https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases">Download</a> </li>
+<li>
+NumPy 1.15 or later Python module <a href="http://www.numpy.org">Download</a> </li>
 </ul>
 <h1><a class="anchor" id="install_sec"></a>
 Installation Instructions</h1>
 <h2><a class="anchor" id="linux_macosx_sec"></a>
 Linux and MacOS X</h2>
-<p>The recommended location for the HDF-EOS/HDF libraries and the MISR Toolkit is /usr/local/hdfeoslibs and /usr/local/Mtk-1.4.X respectively, because this location provides convenient access for multiple user accounts. It is not necessary, however, to install in /usr/local. The MISR Toolkit and HDF-EOS can be installed anywhere. Of course installing in /usr/local requires root or sudo privileges. Use the sudo commands below if you are a sudoer or simply become root before installing the HDF-EOS/HDF libraries and before the "make install" step for the MISR Toolkit.</p>
+<p>The recommended location for the HDF-EOS/HDF libraries and the MISR Toolkit is /usr/local/hdfeoslibs and /usr/local/Mtk-1.5.X respectively, because this location provides convenient access for multiple user accounts. It is not necessary, however, to install in /usr/local. The MISR Toolkit and HDF-EOS can be installed anywhere. Of course installing in /usr/local requires root or sudo privileges. Use the sudo commands below if you are a sudoer or simply become root before installing the HDF-EOS/HDF libraries and before the "make install" step for the MISR Toolkit.</p>
 <p>1) Create a working directory </p>
 <ul>
 <li>
@@ -159,20 +153,20 @@ Linux and MacOS X</h2>
 <li>
 <code>cd Mtk_tmp</code> </li>
 </ul>
-<p>2) Extract Mtk-src-1.4.X.tar.gz </p>
+<p>2) Extract Mtk-src-1.5.X.tar.gz </p>
 <ul>
 <li>
-<code>tar xzvf Mtk-src-1.4.X.tar.gz</code> (if not done already) </li>
+<code>tar xzvf Mtk-src-1.5.X.tar.gz</code> (if not done already) </li>
 </ul>
-<p>3) Extract Mtk testdata (substitute Mtk-testdata-1.0.2 with your version) </p>
+<p>3) Extract Mtk testdata (substitute Mtk-testdata-1.5.x with your version) </p>
 <ul>
 <li>
-<code>tar xzvf Mtk-testdata-1.0.2.tar.gz</code> </li>
+<code>tar xzvf Mtk-testdata-1.5.x.tar.gz</code> </li>
 </ul>
 <p>4) Download HDF-EOS/HDF, JPEG and ZLIB libraries </p>
 <ul>
 <li>
-<code>cd Mtk-src-1.4.X</code> </li>
+<code>cd Mtk-src-1.5.X</code> </li>
 <li>
 <code>scripts/download_libraries</code> </li>
 <li>
@@ -187,7 +181,7 @@ The next step requires root privileges to install into /usr/local/hdfeoslibs, ot
 <li>
 Hit "return" for defaults (/usr/local/hdfeoslibs) </li>
 </ul>
-<p>6) Build, test and install Mtk (substitute Mtk-src-1.4.X with your version) </p>
+<p>6) Build, test and install Mtk (substitute Mtk-src-1.5.X with your version) </p>
 <ul>
 <li>
 Setup your HDF/HDFEOS environment <ul>
@@ -208,11 +202,11 @@ for bash: <ul>
 </ul>
 </li>
 <li>
-Set MTK_INSTALLDIR environment variable (ex. /usr/local/Mtk-1.4.X) <ul>
+Set MTK_INSTALLDIR environment variable (ex. /usr/local/Mtk-1.5.X) <ul>
 <li>
 for csh: <ul>
 <li>
-<code>setenv MTK_INSTALLDIR &lt;your-path&gt;/Mtk-1.4.X</code> </li>
+<code>setenv MTK_INSTALLDIR &lt;your-path&gt;/Mtk-1.5.X</code> </li>
 </ul>
 </li>
 </ul>
@@ -220,7 +214,7 @@ for csh: <ul>
 <li>
 for bash: <ul>
 <li>
-<code>export MTK_INSTALLDIR=&lt;your-path&gt;/Mtk-1.4.X</code> </li>
+<code>export MTK_INSTALLDIR=&lt;your-path&gt;/Mtk-1.5.X</code> </li>
 </ul>
 </li>
 </ul>
@@ -230,7 +224,7 @@ Set IDL_DIR environment variable (if applicable) <ul>
 <li>
 for csh: <ul>
 <li>
-<code>setenv IDL_DIR &lt;path-to-idl&gt;/rsi/idl</code> </li>
+<code>setenv IDL_DIR &lt;path-to-idl&gt;/harris/idl</code> </li>
 </ul>
 </li>
 </ul>
@@ -238,7 +232,7 @@ for csh: <ul>
 <li>
 for bash: <ul>
 <li>
-<code>export IDL_DIR=&lt;path-to-idl&gt;/rsi/idl</code> </li>
+<code>export IDL_DIR=&lt;path-to-idl&gt;/harris/idl</code> </li>
 </ul>
 </li>
 </ul>
@@ -252,7 +246,7 @@ Everything - C library, command-line utilities, IDL and Python <ul>
 <li>
 <code>make testall</code> (If you have Mtk testdata installed and would like to test C, IDL and Python) </li>
 <li>
-The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo </li>
+The next step requires root privileges to install into /usr/local/Mtk-1.5.X, otherwise choose another location and disregard sudo </li>
 <li>
 <code>sudo make install</code> </li>
 </ul>
@@ -266,7 +260,7 @@ Or - C library and command-line utilites <ul>
 <li>
 <code>make test</code> (If you have Mtk testdata installed and would like to test only C routines) </li>
 <li>
-The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo </li>
+The next step requires root privileges to install into /usr/local/Mtk-1.5.X, otherwise choose another location and disregard sudo </li>
 <li>
 <code>sudo make install</code> </li>
 </ul>
@@ -278,7 +272,7 @@ Or - IDL library <ul>
 <li>
 <code>make testidl</code> (If you have Mtk testdata installed and would like to test only IDL routines - requires user interaction) </li>
 <li>
-The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo </li>
+The next step requires root privileges to install into /usr/local/Mtk-1.5.X, otherwise choose another location and disregard sudo </li>
 <li>
 <code>sudo make install</code> </li>
 </ul>
@@ -290,7 +284,7 @@ Or - Python library <ul>
 <li>
 <code>make testpython</code> (If you have Mtk testdata installed and would like to test only python routines) </li>
 <li>
-The next step requires root privileges to install into /usr/local/Mtk-1.4.X, otherwise choose another location and disregard sudo </li>
+The next step requires root privileges to install into /usr/local/Mtk-1.5.X, otherwise choose another location and disregard sudo </li>
 <li>
 <code>sudo make install</code> </li>
 </ul>
@@ -353,14 +347,14 @@ For IDL examples: <code>$MTK_INSTALLDIR/examples/idl</code> </li>
 <li>
 For Python examples: <code>$MTK_INSTALLDIR/examples/python</code> </li>
 <li>
-For C command-line utilities source code: <code>Mtk-src-1.4.X/src</code> </li>
+For C command-line utilities source code: <code>Mtk-src-1.5.X/src</code> </li>
 <li>
-For IDL tests source code: <code>Mtk-src-1.4.X/wrappers/idl</code> </li>
+For IDL tests source code: <code>Mtk-src-1.5.X/wrappers/idl</code> </li>
 </ul>
 <p>8) Optional - You may want to install the MisrToolkit into you Python site-packages directory </p>
 <ul>
 <li>
-<code>cd Mtk-src-1.4.X/wrappers/python</code> </li>
+<code>cd Mtk-src-1.5.X/wrappers/python</code> </li>
 <li>
 <code>sudo python setup.py install</code> </li>
 <li>
@@ -556,19 +550,18 @@ The IDL routine MTK_FIND_FILELIST() does not work properly. </li>
 By default OS X swallows click-events on change of focus.<br/>
  <ul>
 <li>
-If IDL test windows on MacOS X 10.6/10.7 don't respond to clicks, do this command <code>"defaults write com.apple.x11 wm_click_through -bool true"</code></li>
-</ul>
-<ul>
-<li>
-If IDL test windows on MacOS X 10.8 don't respond to clicks, do this command <code>"defaults write org.x.x11 wmclickthrough -bool true"</code></li>
+If IDL test windows on MacOS X 10.14 don't respond to clicks, do this command <code>"defaults write org.x.x11 wmclickthrough -bool true"</code></li>
 </ul>
 Then, once at a shell prompt, restart X11/XQuartz and retry <code>"make testidl"</code>.  </li>
+<li>
+IDL is not compatible with XQuartz versions greater than 2.7.9 If IDL tests return an error of "Error: attempt to add non-widget child "dsm"
+  to parent "idl" which supports only widgets"" then you can either downgrade to XQuartz 2.7.9 or follow the procedure described at goo.gl/RvXOXy to add /opt/X11/lib/flat_namespace to the DYLD_LIBRARY_PATH set by your idl launcher script (e.g. /Applications/harris/idl87/bin/idl) </li>
 </ul>
 </div></div><!-- contents -->
 <hr size="1"><address style="align: right;"><small>
 <center>
-MISR Toolkit - Copyright &copy 2005 - 2006 Jet Propulsion Laboratory<br>
-Generated on Fri Mar 9 2018 12:27:44
+MISR Toolkit - Copyright &copy 2005 - 2020 Jet Propulsion Laboratory<br>
+Generated on Thu Jan 9 2020 11:32:27
 </center></small></address>
 </body>
 </html>

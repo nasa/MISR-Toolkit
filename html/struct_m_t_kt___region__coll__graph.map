@@ -1,5 +1,5 @@
 <map id="MTKt_Region" name="MTKt_Region">
 <area shape="rect" id="node2" href="$struct_m_t_kt___extent.html" title="Geographic Extent. " alt="" coords="5,163,104,255"/>
-<area shape="rect" id="node3" href="$struct_m_t_kt___geo_center.html" title="Geographic Center. " alt="" coords="129,171,255,248"/>
-<area shape="rect" id="node4" href="$struct_m_t_kt___geo_coord.html" title="Geographic Coordinates. " alt="" coords="131,6,253,98"/>
+<area shape="rect" id="node3" href="$struct_m_t_kt___geo_center.html" title="Geographic Center. " alt="" coords="129,171,252,248"/>
+<area shape="rect" id="node4" href="$struct_m_t_kt___geo_coord.html" title="Geographic Coordinates. " alt="" coords="131,6,251,98"/>
 </map>

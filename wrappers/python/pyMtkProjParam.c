@@ -21,7 +21,7 @@
 static void
 MtkProjParam_dealloc(MtkProjParam* self)
 {
-    self->ob_type->tp_free((PyObject*)self);
+    Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -151,8 +151,7 @@ static PyMemberDef MtkProjParam_members[] = {
 };
 
 PyTypeObject MtkProjParamType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkProjParam", /*tp_name*/
     sizeof(MtkProjParam),      /*tp_basicsize*/
     0,                         /*tp_itemsize*/

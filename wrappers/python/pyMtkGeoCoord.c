@@ -21,7 +21,7 @@
 static void
 MtkGeoCoord_dealloc(MtkGeoCoord* self)
 {
-    self->ob_type->tp_free((PyObject*)self);
+    Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -65,8 +65,7 @@ static PyMemberDef MtkGeoCoord_members[] = {
 };
 
 PyTypeObject MtkGeoCoordType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkGeoCoord", /*tp_name*/
     sizeof(MtkGeoCoord),       /*tp_basicsize*/
     0,                         /*tp_itemsize*/

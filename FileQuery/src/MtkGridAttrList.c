@@ -42,6 +42,56 @@ MTKt_status MtkGridAttrList(
   int *num_attrs,          /**< [OUT] Number of attributes */
   char **attrlist[]        /**< [OUT] List of Attributes */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkGridAttrListNC(filename, gridname, num_attrs, attrlist); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkGridAttrListHDF(filename, gridname, num_attrs, attrlist); // try HDF
+}
+
+MTKt_status MtkGridAttrListNC(
+  const char *filename,    /**< [IN] File name */
+  const char *gridname,    /**< [IN] Grid name */
+  int *num_attrs,          /**< [OUT] Number of attributes */
+  char **attrlist[]        /**< [OUT] List of Attributes */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkGridAttrListNcid(ncid, gridname, num_attrs, attrlist);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkGridAttrListHDF(
+  const char *filename,    /**< [IN] File name */
+  const char *gridname,    /**< [IN] Grid name */
+  int *num_attrs,          /**< [OUT] Number of attributes */
+  char **attrlist[]        /**< [OUT] List of Attributes */ )
+{
   MTKt_status status_code; /* Return status of this function */
   MTKt_status status;      /* Return status */
   int32 hdfstatus;         /* HDF-EOS return status */
@@ -155,6 +205,59 @@ ERROR_HANDLE:
 
   free(list);
   GDdetach(gid);
+
+  return status_code;
+}
+
+MTKt_status MtkGridAttrListNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  const char *gridname,    /**< [IN] Grid name */
+  int *num_attrs,          /**< [OUT] Number of attributes */
+  char **attrlist[]        /**< [OUT] List of Attributes */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  int32 nattrs = 0;        /* Number of attributes */
+  char **attrlist_tmp = NULL;
+
+  if (gridname == NULL || 
+      num_attrs == NULL || attrlist == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  int group_id;
+  {
+    int nc_status = nc_inq_ncid(ncid, gridname, &group_id); 
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    nc_status = nc_inq_varnatts(group_id, NC_GLOBAL, &nattrs); 
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  attrlist_tmp = (char**)calloc(nattrs,sizeof(char*));
+  if (attrlist_tmp == NULL)
+    MTK_ERR_CODE_JUMP(MTK_CALLOC_FAILED);
+
+  for (int i = 0; i < nattrs; ++i) {
+    char attr_name[NC_MAX_NAME+1];
+    int nc_status = nc_inq_attname(group_id, NC_GLOBAL, i, attr_name);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    attrlist_tmp[i] = (char*)malloc((strlen(attr_name) + 1) * sizeof(char));
+    if (attrlist_tmp[i] == NULL)
+      MTK_ERR_CODE_JUMP(MTK_MALLOC_FAILED);
+    strcpy(attrlist_tmp[i],attr_name);
+  }
+    
+  *attrlist = attrlist_tmp;
+  *num_attrs = nattrs;
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (attrlist_tmp != NULL)
+    MtkStringListFree(nattrs, &attrlist_tmp);
+
+  if (num_attrs != NULL)
+    *num_attrs = -1;
 
   return status_code;
 }

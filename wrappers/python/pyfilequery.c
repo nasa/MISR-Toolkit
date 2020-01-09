@@ -17,9 +17,9 @@
 #include <Python.h>
 #include "MisrToolkit.h"
 #include <stdlib.h>
+#include "pyMtk.h"
 
-PyObject *
-FindFileList(PyObject *self, PyObject *args)
+PyObject* FindFileList(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -58,8 +58,7 @@ FindFileList(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-MakeFilename(PyObject *self, PyObject *args)
+PyObject* MakeFilename(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;

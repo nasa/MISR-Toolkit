@@ -56,7 +56,7 @@ jpegfile="$default_jpegfile"
 # Select HDF
 #
 
-default_hdffile="${libdir}/hdf-4.2.10.tar.gz"
+default_hdffile="${libdir}/hdf-4.2.8.tar.gz"
 hdffile="$default_hdffile"
 
 #

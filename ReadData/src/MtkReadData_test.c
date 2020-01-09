@@ -152,6 +152,31 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  ctr_lat_dd = 29.95;
+  ctr_lon_dd = -117.61;
+  lat_extent = 17600;
+  lon_extent = 17600;
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  strcpy(gridname, "1.1_KM_PRODUCTS");
+  strcpy(fieldname, "Latitude");
+
+  MtkSetRegionByLatLonExtent(ctr_lat_dd, ctr_lon_dd,
+                             lat_extent,
+                             lon_extent,
+                             "meters",
+                             &region);
+
+  status = MtkReadData(filename, gridname, fieldname, region, &dbuf, &mapinfo);
+  if (status == MTK_SUCCESS) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+
   /* Failure test call */
   status = MtkReadData(NULL, gridname, fieldname, region, &dbuf, &mapinfo);
   if (status == MTK_NULLPTR) {

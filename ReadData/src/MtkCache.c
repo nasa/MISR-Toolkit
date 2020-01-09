@@ -30,7 +30,7 @@
  *  \return Initialized Cache
  */
 
-MTKt_status MtkCacheInit( int32 fid,             /**< HDF-EOS file identifier */
+MTKt_status MtkCacheInitFid( int32 fid,             /**< HDF-EOS file identifier */
 			  const char *gridname,  /**< Grid name */
 			  const char *fieldname, /**< Field name */
 			  MTKt_Cache *cache      /**< Cache */ ) {
@@ -44,6 +44,7 @@ MTKt_status MtkCacheInit( int32 fid,             /**< HDF-EOS file identifier */
 
 
   cache->fid = fid;
+  cache->ncid = 0;
   cache->gridname = (char *)malloc(strlen(gridname)+1);
   strcpy(cache->gridname, gridname);
   cache->fieldname = (char *)malloc(strlen(fieldname)+1);
@@ -63,6 +64,52 @@ MTKt_status MtkCacheInit( int32 fid,             /**< HDF-EOS file identifier */
   status = MtkFillValueGetFid(fid, gridname, fieldname, &(cache->fill));
   if (status != MTK_SUCCESS) {
     status = MtkFileGridFieldToDataTypeFid(fid, gridname, fieldname,
+					   &datatype);
+    if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+    status = MtkDataBufferAllocate(1, 1, datatype, &(cache->fill));
+    if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+    /* Calloc is used to clear the fill buffer, so zero is the default fill */
+  }
+
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
+  return status_code;
+}
+
+MTKt_status MtkCacheInitNcid( int ncid,             /**< file identifier */
+			  const char *gridname,  /**< Grid name */
+			  const char *fieldname, /**< Field name */
+			  MTKt_Cache *cache      /**< Cache */ ) {
+
+  MTKt_status status;		/* Return status */
+  MTKt_status status_code;      /* Return code of this function */
+  MTKt_DataBuffer buf_tmp = MTKT_DATABUFFER_INIT;
+				/* Temp block data buffer */
+  MTKt_DataType datatype;	/* Mtk datatype */
+  int i;			/* Loop index */
+
+
+  cache->ncid = ncid;
+  cache->fid = FAIL;
+  cache->gridname = (char *)malloc(strlen(gridname)+1);
+  strcpy(cache->gridname, gridname);
+  cache->fieldname = (char *)malloc(strlen(fieldname)+1);
+  strcpy(cache->fieldname, fieldname);
+
+  cache->block_cnt = 0;
+ 
+  /* Block cache has NBLOCK+1 elements to make it 1-based, thus i <= NBLOCK */
+
+  for (i = 0; i <= NBLOCK; i++) {
+    cache->block[i].valid = MTK_FALSE;
+    cache->block[i].buf = buf_tmp;
+  }
+
+  /* Set fill value, if available otherwise set to zero */
+
+  status = MtkFillValueGetNcid(ncid, gridname, fieldname, &(cache->fill));
+  if (status != MTK_SUCCESS) {
+    status = MtkFileGridFieldToDataTypeNcid(ncid, gridname, fieldname,
 					   &datatype);
     if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
     status = MtkDataBufferAllocate(1, 1, datatype, &(cache->fill));
@@ -152,9 +199,15 @@ MTKt_status MtkCacheLoad( MTKt_Cache *cache, /**< Cache */
 
   /* Read a block */
 
-  status = MtkReadBlockFid(cache->fid, cache->gridname,
-			   cache->fieldname, block,
-			   &(cache->block[block].buf));
+  if (cache->ncid > 0) {
+    status = MtkReadBlockNcid(cache->ncid, cache->gridname,
+                              cache->fieldname, block,
+                              &(cache->block[block].buf));
+  } else {
+    status = MtkReadBlockFid(cache->fid, cache->gridname,
+                             cache->fieldname, block,
+                             &(cache->block[block].buf));
+  }
   if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
 
   cache->block[block].valid = MTK_TRUE;

@@ -16,6 +16,7 @@
 
 #include "MisrFileQuery.h"
 #include "MisrError.h"
+#include "MisrUtil.h"
 #include <hdf.h>
 
 /** \brief Read core metadata from a MISR product file into a buffer
@@ -35,6 +36,52 @@
  */
 
 MTKt_status MtkFileCoreMetaDataRaw(
+  const char *filename,    /**< [IN] File name */
+  char **coremeta          /**< [OUT] Core metadata */ )
+{
+  MTKt_status status;      /* Return status */
+
+  status = MtkFileCoreMetaDataRawNC(filename, coremeta); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileCoreMetaDataRawHDF(filename, coremeta); // try HDF
+}
+
+MTKt_status MtkFileCoreMetaDataRawNC(
+  const char *filename,    /**< [IN] File name */
+  char **coremeta          /**< [OUT] Core metadata */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFileCoreMetaDataRawNcid(ncid, coremeta);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileCoreMetaDataRawHDF(
   const char *filename,    /**< [IN] File name */
   char **coremeta          /**< [OUT] Core metadata */ )
 {
@@ -111,6 +158,65 @@ MTKt_status MtkFileCoreMetaDataRawFid(
     MTK_ERR_CODE_JUMP(MTK_HDF_SDREADATTR_FAILED);
 
   attr_buf[count] = '\0';
+
+  *coremeta = attr_buf;
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (attr_buf != NULL)
+    free(attr_buf);
+
+  return status_code;
+}
+
+MTKt_status MtkFileCoreMetaDataRawNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  char **coremeta          /**< [OUT] Core metadata */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  char *attr_buf = NULL;
+
+  if (coremeta == NULL) {
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+  }
+
+  const char *group_name = "HDFEOS INFORMATION";
+  const char *var_name = "coremetadata";
+
+  {
+    int group_id;
+    int nc_status = nc_inq_ncid(ncid, group_name, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    MTKt_ncvarid var;
+    int status = MtkNCVarId(group_id, var_name, &var);
+    MTK_ERR_COND_JUMP(status);
+
+    int ndims;
+    nc_status = nc_inq_varndims(var.gid, var.varid, &ndims);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    if (ndims != 1) {
+      MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    }
+
+    int dimid;
+    nc_status = nc_inq_vardimid(var.gid, var.varid, &dimid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    size_t len;
+    nc_status = nc_inq_dimlen(group_id, dimid, &len);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    /* Allocate Memory */
+    attr_buf = (char*)calloc((len + 1), sizeof(char));
+    if (attr_buf == NULL)
+      MTK_ERR_CODE_JUMP(MTK_MALLOC_FAILED);
+    
+    nc_status = nc_get_var_text(var.gid, var.varid, attr_buf);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
 
   *coremeta = attr_buf;
 

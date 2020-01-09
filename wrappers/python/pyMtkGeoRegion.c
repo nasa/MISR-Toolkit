@@ -27,7 +27,7 @@ MtkGeoRegion_dealloc(MtkGeoRegion* self)
     Py_XDECREF(self->ulc);
     Py_XDECREF(self->ctr);
     Py_XDECREF(self->lrc);
-    self->ob_type->tp_free((PyObject*)self); 
+    Py_TYPE(self)->tp_free((PyObject*)self); 
 }
 
 static PyObject *
@@ -39,19 +39,14 @@ MtkGeoRegion_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
    if (self != NULL)
    {  
       self->ulc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-      self->ulc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->ulc, &MtkGeoCoordType);
       MtkGeoCoord_init(self->ulc,NULL,NULL);
       self->urc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-      self->urc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->urc, &MtkGeoCoordType);
       MtkGeoCoord_init(self->urc,NULL,NULL);
       self->ctr = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-      self->ctr = (MtkGeoCoord*)PyObject_Init((PyObject*)self->ctr, &MtkGeoCoordType);
       MtkGeoCoord_init(self->ctr,NULL,NULL);
       self->lrc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-      self->lrc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->lrc, &MtkGeoCoordType);
       MtkGeoCoord_init(self->lrc,NULL,NULL);
       self->llc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-      self->llc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->llc, &MtkGeoCoordType);
       MtkGeoCoord_init(self->llc,NULL,NULL);
 
       if (self->ulc == NULL || self->urc == NULL || self->ctr == NULL ||
@@ -69,19 +64,14 @@ int
 MtkGeoRegion_init(MtkGeoRegion *self, PyObject *args, PyObject *kwds)
 {
    self->ulc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-   self->ulc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->ulc, &MtkGeoCoordType);
    MtkGeoCoord_init(self->ulc,NULL,NULL);
    self->urc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-   self->urc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->urc, &MtkGeoCoordType);
    MtkGeoCoord_init(self->urc,NULL,NULL);
    self->ctr = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-   self->ctr = (MtkGeoCoord*)PyObject_Init((PyObject*)self->ctr, &MtkGeoCoordType);
    MtkGeoCoord_init(self->ctr,NULL,NULL);
    self->lrc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-   self->lrc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->lrc, &MtkGeoCoordType);
    MtkGeoCoord_init(self->lrc,NULL,NULL);
    self->llc = (MtkGeoCoord*)PyObject_New(MtkGeoCoord, &MtkGeoCoordType);
-   self->llc = (MtkGeoCoord*)PyObject_Init((PyObject*)self->llc, &MtkGeoCoordType);
    MtkGeoCoord_init(self->llc,NULL,NULL);
 
    if (self->ulc == NULL || self->urc == NULL || self->ctr == NULL ||
@@ -159,8 +149,7 @@ static PyMethodDef MtkGeoRegion_methods[] = {
 };
 
 PyTypeObject MtkGeoRegionType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkGeoRegion", /*tp_name*/
     sizeof(MtkGeoRegion),      /*tp_basicsize*/
     0,                         /*tp_itemsize*/

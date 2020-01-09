@@ -23,54 +23,19 @@ VERSION := 	$(shell grep MTK_VERSION $(MTKHOME)/include/MisrToolkit.h | cut -d'"
 BUILDDATE :=	$(shell date "+%b %d %Y")
 ARCH :=		$(shell uname -s -m)
 INSTALLDIR :=	$(shell printenv MTK_INSTALLDIR)
+COMMON_MK := $(MTKHOME)/common.mk
 
-ifeq ("$(ARCH)","Darwin Power Macintosh")
-  IDL_DIR ?= 	/Applications/exelis/idl
-  DOXYDIR ?=	/Applications/Doxygen/Doxygen.app/Contents/Resources
-  PYDOCDIR?=    /Users/ber/Development/Python/Python-2.4.3
-  ARCH_CFLAGS:=	-arch ppc
-  IDL_MODE:=
-  IDL_CFLAGS:=
-  IDL_LDFLAGS:=
-  MATHLIB :=    -lmx
-  DYNLDFLAGS := -flat_namespace -undefined suppress -bundle -dynamic $(ARCH_CFLAGS)
-  MTK_LD_PATH := DYLD_LIBRARY_PATH
-else
-ifeq ("$(ARCH)","Darwin i386")
-  IDL_DIR ?= 	/Applications/exelis/idl
-  DOXYDIR ?=	/Applications/Doxygen/Doxygen.app/Contents/Resources
-  PYDOCDIR?=    /usr/local/bin
-  ARCH_CFLAGS:=	-arch i386
-  IDL_MODE:=	-32
-  IDL_CFLAGS:=
-  IDL_LDFLAGS:= $(ARCH_CFLAGS)
-  MATHLIB :=    -lmx
-  DYNLDFLAGS := -dynamiclib -all_load -current_version $(VERSION) $(ARCH_CFLAGS)
-  MTK_LD_PATH := DYLD_LIBRARY_PATH
-else
 ifeq ("$(ARCH)","Darwin x86_64")
   IDL_DIR ?= 	/Applications/exelis/idl
   DOXYDIR ?=	/Applications/Doxygen/Doxygen.app/Contents/Resources
   PYDOCDIR?=    /usr/local/bin
   ARCH_CFLAGS:=	-arch x86_64
   IDL_MODE:=
-  IDL_CFLAGS:=
+  IDL_CFLAGS := -Wno-macro-redefined
   IDL_LDFLAGS:=
   MATHLIB :=    -lmx
   DYNLDFLAGS := -dynamiclib -all_load -current_version $(VERSION) $(ARCH_CFLAGS)
   MTK_LD_PATH := DYLD_LIBRARY_PATH
-else
-ifeq ("$(ARCH)","Linux i686")
-  IDL_DIR ?= 	/usr/local/exelis/idl
-  DOXYDIR ?=	/usr/bin
-  PYDOCDIR?=	/usr/local/bin
-  ARCH_CFLAGS:=	-m32
-  IDL_MODE:=
-  IDL_CFLAGS:=  -fno-strict-aliasing
-  IDL_LDFLAGS:= $(IDL_DIR)/bin/bin.linux.x86/idl_hdf.so 
-  MATHLIB :=    -lm
-  DYNLDFLAGS := -shared -Bsymbolic
-  MTK_LD_PATH := LD_LIBRARY_PATH
 else
 ifeq ("$(ARCH)","Linux x86_64")
   IDL_DIR ?= 	/usr/local/exelis/idl
@@ -85,9 +50,6 @@ ifeq ("$(ARCH)","Linux x86_64")
   MTK_LD_PATH := LD_LIBRARY_PATH
 else
   $(error $(ARCH) not supported. Try to edit Makefile to add your architecture)
-endif
-endif
-endif
 endif
 endif
 
@@ -140,15 +102,43 @@ SED :=		sed
 ETAGS :=	etags
 TAR :=		tar
 
+ifndef GCTPINC
+  GCTPINC := $(HDFEOS_INC)
+endif
+ifndef GCTPLIB
+  GCTPLIB := $(HDFEOS_LIB)
+endif
+
+ifndef NCINC
+  NCINC := $(HDFEOS_INC)
+endif
+ifndef NCLIB
+  NCLIB := $(HDFEOS_LIB)
+endif
+
+ifndef HDF5INC
+  HDF5INC := $(HDFEOS_INC)
+endif
+ifndef HDF5LIB
+  HDF5LIB := $(HDFEOS_LIB)
+endif
+
+ifndef JPEGINC
+  JPEGINC := $(HDFEOS_INC)
+endif
+ifndef JPEGLIB
+  JPEGLIB := $(HDFEOS_LIB)
+endif
+
 CFLAGS := 	$(OPTFLAG) $(ARCH_CFLAGS) $(ADDITIONAL_CFLAGS)
-CFLAGS +=	-Wall -pedantic -fPIC -std=c99 -fno-common -D_DEFAULT_SOURCE
+CFLAGS +=	-Wall -Werror -pedantic -fPIC -std=c99 -fno-common
 CFLAGS += 	-I$(MTKHOME)/include
 CFLAGS += 	$(patsubst %, -I$(MTKHOME)/%/include, $(MODULES))
 CFLAGS +=	-I$(MTKHOME)/misrcoord -I$(MTKHOME)/odl
-CFLAGS += 	-I$(HDFINC) -I$(HDFEOS_INC)
+CFLAGS += 	-I$(NCINC) -I$(HDF5INC) -I$(HDFEOS_INC) -I$(GCTPINC) -I$(HDFINC) -I$(JPEGINC) 
 
-LDFLAGS := 	-L$(HDFEOS_LIB) -L$(HDFLIB)
-LDFLAGS += 	-lhdfeos -lGctp -lmfhdf -ldf -ljpeg -lz $(MATHLIB)
+LDFLAGS := 	-L$(NCLIB) -L$(HDF5LIB) -L$(HDFEOS_LIB) -L$(GCTPLIB) -L$(HDFLIB) -L$(JPEGLIB) 
+LDFLAGS +=      -lnetcdf -lhdf5_hl -lhdf5 -lhdfeos -lGctp -lmfhdf -ldf -ljpeg -lz $(MATHLIB) -ldl
 
 INC :=		include/MisrToolkit.h
 INC +=		include/MisrProjParam.h
@@ -231,7 +221,7 @@ DYNLIB :=	$(LIB:%=lib/%.so)
 VERLIB :=	$(LIB:%=lib/%.so.$(VERSION))
 IDLLIB :=	$(LIB:lib%=lib/idl_%.so)
 IDLDLM :=	$(LIB:lib%=lib/idl_%.dlm)
-PYTHONLIB :=    $(wildcard $(MTKHOME)/wrappers/python/build/lib.*/MisrToolkit/MisrToolkit.so)
+PYTHONLIB :=    $(wildcard $(MTKHOME)/wrappers/python/build/lib.*/MisrToolkit/MisrToolkit*.so)
 CENV :=		$(MTKHOME)/c_environ
 IDLENV :=	$(MTKHOME)/idl_environ
 PYTHONENV :=	$(MTKHOME)/python_environ
@@ -391,14 +381,14 @@ valgrind: $(STCLIB) $(DYNLIB) $(TESTEXE) $(CENV)
 	done
 
 %_test: %_test.o $(STCLIB) $(DYNLIB)
-	$(CC) $(CFLAGS) $(OPTFLAGS) -o $@ $< -L$(MTKHOME)/lib -lMisrToolkit $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OPTFLAGS) -o $@ $< $(MTKHOME)/lib/libMisrToolkit.a $(LDFLAGS)
 
 #------------------------------------------------------------------------------
 # Applications build rules
 #------------------------------------------------------------------------------
 
 applications: lib
-	cd applications; make all MTK_CFLAGS="$(CFLAGS)" MTK_LDFLAGS="$(LDFLAGS) -L$(MTKHOME)/lib -lMisrToolkit"
+	cd applications; make all MTK_CFLAGS="$(CFLAGS)" MTK_LDFLAGS="$(MTKHOME)/lib/libMisrToolkit.a $(LDFLAGS)"
 
 #------------------------------------------------------------------------------
 # Command-line utility build rules
@@ -407,7 +397,7 @@ applications: lib
 cmdutil: $(STCLIB) $(DYNLIB) $(CMDOBJ) $(BINEXE)
 
 bin/%: src/%.o $(STCLIB) $(DYNLIB)
-	$(CC) $(CFLAGS) $(OPTFLAGS) -I$(MTKHOME)/include -o $@ $< -L$(MTKHOME)/lib -lMisrToolkit $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OPTFLAGS) -I$(MTKHOME)/include -o $@ $< $(MTKHOME)/lib/libMisrToolkit.a $(LDFLAGS)
 
 #------------------------------------------------------------------------------
 # Misrcoord build rules
@@ -425,7 +415,7 @@ $(MISRCOORDLIB):
 odl: $(ODLLIB)
 
 $(ODLLIB):
-	cd odl; make OPTFLAG="$(OPTFLAG)" ARCH_CFLAGS="$(ARCH_CFLAGS)" ADDITIONAL_CFLAGS="$(ADDITIONAL_CFLAGS)" all
+	cd odl; make OPTFLAG="$(OPTFLAG)" ARCH_CFLAGS="$(ARCH_CFLAGS)" ADDITIONAL_CFLAGS="$(ADDITIONAL_CFLAGS) -O0" all
 
 #------------------------------------------------------------------------------
 # Clean targets
@@ -710,4 +700,6 @@ help:
 # Include auto generated header dependencies
 #------------------------------------------------------------------------------
 
--include $(DEPEND)
+ifneq "$(MAKECMDGOALS)" "clean"
+  -include $(DEPEND)
+endif

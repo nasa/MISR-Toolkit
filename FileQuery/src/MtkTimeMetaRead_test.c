@@ -62,13 +62,13 @@ int main () {
        
      for (i = 0; i < 6; ++i)
        for (j = 0; j < 2; ++j)
-         if (abs(time_metadata.coeff_line[100][i][j]) - abs(coeff_line[i][j]) > 0.0000001)
+         if (fabs(time_metadata.coeff_line[100][i][j]) - fabs(coeff_line[i][j]) > 0.0000001)
            data_ok = MTK_FALSE;
         
-     if (abs(time_metadata.som_ctr_x[100][0]) - abs(5.0816000E+04) > 0.00001 ||
-        abs(time_metadata.som_ctr_x[100][1]) - abs(5.1072000E+04) > 0.00001 ||
-        abs(time_metadata.som_ctr_y[100][0]) - abs(1.0240000E+03) > 0.00001 ||
-        abs(time_metadata.som_ctr_y[100][1]) - abs(1.0240000E+03) > 0.00001)
+     if (fabs(time_metadata.som_ctr_x[100][0]) - fabs(5.0816000E+04) > 0.00001 ||
+        fabs(time_metadata.som_ctr_x[100][1]) - fabs(5.1072000E+04) > 0.00001 ||
+        fabs(time_metadata.som_ctr_y[100][0]) - fabs(1.0240000E+03) > 0.00001 ||
+        fabs(time_metadata.som_ctr_y[100][1]) - fabs(1.0240000E+03) > 0.00001)
        data_ok = MTK_FALSE;
   }
 

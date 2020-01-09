@@ -16,9 +16,9 @@
 
 #include <Python.h>
 #include "MisrToolkit.h"
+#include "pyMtk.h"
 
-static PyObject *
-ParseFieldname(PyObject *self, PyObject *args)
+static PyObject* ParseFieldname(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -49,8 +49,7 @@ ParseFieldname(PyObject *self, PyObject *args)
    return result;
 }
 
-static PyObject *
-JulianToCal(PyObject *self, PyObject *args)
+static PyObject* JulianToCal(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -77,8 +76,7 @@ JulianToCal(PyObject *self, PyObject *args)
    return result;
 }
 
-static PyObject *
-CalToJulian(PyObject *self, PyObject *args)
+static PyObject* CalToJulian(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -104,8 +102,7 @@ CalToJulian(PyObject *self, PyObject *args)
    return result;
 }
 
-static PyObject *
-DateTimeToJulian(PyObject *self, PyObject *args)
+static PyObject* DateTimeToJulian(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -126,8 +123,7 @@ DateTimeToJulian(PyObject *self, PyObject *args)
    return result;
 }
 
-static PyObject *
-JulianToDateTime(PyObject *self, PyObject *args)
+static PyObject* JulianToDateTime(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -148,8 +144,7 @@ JulianToDateTime(PyObject *self, PyObject *args)
    return result;
 }
 
-static PyObject *
-Version(PyObject *self)
+static PyObject* Version(PyObject *self)
 {
    PyObject *result;
 

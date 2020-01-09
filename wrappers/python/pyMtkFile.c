@@ -31,34 +31,40 @@ MtkFile_dealloc(MtkFile* self)
 {
    int i;
 
-   Py_XDECREF(self->filename);
+   Py_CLEAR(self->filename);
    for (i = 0; i < self->num_grids; ++i) {
-     Py_XDECREF(self->grids[i]);
+     Py_CLEAR(self->grids[i]);
    }
-   Py_XDECREF(self->file_id);
+   Py_CLEAR(self->file_id);
 
    if (self->grids != NULL) {
      PyMem_Free(self->grids);
    }
-   self->ob_type->tp_free((PyObject*)self);
+   Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
 MtkFile_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 {
-   MtkFile *self;
-   static char *kwlist[] = {"filename", NULL};
+    MtkFile *self;
+    static char *kwlist[] = {"filename", NULL};
 
-   self = (MtkFile *)type->tp_alloc(type, 0);
-   if (self != NULL)
-   {
-      if (!PyArg_ParseTupleAndKeywords(args, kwds, "S", kwlist,
-                                       &self->filename))
-         return NULL; 
+    self = (MtkFile *)type->tp_alloc(type, 0);
+    if (self != NULL)
+    {
+        #if PY_MAJOR_VERSION >= 3
+            if (!PyArg_ParseTupleAndKeywords(args, kwds, "U", kwlist,
+                                             &self->filename)) {
+        #else
+            if (!PyArg_ParseTupleAndKeywords(args, kwds, "S", kwlist,
+                                             &self->filename)) {
+        #endif
+                return NULL;
+            }
       Py_INCREF(self->filename);
-   }
+    }
 
-   return (PyObject*)self;
+    return (PyObject*)self;
 }
 
 
@@ -73,10 +79,15 @@ MtkFile_init(MtkFile *self, PyObject *args, PyObject *kwds)
    int i;
 
    static char *kwlist[] = {"filename", NULL};
-
-   if (!PyArg_ParseTupleAndKeywords(args, kwds, "S", kwlist,
-                                      &filename))
-      return -1;
+   #if PY_MAJOR_VERSION >= 3
+       if (!PyArg_ParseTupleAndKeywords(args, kwds, "U", kwlist,
+                                        &filename)) {
+   #else
+       if (!PyArg_ParseTupleAndKeywords(args, kwds, "S", kwlist,
+                                        &filename)) {
+   #endif
+           return -1;
+       }
 
    if (filename) {
       tmp = self->filename;
@@ -89,17 +100,20 @@ MtkFile_init(MtkFile *self, PyObject *args, PyObject *kwds)
 
    self->file_id = PyObject_New(MtkFileId, &MtkFileIdType);
 
-   self->file_id = (MtkFileId *)PyObject_Init((PyObject *)self->file_id, &MtkFileIdType);
    status = file_id_init(self->file_id, file_name);
    if (status)  {
      PyErr_Format(PyExc_IOError, "Trouble opening file: %s", file_name);
 
-     Py_XDECREF(self->filename);
-     self->filename = NULL;
+     Py_CLEAR(self->filename);
+     Py_CLEAR(self->file_id);
      return -1;
    }
 
-   status = MtkFileToGridListFid(self->file_id->fid, &num_grids, &gridlist);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileToGridListNcid(self->file_id->ncid, &num_grids, &gridlist);
+   } else {
+     status = MtkFileToGridListFid(self->file_id->fid, &num_grids, &gridlist);
+   }
    if (status != MTK_SUCCESS)
    {
        PyErr_Format(PyExc_IOError, "Trouble reading grid list: %s", file_name);
@@ -115,13 +129,12 @@ MtkFile_init(MtkFile *self, PyObject *args, PyObject *kwds)
    for (i = 0; i < num_grids; ++i)
    {
       self->grids[i] = PyObject_New(MtkGrid, &MtkGridType);
-      self->grids[i] = (MtkGrid*)PyObject_Init((PyObject*)self->grids[i], &MtkGridType);
       self->grids[i] = grid_init(self->grids[i], file_name, gridlist[i], self->file_id);
       if (self->grids[i] == NULL)
       {
          PyErr_Format(PyExc_StandardError, "Problem initializing Grid: %s", gridlist[i]);
-         Py_XDECREF(self->filename);
-	 self->filename = NULL;
+         Py_CLEAR(self->filename);
+         Py_CLEAR(self->file_id);
          MtkStringListFree(num_grids, &gridlist);
          return -1;
       }
@@ -144,7 +157,11 @@ MtkFile_getlocal_granule_id(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileLGIDFid(self->file_id->sid,&lgid);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileLGIDNcid(self->file_id->ncid,&lgid);
+   } else {
+     status = MtkFileLGIDFid(self->file_id->sid,&lgid);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileLGID Failed");
@@ -171,7 +188,11 @@ MtkFile_getblock(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileToBlockRangeFid(self->file_id->sid,&start_block,&end_block);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileToBlockRangeNcid(self->file_id->ncid,&start_block,&end_block);
+   } else {
+     status = MtkFileToBlockRangeFid(self->file_id->sid,&start_block,&end_block);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileToBlockRange Failed");
@@ -218,7 +239,11 @@ MtkFile_getgrid_list(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileToGridListFid(self->file_id->fid,&ngrids,&gridlist);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileToGridListNcid(self->file_id->ncid,&ngrids,&gridlist);
+   } else {
+     status = MtkFileToGridListFid(self->file_id->fid,&ngrids,&gridlist);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileToGridList Failed");
@@ -249,7 +274,11 @@ MtkFile_getpath(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileToPathFid(self->file_id->sid,&path);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileToPathNcid(self->file_id->ncid,&path);
+   } else {
+     status = MtkFileToPathFid(self->file_id->sid,&path);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileToPath Failed");
@@ -274,7 +303,11 @@ MtkFile_getorbit(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileToOrbitFid(self->file_id->sid,&orbit);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileToOrbitNcid(self->file_id->ncid,&orbit);
+   } else {
+     status = MtkFileToOrbitFid(self->file_id->sid,&orbit);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileToOrbit Failed");
@@ -300,7 +333,11 @@ MtkFile_getfile_type(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileTypeFid(self->file_id->fid, &filetype);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileTypeNcid(self->file_id->ncid, &filetype);
+   } else {
+     status = MtkFileTypeFid(self->file_id->fid, &filetype);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileType Failed");
@@ -334,7 +371,11 @@ MtkFile_getversion(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileVersionFid(self->file_id->sid,fileversion);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileVersionNcid(self->file_id->ncid,fileversion);
+   } else {
+     status = MtkFileVersionFid(self->file_id->sid,fileversion);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileVersion Failed");
@@ -364,7 +405,11 @@ CoreMetaDataGet(MtkFile *self, PyObject *args)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileCoreMetaDataGetFid(self->file_id->sid,paramname,&metadata);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileCoreMetaDataGetNcid(self->file_id->ncid,paramname,&metadata);
+   } else {
+     status = MtkFileCoreMetaDataGetFid(self->file_id->sid,paramname,&metadata);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileCoreMetaDataGet Failed");
@@ -427,7 +472,11 @@ MtkFile_getcore_metadata_list(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileCoreMetaDataQueryFid(self->file_id->sid,&nparam,&paramlist);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileCoreMetaDataQueryNcid(self->file_id->ncid,&nparam,&paramlist);
+   } else {
+     status = MtkFileCoreMetaDataQueryFid(self->file_id->sid,&nparam,&paramlist);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileCoreMetaDataQuery Failed");
@@ -462,7 +511,11 @@ AttrGet(MtkFile *self, PyObject *args)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileAttrGetFid(self->file_id->sid,attrname,&attrbuf);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileAttrGetNcid(self->file_id->ncid,attrname,&attrbuf);
+   } else {
+     status = MtkFileAttrGetFid(self->file_id->sid,attrname,&attrbuf);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileAttrGet Failed");
@@ -600,7 +653,11 @@ MtkFile_getattr_list(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileAttrListFid(self->file_id->sid,&num_attrs,&attrlist);
+   if (self->file_id->ncid > 0) {
+     status = MtkFileAttrListNcid(self->file_id->ncid,&num_attrs,&attrlist);
+   } else {
+     status = MtkFileAttrListFid(self->file_id->sid,&num_attrs,&attrlist);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileAttrList Failed");
@@ -632,7 +689,11 @@ MtkFile_getblock_metadata_list(MtkFile *self, void *closure)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileBlockMetaListFid(self->file_id->hdf_fid, &nblockmeta, &blockmetalist);
+   if (self->file_id->ncid > 0) {
+     return NULL;  /* No block metadata in current netCDF products */
+   } else {
+     status = MtkFileBlockMetaListFid(self->file_id->hdf_fid, &nblockmeta, &blockmetalist);
+   }
    if (status != MTK_SUCCESS)
    {
       PyErr_SetString(PyExc_StandardError, "MtkFileBlockMetaList Failed");
@@ -668,8 +729,12 @@ BlockMetaFieldList(MtkFile *self, PyObject *args)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileBlockMetaFieldListFid(self->file_id->hdf_fid, blockmetaname, &nfields, 
-                                      &fieldlist);
+   if (self->file_id->ncid > 0) {
+     return NULL;  /* No block metadata in current netCDF products */
+   } else {
+     status = MtkFileBlockMetaFieldListFid(self->file_id->hdf_fid, blockmetaname, &nfields,
+                                           &fieldlist);
+   }
    switch (status)
    {
       case MTK_SUCCESS :
@@ -712,8 +777,12 @@ BlockMetaFieldRead(MtkFile *self, PyObject *args)
    if (filename == NULL)
      return NULL;
 
-   status = MtkFileBlockMetaFieldReadFid(self->file_id->hdf_fid, blockmetaname, fieldname, 
-                                      &blockmetabuf);
+   if (self->file_id->ncid > 0) {
+     return NULL;  /* No block metadata in current netCDF products */
+   } else {
+     status = MtkFileBlockMetaFieldReadFid(self->file_id->hdf_fid, blockmetaname, fieldname, 
+                                           &blockmetabuf);
+   }
    switch (status)
    {
       case MTK_SUCCESS :
@@ -996,8 +1065,12 @@ TimeMetaRead(MtkFile *self, PyObject *args)
    filename = PyString_AsString(self->filename);
    if (filename == NULL)
      return NULL;
-   
-   status = MtkTimeMetaReadFid(self->file_id->hdf_fid, self->file_id->sid,  &tmd->time_metadata);
+
+   if (self->file_id->ncid > 0) {
+     return NULL;  /* Not available for netCDF */
+   } else {
+     status = MtkTimeMetaReadFid(self->file_id->hdf_fid, self->file_id->sid,  &tmd->time_metadata);
+   }
    switch (status)
    {
    	  case MTK_SUCCESS :
@@ -1061,8 +1134,7 @@ static PyMethodDef MtkFile_methods[] = {
 };
 
 PyTypeObject pyMtkFileType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkFile",      /*tp_name*/
     sizeof(MtkFile),            /*tp_basicsize*/
     0,                         /*tp_itemsize*/

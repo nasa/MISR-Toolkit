@@ -18,6 +18,7 @@
 #include "MisrError.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int main () {
 
@@ -56,7 +57,7 @@ int main () {
   printf("%d %20.12f %20.12f\n", block_expected[0], line_expected[0], sample_expected[0]);
   */
   if (status == MTK_SUCCESS &&
-      fabs(block[0] - block_expected[0]) == 0 &&
+      abs(block[0] - block_expected[0]) == 0 &&
       fabs(line[0] - line_expected[0]) < 0.00001 &&
       fabs(sample[0] - sample_expected[0]) < 0.00001) {
     MTK_PRINT_STATUS(cn,".");

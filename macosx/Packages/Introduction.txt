@@ -8,5 +8,5 @@ Source for HDF4, HDF-EOS2, Libjpeg, and zlib: /Library/Mtk_thirdparty
 
 Install of HDF4, HDF-EOS2, Libjpeg, and zlib: /usr/local/hdfeoslibs
 
-Install of MISR Toolkit: /Library/Mtk-1.4.5
+Install of MISR Toolkit: /Library/Mtk-1.4.4
 

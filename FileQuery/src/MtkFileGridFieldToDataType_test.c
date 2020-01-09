@@ -116,6 +116,43 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  strcpy(gridname, "1.1_KM_PRODUCTS");
+  strcpy(fieldname, "Bi-Hemispherical_Reflectance");
+
+  status =MtkFileGridFieldToDataType(filename, gridname, fieldname, &datatype);
+  if (status == MTK_SUCCESS && datatype == MTKe_uint8) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDataType(filename, NULL, fieldname, &datatype);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDataType(filename, gridname, NULL, &datatype);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDataType(filename, gridname, fieldname, NULL);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

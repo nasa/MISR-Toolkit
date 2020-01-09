@@ -18,17 +18,23 @@
 #include "structmember.h"
 #include "pyMtk.h"
 #include <HdfEosDef.h>
+#include <netcdf.h>
 
 static void
 MtkFileId_dealloc(MtkFileId* self)
 {
+
+  if (self->ncid > 0) {
+    nc_close(self->ncid);
+    self->ncid = 0;
+  }
 
   /* Close file. */
   if (self->fid != FAIL) {
     GDclose(self->fid);
   }
 
-  self->ob_type->tp_free((PyObject*)self);
+  Py_TYPE(self)->tp_free((PyObject*)self);
 
 }
 
@@ -41,6 +47,7 @@ MtkFileId_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
    if (self != NULL)
    {
      self->fid = FAIL; 
+     self->ncid = 0;
    }
 
    return (PyObject *)self;
@@ -52,6 +59,19 @@ file_id_init(MtkFileId *self, const char *filename)
   int32 fid;
   intn hdfstatus;		/* HDF return status */
 
+  /* Try netCDF4 format */
+  {
+    int ncid;
+    int status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (status == NC_NOERR) {  // success
+      self->ncid = ncid;
+      self->fid = FAIL;
+      return 0; // success
+    }
+    self->ncid = 0;
+  }
+
+  /* Otherwise, try HDF-EOS2 format */
   fid = GDopen((char*)filename, DFACC_READ);
   if (fid == FAIL) {
     self->fid = FAIL;
@@ -60,7 +80,7 @@ file_id_init(MtkFileId *self, const char *filename)
     return -1;
   }
   self->fid = fid;
-   
+
   hdfstatus = EHidinfo(fid, &(self->hdf_fid), &(self->sid));
   if (hdfstatus == FAIL) {
     GDclose(self->fid);
@@ -74,8 +94,7 @@ file_id_init(MtkFileId *self, const char *filename)
 }
 
 PyTypeObject MtkFileIdType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkFileId", /*tp_name*/
     sizeof(MtkFileId),      /*tp_basicsize*/
     0,                         /*tp_itemsize*/

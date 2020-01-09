@@ -60,6 +60,48 @@ int main () {
                                  "GreenConversionFactor",
                                  "RedConversionFactor",
 				 "NIRConversionFactor"};
+  char *fieldlist_expected4[] = {
+    "X_Dim",
+    "Y_Dim",
+    "Block_Number",
+    "Block_Start_X_Index",
+    "Block_Start_Y_Index",
+    "Time",
+    "Camera_Dim",
+    "Band_Dim",
+    "Biome_Type_Dim",
+    "Latitude",
+    "Longitude",
+    "Hemispherical_Directional_Reflectance_Factor",
+    "Hemispherical_Directional_Reflectance_Factor_Uncertainty",
+    "Bi-Hemispherical_Reflectance",
+    "Bi-Hemispherical_Reflectance_Relative_Uncertainty",
+    "Bidirectional_Reflectance_Factor",
+    "Directional_Hemispherical_Reflectance",
+    "Normalized_Difference_Vegetation_Index",
+    "Biome_Best_Estimate",
+    "Leaf_Area_Index_Best_Estimate",
+    "Leaf_Area_Index_Best_Estimate_QA",
+    "Fractional_Absorbed_Photosynthetically_Active_Radiation_Best_Estimate",
+    "Photosynthetically_Active_Radiation_Integrated_Bi-Hemispherical_Reflectance",
+    "Photosynthetically_Active_Radiation_Integrated_Directional_Hemispherical_Reflectance",
+    "Leaf_Area_Index_QA",
+    "AUXILIARY/BRF_HDRF_Interpolation_Flag",
+    "AUXILIARY/mRPV_Model_r0",
+    "AUXILIARY/mRPV_Model_k",
+    "AUXILIARY/mRPV_Model_b",
+    "AUXILIARY/mRPV_Model_Fit_Residual",
+    "AUXILIARY/Mean_Leaf_Area_Index_Test_1",
+    "AUXILIARY/Leaf_Area_Index_Merit_Function_Test_1",
+    "AUXILIARY/Number_Passing_LAI_Values_Test_1",
+    "AUXILIARY/Mean_Leaf_Area_Index_Test_2",
+    "AUXILIARY/Leaf_Area_Index_Merit_Function_Test_2",
+    "AUXILIARY/Number_Passing_LAI_Values_Test_2",
+    "AUXILIARY/Equivalent_Reflectance_Subregion_Variability",
+    "AUXILIARY/AGP_Surface_Type",
+    "AUXILIARY/Suitable_For_Surface_Retrieval"
+  };
+  
   char **fieldlist;
   int num_fields;
   int i;
@@ -236,6 +278,71 @@ int main () {
     MTK_PRINT_STATUS(cn,"*");
     pass = MTK_FALSE;
   }  
+
+  /* Normal test call */
+  data_ok = MTK_TRUE;
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  strcpy(gridname, "1.1_KM_PRODUCTS");
+
+  status = MtkFileGridToFieldList(filename,gridname,&num_fields,&fieldlist);
+  if (status == MTK_SUCCESS) {
+    int num_fields_expect = sizeof(fieldlist_expected4) / (sizeof(char *));
+    if (num_fields != num_fields_expect) {
+      data_ok = MTK_FALSE;
+    }
+
+    for (i = 0; i < num_fields; ++i) {
+      if (strcmp(fieldlist[i],fieldlist_expected4[i]) != 0)
+      {
+        data_ok = MTK_FALSE;
+      }
+    }
+    MtkStringListFree(num_fields, &fieldlist);
+  }
+
+  if (status == MTK_SUCCESS && data_ok)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridToFieldList(filename,NULL,&num_fields,&fieldlist);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridToFieldList(filename,gridname,NULL,&fieldlist);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridToFieldList(filename,gridname,&num_fields,NULL);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }  
+
 
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");

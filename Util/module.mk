@@ -20,5 +20,6 @@ SRC += Util/src/MtkUtcToUtcJd.c
 SRC += Util/src/MtkUtcJdToTaiJd.c
 SRC += Util/src/MtkTaiToUtc.c
 SRC += Util/src/MtkUtcToTai.c
+SRC += Util/src/MtkNCVarId.c
 #SRC += Util/src/strcasestr.c
 #SRC += Util/src/strncasecmp.c

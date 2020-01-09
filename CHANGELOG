@@ -1,9 +1,21 @@
+1.5.0 (January 2020)
+Completed full support for V23 AS_AEROSOL and AS_LAND netCDF4 products.
+Added HDF5 and NetCDF4 as Mtk dependencies.
+Added Python 3.x support (Tested with 3.6).
+Added support for MISR-HR products.
+Updated thirdparty download locations.
+Fixed python MtkReProject.transform_coordinates() bug.
+Added 253 as fill value for UINT8 fields that do not declare a fill value (e.g. AGP SurfaceFeatureID).
+
 1.4.5 (Mon 15, May 2017)
 Updated HDF and HDF-EOS download locations.
 Added .gitignore files for empty directories to source.
 Changed netcdf #defines to use HDF specific versions.
 Fixed library ordering in applications Makefile.
 Silenced missing .d files in Makefile.
+
+1.4.4-internal (April 21, 2016)
+Added support for interim verison of AS_AEROSOL and AS_LAND netCDF4 products.
 
 1.4.4 (Tue 19, Aug 2014)
 Fixed data type size bug on IDL.
@@ -12,7 +24,6 @@ Fixed python test target with over-written LD_LIBRARY_PATH.
 Fixed python build broken by XCode 5.1
 Added applications target to OS X Installer.
 Added IDL target to OS X Installer.
-
 
 1.4.3 (Tue 13, May 2014)
 Added applications to default make and make install.
@@ -39,7 +50,6 @@ Added support for TC_CLOUD, TC_CLOUD_DIAG.
 Added support for RCCM firstlook.
 Changes to fix orbit / time functions dealing with orbits 995-1000.
 Added MtkFileAttrList / MtkFileAttrGet
-
 
 1.4.0RC1 (Tuesday 5, Nov 2013)
 Added documentation, Python wrappers, IDL wrappers for Regression and ReProject functionality.

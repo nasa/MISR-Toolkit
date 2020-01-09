@@ -44,6 +44,60 @@ MTKt_status MtkReadL2Land(
   MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
   MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkReadL2LandNC(filename, gridname, fieldname, region, databuf, mapinfo); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkReadL2LandHDF(filename, gridname, fieldname, region, databuf, mapinfo); // try HDF
+}
+
+MTKt_status MtkReadL2LandNC(
+  const char *filename,     /**< [IN] File name */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read data. */
+  status = MtkReadL2LandNcid(ncid, gridname, fieldname, region, databuf, mapinfo);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkReadL2LandHDF(
+  const char *filename,     /**< [IN] File name */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
   MTKt_status status;		/* Return status */
   MTKt_status status_code;	/* Return status code for error macros */
   int32 fid = FAIL;		/* HDF-EOS File id */
@@ -414,5 +468,152 @@ MTKt_status MtkReadL2LandFid(
   MtkDataBufferFree(&fill);
   MtkDataBufferFree(&overflow);
   MtkDataBufferFree(&underflow);
+  return status_code;
+}
+
+MTKt_status MtkReadL2LandNcid(
+  int ncid,                /**< [IN] netCDF file identifier */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
+  MTKt_status status;		/* Return status */
+  MTKt_status status_code;	/* Return status code for error macros */
+  MTKt_MapInfo map = MTKT_MAPINFO_INIT;     /* Map info structure */
+  MTKt_DataBuffer buf = MTKT_DATABUFFER_INIT;    /* Data buffer structure */
+  MTKt_DataBuffer rawbuf = MTKT_DATABUFFER_INIT;  /* Raw data buffer structure */
+  char *basefield = NULL;	/* Base fieldname */
+  int nextradims;               /* Number of extra dimensions */
+  int *extradims = NULL;	/* Extra dimension list */
+
+  if (gridname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+  if (fieldname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* -------------------------------------------------------------------- */
+  /* Determine field type                                                 */
+  /* -------------------------------------------------------------------- */
+
+  status = MtkParseFieldname(fieldname, &basefield, &nextradims, &extradims);
+  MTK_ERR_COND_JUMP(status);
+
+  MTKt_ncvarid var;
+  int scaled = 0;
+  nc_type nc_datatype;
+
+  {
+    int nc_status;
+    int group_id;
+    nc_status = nc_inq_grp_ncid(ncid, gridname, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    status = MtkNCVarId(group_id, basefield, &var);
+    MTK_ERR_COND_JUMP(status);
+
+    nc_status = nc_inq_att(var.gid, var.varid, "scale_factor", NULL, NULL);
+    if (nc_status == NC_NOERR) scaled = 1;
+    nc_status = nc_inq_vartype(var.gid, var.varid, &nc_datatype);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  /* -------------------------------------------------------------- */
+  /* Read and unscale fields of type unsigned short.                */
+  /* -------------------------------------------------------------- */
+
+  if ( scaled == 1 && nc_datatype == NC_USHORT ) {
+    unsigned short valid_range[2];
+    float scale;
+    float offset;
+    int nc_status;
+    nc_status = nc_get_att(var.gid, var.varid, "valid_range", &valid_range);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_get_att(var.gid, var.varid, "scale_factor", &scale);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_get_att(var.gid, var.varid, "add_offset", &offset);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    status = MtkReadRawNcid(ncid, gridname, fieldname, region, &rawbuf, &map);
+    MTK_ERR_COND_JUMP(status);
+
+    status = MtkDataBufferAllocate(rawbuf.nline, rawbuf.nsample, MTKe_float, &buf);
+    MTK_ERR_COND_JUMP(status);
+
+    float float_fill = -9999.0;
+
+    unsigned short valid_min = valid_range[0];
+    unsigned short valid_max = valid_range[1];
+    for (int i = 0; i < buf.nline; i++) {
+      for (int j = 0; j < buf.nsample; j++) {
+        unsigned short raw = rawbuf.data.u16[i][j];
+        if (raw < valid_min || raw > valid_max) {
+          buf.data.f[i][j] = float_fill;
+        } else {
+          buf.data.f[i][j] = raw * scale + offset;
+        }
+      }
+    }
+
+  /* -------------------------------------------------------------- */
+  /* Read and unscale fields of type unsigned char                  */
+  /* -------------------------------------------------------------- */
+
+  } else if (scaled == 1 && nc_datatype == NC_UBYTE) {
+    unsigned char valid_range[2];
+    float scale;
+    float offset;
+    int nc_status;
+    nc_status = nc_get_att(var.gid, var.varid, "valid_range", &valid_range);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_get_att(var.gid, var.varid, "scale_factor", &scale);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_get_att(var.gid, var.varid, "add_offset", &offset);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    status = MtkReadRawNcid(ncid, gridname, fieldname, region, &rawbuf, &map);
+    MTK_ERR_COND_JUMP(status);
+
+    status = MtkDataBufferAllocate(rawbuf.nline, rawbuf.nsample, MTKe_float, &buf);
+    MTK_ERR_COND_JUMP(status);
+
+    float float_fill = -9999.0;
+
+    unsigned char valid_min = valid_range[0];
+    unsigned char valid_max = valid_range[1];
+    for (int i = 0; i < buf.nline; i++) {
+      for (int j = 0; j < buf.nsample; j++) {
+        unsigned char raw = rawbuf.data.u8[i][j];
+        if (raw < valid_min || raw > valid_max) {
+          buf.data.f[i][j] = float_fill;
+        } else {
+          buf.data.f[i][j] = raw * scale + offset;
+        }
+      }
+    }
+
+  /* -------------------------------------------------------------- */
+  /* Read float fields                                              */
+  /* -------------------------------------------------------------- */
+
+  } else {
+
+    status = MtkReadRawNcid(ncid, gridname, fieldname, region, &buf, &map);
+    MTK_ERR_COND_JUMP(status);
+
+  }
+
+  free(basefield);
+  free(extradims);
+  MtkDataBufferFree(&rawbuf);
+
+  *databuf = buf;
+  *mapinfo = map;
+
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
+  if (basefield != NULL) free(basefield);
+  if (extradims != NULL) free(extradims);
+  MtkDataBufferFree(&buf);
+  MtkDataBufferFree(&rawbuf);
   return status_code;
 }

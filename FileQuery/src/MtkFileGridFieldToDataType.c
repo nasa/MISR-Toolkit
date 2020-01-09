@@ -40,6 +40,56 @@ MTKt_status MtkFileGridFieldToDataType(
   const char *fieldname, /**< [IN] Field name */
   MTKt_DataType *datatype /**< [OUT] Data type */ )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkFileGridFieldToDataTypeNC(filename, gridname, fieldname, datatype); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileGridFieldToDataTypeHDF(filename, gridname, fieldname, datatype); // try HDF
+}
+
+MTKt_status MtkFileGridFieldToDataTypeNC(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname, /**< [IN] Field name */
+  MTKt_DataType *datatype /**< [OUT] Data type */ )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read data type for the field. */
+  status = MtkFileGridFieldToDataTypeNcid(ncid, gridname, fieldname, datatype);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridFieldToDataTypeHDF(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname, /**< [IN] Field name */
+  MTKt_DataType *datatype /**< [OUT] Data type */ )
+{
   MTKt_status status_code;      /* Return status of this function */
   intn status;			/* HDF-EOS return status */
   int32 fid = FAIL;		/* HDF-EOS file identifier */
@@ -111,6 +161,54 @@ MTKt_status MtkFileGridFieldToDataTypeFid(
 
 ERROR_HANDLE:
   if (gid != FAIL) GDdetach(gid);
+  if (basefield != NULL) free(basefield);
+  if (extradims != NULL) free(extradims);
+  return status_code;
+}
+
+MTKt_status MtkFileGridFieldToDataTypeNcid(
+  int ncid,            /**< [IN] netCDF file identifier */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname, /**< [IN] Field name */
+  MTKt_DataType *datatype /**< [OUT] Data type */ )
+{
+  MTKt_status status_code;      /* Return status of this function */
+  intn status;			/* HDF-EOS return status */
+  char *basefield = NULL;	/* Base fieldname */
+  int nextradims;               /* Number of extra dimensions */
+  int *extradims = NULL;	/* Extra dimension list */
+
+  if (gridname == NULL ||
+      fieldname == NULL || datatype == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  status = MtkParseFieldname(fieldname, &basefield, &nextradims, &extradims);
+  MTK_ERR_COND_JUMP(status);
+
+  int group_id;
+  {
+    int nc_status = nc_inq_grp_ncid(ncid, gridname, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  MTKt_ncvarid var;
+  status = MtkNCVarId(group_id, basefield, &var);
+  MTK_ERR_COND_JUMP(status);
+
+  nc_type nc_datatype;
+  {
+    int nc_status = nc_inq_vartype(var.gid, var.varid, &nc_datatype);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  status = MtkNcToMtkDataTypeConvert(nc_datatype, datatype);
+  MTK_ERR_COND_JUMP(status);
+
+  free(basefield);
+  free(extradims);
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
   if (basefield != NULL) free(basefield);
   if (extradims != NULL) free(extradims);
   return status_code;

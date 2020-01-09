@@ -105,6 +105,20 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  status = MtkFileCoreMetaDataGet("../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc", "LOCALGRANULEID", &metadata);
+  if (status == MTK_SUCCESS && metadata.datatype == MTKMETA_CHAR &&
+      metadata.num_values == 1 &&
+      strcmp(metadata.data.s[0],"MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.nc") == 0)
+  {
+    MtkCoreMetaDataFree(&metadata);
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

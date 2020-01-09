@@ -38,7 +38,7 @@ RegCoeff_dealloc(RegCoeff* self)
    MtkDataBufferFree(&self->slope);
    MtkDataBufferFree(&self->intercept);
    MtkDataBufferFree(&self->correlation);            
-   self->ob_type->tp_free((PyObject*)self);
+   Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -127,8 +127,7 @@ static PyMethodDef RegCoeff_methods[] = {
 };
 
 PyTypeObject RegCoeffType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkRegCoeff",      /*tp_name*/
     sizeof(RegCoeff),            /*tp_basicsize*/
     0,                         /*tp_itemsize*/

@@ -47,6 +47,60 @@ MTKt_status MtkFileGridFieldToDimList(
   char **dimlist[],     /**< [OUT] Dimension list */
   int **dimsize         /**< [OUT] Dimension size */ )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkFileGridFieldToDimListNC(filename, gridname, fieldname, dimcnt, dimlist, dimsize); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileGridFieldToDimListHDF(filename, gridname, fieldname, dimcnt, dimlist, dimsize); // try HDF
+}
+
+MTKt_status MtkFileGridFieldToDimListNC(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname,/**< [IN] Field name */
+  int *dimcnt,          /**< [OUT] Dimension count */
+  char **dimlist[],     /**< [OUT] Dimension list */
+  int **dimsize         /**< [OUT] Dimension size */ )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+ 
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read dimension list. */
+  status = MtkFileGridFieldToDimListNcid(ncid, gridname, fieldname, dimcnt, dimlist, dimsize);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridFieldToDimListHDF(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname,/**< [IN] Field name */
+  int *dimcnt,          /**< [OUT] Dimension count */
+  char **dimlist[],     /**< [OUT] Dimension list */
+  int **dimsize         /**< [OUT] Dimension size */ )
+{
   MTKt_status status;		/* Return status. */
   MTKt_status status_code;      /* Return status of this function. */
   intn hdfstatus;               /* HDF-EOS return status */
@@ -75,6 +129,7 @@ ERROR_HANDLE:
 
   return status_code;
 }
+
 
 /** \brief Version of MtkFileGridFieldToDimList that takes an HDF-EOS file ID rather than a filename.
  *
@@ -206,6 +261,115 @@ ERROR_HANDLE:
 
   free(list);
   GDdetach(Gid);
+
+  return status_code;
+}
+
+MTKt_status MtkFileGridFieldToDimListNcid(
+  int ncid,            /**< [IN] netCDF file identifier */
+  const char *gridname, /**< [IN] Grid name */
+  const char *fieldname,/**< [IN] Field name */
+  int *dimcnt,          /**< [OUT] Dimension count */
+  char **dimlist[],     /**< [OUT] Dimension list */
+  int **dimsize         /**< [OUT] Dimension size */ )
+{
+  MTKt_status status;		/* Return status. */
+  MTKt_status status_code;      /* Return status of this function. */
+  char *basefield = NULL;	/* Base fieldname */
+  int nextradims;               /* Number of extra dimensions */
+  int *extradims = NULL;	/* Extra dimension list */
+
+  int *dimids = NULL;
+
+  /* Check Arguments */
+  if (dimlist == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  if (dimsize == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  *dimlist = NULL; /* Set output to NULL to prevent freeing unallocated
+                      memory in case of error. */
+  *dimsize = NULL;
+
+  if (gridname == NULL || fieldname == NULL ||
+      dimcnt == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  status = MtkParseFieldname(fieldname, &basefield, &nextradims, &extradims);
+  MTK_ERR_COND_JUMP(status);
+
+  int group_id;
+  {
+    int nc_status = nc_inq_grp_ncid(ncid, gridname, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  MTKt_ncvarid var;
+  status = MtkNCVarId(group_id, basefield, &var);
+  MTK_ERR_COND_JUMP(status);
+
+  int ndims;
+  {
+    int nc_status = nc_inq_varndims(var.gid, var.varid, &ndims);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  dimids = calloc(ndims, sizeof(int));
+  {
+    int nc_status = nc_inq_var(var.gid, var.varid, NULL, NULL, NULL, dimids, NULL);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  *dimlist = calloc(ndims, sizeof(char *));
+  *dimsize = calloc(ndims, sizeof(int));
+  *dimcnt = 0;
+
+  for (size_t i = 0 ; i < ndims ; i++) {
+    char name[NC_MAX_NAME+1];  // add 1 for string terminator
+    int this_dimid = dimids[i];
+    size_t size;
+    int nc_status = nc_inq_dim(group_id, this_dimid, name, &size);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    if (0 == strcmp(name, "X_Dim")) continue; // skip X_Dim
+    if (0 == strcmp(name, "Y_Dim")) continue; // skip Y_Dim
+
+    char *this_name = calloc(sizeof(name), sizeof(char));
+    strcpy(this_name, name);
+    (*dimlist)[(*dimcnt)] = this_name;
+    (*dimsize)[(*dimcnt)] = size;
+    (*dimcnt)++;
+  }
+
+  if (*dimcnt == 0) {
+    MtkStringListFree(*dimcnt, dimlist);
+    free(*dimsize);
+    *dimsize = NULL;
+  }
+
+  free(dimids);
+  free(basefield);
+  free(extradims);
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (dimids != NULL) free(dimids);
+  if (dimlist != NULL && *dimlist != NULL)
+    MtkStringListFree(ndims, dimlist);
+
+  if (dimsize != NULL)
+    {
+      free(*dimsize);
+      *dimsize = NULL;
+    }
+
+  if (dimcnt != NULL)
+    *dimcnt = -1;
+
+  if (basefield != NULL) free(basefield);
+  if (extradims != NULL) free(extradims);
 
   return status_code;
 }

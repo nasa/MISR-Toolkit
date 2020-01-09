@@ -35,6 +35,7 @@ typedef struct {
 /** \brief Cache (Low Level) */
 typedef struct {
   int32 fid;                   /**< HDF-EOS file identifier */
+  int ncid;                    /**< netCDF file identifier */
   char *gridname;              /**< Grid name */
   char *fieldname;             /**< Field name */
   int block_cnt;               /**< Block count */
@@ -42,9 +43,14 @@ typedef struct {
   MTKt_Block block[NBLOCK+1];  /**< Block */
 } MTKt_Cache;
 
-#define MTKT_CACHE_INIT { FAIL, NULL, NULL, 0, MTKT_DATABUFFER_INIT, {MTKT_BLOCK_INIT} }
+#define MTKT_CACHE_INIT { FAIL, 0, NULL, NULL, 0, MTKT_DATABUFFER_INIT, {MTKT_BLOCK_INIT} }
 
-MTKt_status MtkCacheInit( int32 fid,
+MTKt_status MtkCacheInitFid( int32 fid,
+			  const char *gridname,
+			  const char *fieldname,
+			  MTKt_Cache *cache );
+
+MTKt_status MtkCacheInitNcid( int ncid,
 			  const char *gridname,
 			  const char *fieldname,
 			  MTKt_Cache *cache );

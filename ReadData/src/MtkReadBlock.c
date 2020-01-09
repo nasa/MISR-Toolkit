@@ -55,6 +55,58 @@ MTKt_status MtkReadBlock(
   int block,               /**< [IN] Block number */
   MTKt_DataBuffer *databuf /**< [OUT] Data buffer */  )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkReadBlockNC(filename, gridname, fieldname, block, databuf); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkReadBlockHDF(filename, gridname, fieldname, block, databuf); // try HDF
+}
+
+MTKt_status MtkReadBlockNC(
+  const char *filename,    /**< [IN] File name */
+  const char *gridname,    /**< [IN] Grid name */
+  const char *fieldname,   /**< [IN] Field name */
+  int block,               /**< [IN] Block number */
+  MTKt_DataBuffer *databuf /**< [OUT] Data buffer */  )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read block. */
+  status = MtkReadBlockNcid(ncid, gridname, fieldname, block, databuf);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkReadBlockHDF(
+  const char *filename,    /**< [IN] File name */
+  const char *gridname,    /**< [IN] Grid name */
+  const char *fieldname,   /**< [IN] Field name */
+  int block,               /**< [IN] Block number */
+  MTKt_DataBuffer *databuf /**< [OUT] Data buffer */  )
+{
   MTKt_status status;		/* Return status */
   MTKt_status status_code;      /* Return code of this function */
   intn hdfstatus;		/* HDF-EOS return status */
@@ -159,6 +211,147 @@ MTKt_status MtkReadBlockFid(
   return MTK_SUCCESS;
  ERROR_HANDLE:
   if (gid != FAIL) GDdetach(gid);
+  if (basefield != NULL) free(basefield);
+  if (extradims != NULL) free(extradims);
+  MtkDataBufferFree(&databuf_tmp);
+  return status_code;
+}
+
+MTKt_status MtkReadBlockNcid(
+  int ncid,                /**< [IN] netCDF file identifier */
+  const char *gridname,    /**< [IN] Grid name */
+  const char *fieldname,   /**< [IN] Field name */
+  int block,               /**< [IN] Block number */
+  MTKt_DataBuffer *databuf /**< [OUT] Data buffer */  )
+{
+  MTKt_status status;		/* Return status */
+  MTKt_status status_code;      /* Return code of this function */
+  char *basefield = NULL;	/* Base fieldname */
+  int nextradims;               /* Number of extra dimensions */
+  int *extradims = NULL;	/* Extra dimension list */
+  MTKt_DataBuffer databuf_tmp = MTKT_DATABUFFER_INIT;
+				/* Temp data buffer */
+  MTKt_DataType datatype;	/* Mtk data type */
+
+  if (gridname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+  if (fieldname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+  if (block < 1 || block > 180) MTK_ERR_CODE_JUMP(MTK_OUTBOUNDS);
+
+  int group_id;
+  {
+    int nc_status = nc_inq_grp_ncid(ncid, gridname, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  int size_x;
+  int size_y;
+  int start_x;
+  int start_y;
+  int found = 0;
+
+  {
+    int nc_status;
+    nc_status = nc_get_att(group_id, NC_GLOBAL, "block_size_in_lines", &size_x);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_get_att(group_id, NC_GLOBAL, "block_size_in_samples", &size_y);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    int bvarid;
+    nc_status = nc_inq_varid(group_id, "Block_Number", &bvarid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    int dimid[NC_MAX_DIMS];
+    nc_status = nc_inq_var(group_id, bvarid, NULL, NULL, NULL, dimid, NULL);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    size_t number_block;
+    nc_status = nc_inq_dimlen(group_id, dimid[0], &number_block);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    int block_numbers[180];
+    nc_status = nc_get_var_int(group_id, bvarid, block_numbers);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    size_t block_index;
+    for (size_t i = 0 ; i < number_block ; i++) {
+      if (block_numbers[i] == block) {
+        found = 1;
+        block_index = i;
+        break;
+      }
+    }
+
+    if (found == 1) {
+
+      int xvarid;
+      nc_status = nc_inq_varid(group_id, "Block_Start_X_Index", &xvarid);
+      if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+      int yvarid;
+      nc_status = nc_inq_varid(group_id, "Block_Start_Y_Index", &yvarid);
+      if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+      nc_status = nc_get_var1_int(group_id, xvarid, &block_index, &start_x);
+      if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+      nc_status = nc_get_var1_int(group_id, yvarid, &block_index, &start_y);
+      if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    }
+  }
+
+  if (found == 0) MTK_ERR_CODE_JUMP(MTK_OUTBOUNDS);  // Block is outside file extent
+
+  status = MtkParseFieldname(fieldname, &basefield, &nextradims, &extradims);
+  if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+
+  int rank;
+  nc_type nc_datatype;
+  MTKt_ncvarid var;
+  {
+    int nc_status;
+
+    status = MtkNCVarId(group_id, basefield, &var);
+    MTK_ERR_COND_JUMP(status);
+
+    nc_status = nc_inq_varndims(var.gid, var.varid, &rank);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    nc_status = nc_inq_vartype(var.gid, var.varid, &nc_datatype);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  if (rank != nextradims + 2) MTK_ERR_CODE_JUMP(MTK_BAD_ARGUMENT);
+
+  status = MtkNcToMtkDataTypeConvert(nc_datatype, &datatype);
+  if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+
+  status = MtkDataBufferAllocate(size_x, size_y, datatype, &databuf_tmp);
+  if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+
+  size_t start[10];
+  size_t count[10];
+
+  start[0] = start_x;
+  start[1] = start_y;
+
+  count[0] = size_x;
+  count[1] = size_y;
+
+  for (int i = 2; i < rank; i++) {
+    start[i] = extradims[i-2];
+    count[i] = 1;
+  }
+
+  {
+    int nc_status = nc_get_vara(var.gid, var.varid, start, count, databuf_tmp.dataptr);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  *databuf = databuf_tmp;
+
+  free(basefield);
+  free(extradims);
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
   if (basefield != NULL) free(basefield);
   if (extradims != NULL) free(extradims);
   MtkDataBufferFree(&databuf_tmp);

@@ -132,6 +132,40 @@ while [ ! -f "$hdffile" ]; do
 done
 
 #
+# Select HDF5
+#
+
+default_hdf5file="${libdir}/hdf5-1.8.16.tar.gz"
+hdf5file=""
+while [ ! -f "$hdf5file" ]; do
+    /bin/echo -n "Enter HDF5 library directory/file ($default_hdf5file): "
+    read hdf5file
+    if [ ! "$hdf5file" ]; then
+	hdf5file="$default_hdf5file"
+    fi
+    if [ ! -f "$hdf5file" ]; then
+	/bin/echo "$hdf5file does not exist."
+    fi
+done
+
+#
+# Select netcdf
+#
+
+default_netcdffile="${libdir}/netcdf-4.4.0.tar.gz"
+netcdffile=""
+while [ ! -f "$netcdffile" ]; do
+    /bin/echo -n "Enter NETCDF library directory/file ($default_netcdffile): "
+    read netcdffile
+    if [ ! "$netcdffile" ]; then
+	netcdffile="$default_netcdffile"
+    fi
+    if [ ! -f "$netcdffile" ]; then
+	/bin/echo "$netcdffile does not exist."
+    fi
+done
+
+#
 # Select HDF-EOS
 #
 
@@ -192,6 +226,34 @@ tar xzvf $hdffile
 cd /tmp/Mtk.$$/$libbasename
 ./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir --disable-netcdf --disable-shared
 make 
+make check
+make install
+
+#
+# Install HDF5
+#
+
+libbasename=`basename $hdf5file .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $hdf5file
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-shared -disable-silent-rules --disable-fortran --prefix=$installdir --with-zlib=$installdir
+make 
+make check
+make install
+HDF5LIB=${installdir}/lib
+HDF5INC=${installdir}/include
+
+#
+# Install netcdf
+#
+
+libbasename=`basename $netcdffile .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $netcdffile
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags -I${HDF5INC}" LDFLAGS="-L${HDF5LIB} $mathlib" --disable-shared --enable-static --disable-dap --enable-netcdf4 --prefix=$installdir
+make
 make check
 make install
 

@@ -37,6 +37,54 @@ MTKt_status MtkFileGridToResolution(
   const char *gridname, /**< [IN] Grid name */
   int *resolution  /**< [OUT] Resolution */ )
 {
+  MTKt_status status;      	/* Return status */
+
+  status = MtkFileGridToResolutionNC(filename, gridname, resolution); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileGridToResolutionHDF(filename, gridname, resolution); // try HDF
+}
+
+MTKt_status MtkFileGridToResolutionNC(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  int *resolution  /**< [OUT] Resolution */ )
+{
+  MTKt_status status_code;      /* Return code of this function */
+  MTKt_status status;           /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Get resolution of grid. */
+  status = MtkFileGridToResolutionNcid(ncid, gridname, resolution);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridToResolutionHDF(
+  const char *filename, /**< [IN] File name */
+  const char *gridname, /**< [IN] Grid name */
+  int *resolution  /**< [OUT] Resolution */ )
+{
   MTKt_status status_code;	/* Return code of this function */
   MTKt_status status;      	/* Return status */
   intn hdfstatus;		/* HDF-EOS return status */
@@ -100,5 +148,34 @@ MTKt_status MtkFileGridToResolutionFid(
   return MTK_SUCCESS;
  ERROR_HANDLE:
   if (gid != FAIL) GDdetach(gid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridToResolutionNcid(
+  int ncid,            /**< [IN] netCDF file identifier */
+  const char *gridname, /**< [IN] Grid name */
+  int *resolution  /**< [OUT] Resolution */ )
+{
+  MTKt_status status_code;	/* Return code of this function */
+
+  if (gridname == NULL || resolution == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  int group_id;
+  {
+    int nc_status = nc_inq_grp_ncid(ncid, gridname, &group_id);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  int32 res;
+  {
+    int nc_status = nc_get_att(group_id, NC_GLOBAL, "resolution_in_meters", &res);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  *resolution = res;
+
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
   return status_code;
 }

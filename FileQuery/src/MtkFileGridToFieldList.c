@@ -43,6 +43,56 @@ MTKt_status MtkFileGridToFieldList(
   int *nfields, /**< [OUT] Number of Fields */
   char **fieldlist[] /**< [OUT] List of Fields */ )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkFileGridToFieldListNC(filename, gridname, nfields, fieldlist); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileGridToFieldListHDF(filename, gridname, nfields, fieldlist); // try HDF
+}
+
+MTKt_status MtkFileGridToFieldListNC(
+  const char *filename, /**< [IN] Filename */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+ 
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read list of fields. */
+  status = MtkFileGridToFieldListNcid(ncid, gridname, nfields, fieldlist);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridToFieldListHDF(
+  const char *filename, /**< [IN] Filename */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
   MTKt_status status;		/* Return status of called functions */
   MTKt_status status_code;	/* Return status of this function. */
   intn hdfstatus;		/* HDF-EOS return status */
@@ -300,4 +350,13 @@ MTKt_status MtkFileGridToFieldListFid(
   GDdetach(Gid);
 
   return status_code;
+}
+
+MTKt_status MtkFileGridToFieldListNcid(
+  int ncid,            /**< [IN] netCDF file identifier */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
+  return MtkFileGridToNativeFieldListNcid(ncid, gridname, nfields, fieldlist); // No derived fields
 }

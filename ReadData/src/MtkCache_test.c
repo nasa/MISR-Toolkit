@@ -46,11 +46,13 @@ int main () {
   if (fid == FAIL) {
     MTK_PRINT_STATUS(cn,"*");
     pass = MTK_FALSE;
-  } else {
-    MTK_PRINT_STATUS(cn,".");
   }
 
-  status = MtkCacheInit(fid, gridname, fieldname, &cache);
+  status = MtkCacheInitFid(fid, gridname, fieldname, &cache);
+  if (status != MTK_SUCCESS) {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
 
   if (fid == cache.fid) {
     MTK_PRINT_STATUS(cn,".");
@@ -102,6 +104,89 @@ int main () {
 
   /* Close file. */
   hdfstatus = GDclose(fid);
+  if (hdfstatus == -1) {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  /* Normal test call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  strcpy(gridname, "1.1_KM_PRODUCTS");
+  strcpy(fieldname, "Directional_Hemispherical_Reflectance[2]");
+
+  /* Open file. */
+  int ncid;
+  int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+  if (nc_status != NC_NOERR) {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (fid == FAIL) {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  } else {
+    MTK_PRINT_STATUS(cn,".");
+  }
+
+  status = MtkCacheInitNcid(ncid, gridname, fieldname, &cache);
+  if (status != MTK_SUCCESS) {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (ncid == cache.ncid) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (FAIL == cache.fid) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (strcmp(gridname, cache.gridname) == 0) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (strcmp(fieldname, cache.fieldname) == 0) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  MtkCachePixelGet(&cache, -1, 10, 20, (void *)&buf);
+  MtkCachePixelGet(&cache, 1, -1, 20, (void *)&buf);
+  MtkCachePixelGet(&cache, 1, 10, -1, (void *)&buf);
+
+  {
+    for (int block = 0; block < NBLOCK; block++) {
+      for (int i = 100; i < 150; i++) {
+        for (int j = 100; j < 150; j++) {
+          MtkCachePixelGet(&cache, block, i, j, (void *)&buf);
+        }
+      }
+    }
+  }
+
+  MtkCacheFree(&cache);
+
+  /* Close file. */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) {
+      MTK_PRINT_STATUS(cn,"*");
+      pass = MTK_FALSE;
+    }
+  }
 
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");

@@ -33,4 +33,4 @@ fi
 #
 
 cd $libdir
-curl -O http://www.python.org/ftp/python/2.5.6/Python-2.5.6.tgz
+curl -O https://www.python.org/ftp/python/2.5.6/Python-2.5.6.tgz

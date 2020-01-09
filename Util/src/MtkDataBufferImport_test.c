@@ -142,7 +142,7 @@ int main () {
       for (s = 0; s < dbuf.nsample; s++) {
 	data3 = 1.0 / ((l+1) * (s+1));
 	/*	printf("[%d, %d] = %f, %f\n", l, s, data3, dbuf.data.d[l][s]); */
-	if (fabsf(dbuf.data.d[l][s] - data3) > .000001 ){
+	if (fabs(dbuf.data.d[l][s] - data3) > .000001 ){
 	  good = MTK_FALSE;
 	}
       }

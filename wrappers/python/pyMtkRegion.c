@@ -25,7 +25,7 @@ extern int MtkMapInfo_copy(MtkMapInfo *self, MTKt_MapInfo mapinfo);
 static void
 Region_dealloc(Region* self)
 {
-    self->ob_type->tp_free((PyObject*)self);
+    Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -224,7 +224,6 @@ Region_SnapToGrid(Region* self, PyObject *args)
       return NULL;
 
    mapinfo = (MtkMapInfo*)PyObject_New(MtkMapInfo, &MtkMapInfoType);
-   mapinfo = (MtkMapInfo*)PyObject_Init((PyObject*)mapinfo, &MtkMapInfoType);
    MtkMapInfo_init(mapinfo,NULL,NULL);
    
    if (mapinfo == NULL)
@@ -271,8 +270,7 @@ static PyMethodDef Region_methods[] = {
 };
 
 PyTypeObject RegionType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkRegion",   /*tp_name*/
     sizeof(Region),            /*tp_basicsize*/
     0,                         /*tp_itemsize*/

@@ -118,6 +118,7 @@ typedef struct
    int32 fid;
    int32 sid;
    int32 hdf_fid;
+   int ncid;
 
 } MtkFileId;
 
@@ -176,5 +177,18 @@ PYMTKTYPE ## _set ## ATTR_NAME (PYMTKTYPE *self, PyObject *value, void *closure)
 \
    return 0; \
 }
+
+#if PY_MAJOR_VERSION >= 3
+    #define PyInt_FromLong PyLong_FromLong
+    #define PyInt_AsLong PyLong_AsLong
+    #define PyInt_Check PyLong_Check
+    #define PyExc_StandardError PyExc_Exception
+    #define PyString PyBytes
+    #define PyString_FromString PyUnicode_FromString
+    #define PyString_AsString PyUnicode_AsUTF8
+    #define PyString_Format PyUnicode_Format
+#else
+
+#endif
 
 #endif /* PYMTK_H */

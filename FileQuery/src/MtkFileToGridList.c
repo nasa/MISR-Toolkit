@@ -43,6 +43,54 @@ MTKt_status MtkFileToGridList(
   int *ngrids,          /**< [OUT] Number of grids */
   char **gridlist[]     /**< [OUT] Grid list */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkFileToGridListNC(filename, ngrids, gridlist); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileToGridListHDF(filename, ngrids, gridlist); // try HDF
+}
+
+MTKt_status MtkFileToGridListNC(
+  const char *filename, /**< [IN]  File name */
+  int *ngrids,          /**< [OUT] Number of grids */
+  char **gridlist[]     /**< [OUT] Grid list */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFileToGridListNcid(ncid, ngrids, gridlist);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileToGridListHDF(
+  const char *filename, /**< [IN]  File name */
+  int *ngrids,          /**< [OUT] Number of grids */
+  char **gridlist[]     /**< [OUT] Grid list */ )
+{
   MTKt_status status_code;      /* Return status of this function. */
   MTKt_status status;      	/* Return status */
   intn hdfstatus;		/* HDF return status */
@@ -145,6 +193,76 @@ ERROR_HANDLE:
     *ngrids = -1;
 
   free(list);
+
+  return status_code;
+}
+
+MTKt_status MtkFileToGridListNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  int *ngrids,          /**< [OUT] Number of grids */
+  char **gridlist[]     /**< [OUT] Grid list */ )
+{
+  MTKt_status status_code;      /* Return status of this function. */
+  int32 num_grids = 0;          /* Number of grids */
+  int *group_ids = NULL;
+
+  /* Check Arguments */
+  if (gridlist == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  *gridlist = NULL; /* Set output to NULL to prevent freeing unallocated
+                       memory in case of error. */
+
+  if (ngrids == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  {
+    int num_groups;
+    int nc_status = nc_inq_grps(ncid, &num_groups, NULL);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    group_ids = (int *)calloc(num_groups, sizeof(int));
+    nc_status = nc_inq_grps(ncid, NULL, group_ids);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    
+    *gridlist = (char**)calloc(num_groups, sizeof(char*));
+    if (*gridlist == NULL)
+      MTK_ERR_CODE_JUMP(MTK_CALLOC_FAILED);
+
+    for (int i = 0 ; i < num_groups ; i++) {
+      int group_id = group_ids[i];
+      char temp[MAX_NC_NAME+1];
+
+      int nc_status = nc_inq_grpname(group_id, temp);
+      if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+      nc_status = nc_inq_att(group_id, NC_GLOBAL, "resolution_in_meters", NULL, NULL); // must contain recongized grid attibute
+      if (nc_status != NC_NOERR) continue;
+      
+      (*gridlist)[num_grids] = (char*)malloc((strlen(temp) + 1) * sizeof(char));
+      if ((*gridlist)[num_grids] == NULL)
+        MTK_ERR_CODE_JUMP(MTK_MALLOC_FAILED);
+      strcpy((*gridlist)[num_grids],temp);
+      num_grids++;
+    }
+
+    *ngrids = num_grids;
+    free(group_ids);
+    group_ids = NULL;
+  }
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (gridlist != NULL)
+    MtkStringListFree(num_grids, gridlist);
+
+  if (ngrids != NULL)
+    *ngrids = -1;
+
+  if (group_ids != NULL) {
+    free(group_ids);
+  }
 
   return status_code;
 }

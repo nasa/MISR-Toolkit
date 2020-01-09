@@ -21,7 +21,8 @@ file_list = Split("""obj/MtkVersion.c
                      obj/MtkUtcToUtcJd.c
                      obj/MtkUtcJdToTaiJd.c
                      obj/MtkTaiToUtc.c
-                     obj/MtkUtcToTai.c""")
+                     obj/MtkUtcToTai.c
+                     obj/MtkNCVarId.c""")
 
 obj = env.SharedObject(file_list)
 Return('obj')

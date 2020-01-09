@@ -213,6 +213,42 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  MtkSetRegionByPathBlockRange(39, 59, 59, &region);
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc");
+  strcpy(gridname, "4.4_KM_PRODUCTS");
+  strcpy(fieldname, "Latitude");
+
+  status = MtkReadRaw(filename, gridname, fieldname, region, &dbuf, &mapinfo);
+  if (status == MTK_SUCCESS &&
+      dbuf.data.f[0][1] == 40.289031982421875 &&
+      dbuf.data.f[1][0] == 40.253570556640625 &&
+      dbuf.data.f[31][127] == 38.4030723571777343750) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadRaw(filename, NULL, fieldname, region, &dbuf, &mapinfo);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadRaw(filename, gridname, NULL, region, &dbuf, &mapinfo);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

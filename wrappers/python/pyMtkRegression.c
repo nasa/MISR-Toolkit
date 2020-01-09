@@ -44,7 +44,7 @@ int RegCoeff_init(RegCoeff *self, PyObject *args, PyObject *kwds);
 static void
 MtkRegression_dealloc(MtkRegression* self)
 {
-   self->ob_type->tp_free((PyObject*)self);
+   Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -140,8 +140,6 @@ MtkRegression_Downsample(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     MtkDataBufferFree(&srcdata);
@@ -236,8 +234,6 @@ MtkRegression_LinearRegressionCalc(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:             
     Py_XDECREF(a_arr);
@@ -322,8 +318,6 @@ MtkRegression_SmoothData(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     MtkDataBufferFree(&srcdata);
@@ -393,8 +387,6 @@ MtkRegression_UpsampleMask(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     MtkDataBufferFree(&srcmask);
@@ -489,7 +481,6 @@ MtkRegression_CoeffCalc(MtkRegression *self, PyObject *args)
         
         /* Misr Toolkit Call */
         py_regr_coeff = PyObject_New(RegCoeff, &RegCoeffType);
-        py_regr_coeff = (RegCoeff*)PyObject_Init((PyObject*)py_regr_coeff, &RegCoeffType);
         RegCoeff_init(py_regr_coeff,NULL,NULL);
         
         status =  MtkRegressionCoeffCalc(&data1, &mask1, &data2, &sigma2, &mask2, mapinfo, size_factor, &regr_coeff, &regr_map_info);
@@ -503,7 +494,6 @@ MtkRegression_CoeffCalc(MtkRegression *self, PyObject *args)
         status = Mtk_MtkRegCoeffToPy(&regr_coeff, &py_regr_coeff);
         MTK_ERR_PY_COND_JUMP(status);
         py_regr_map_info = (MtkMapInfo*)PyObject_New(MtkMapInfo, &MtkMapInfoType);
-        py_regr_map_info = (MtkMapInfo*)PyObject_Init((PyObject*)py_regr_map_info, &MtkMapInfoType);
         MtkMapInfo_init(py_regr_map_info,NULL,NULL);
         MtkMapInfo_copy(py_regr_map_info,regr_map_info);
         result = Py_BuildValue("NN",py_regr_coeff, py_regr_map_info);
@@ -518,8 +508,6 @@ MtkRegression_CoeffCalc(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     MtkDataBufferFree(&data1);
@@ -625,8 +613,6 @@ MtkRegression_ApplyRegression(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     MtkDataBufferFree(&data1);
@@ -689,7 +675,6 @@ MtkRegression_ResampleRegCoeff(MtkRegression *self, PyObject *args)
         
         /* Misr Toolkit Call */
         py_regr_coeff_out = PyObject_New(RegCoeff, &RegCoeffType);
-        py_regr_coeff_out = (RegCoeff*)PyObject_Init((PyObject*)py_regr_coeff_out, &RegCoeffType);
         RegCoeff_init(py_regr_coeff_out,NULL,NULL);
         
         status =  MtkResampleRegressionCoeff(&regr_coeff, regr_map_info, target_map_info, &regr_coeff_out );
@@ -708,8 +693,6 @@ MtkRegression_ResampleRegCoeff(MtkRegression *self, PyObject *args)
         PyErr_SetString(PyExc_StandardError, "Wrong number of arguments.");
         return NULL;
     }
-    PyErr_SetString(PyExc_StandardError, "Unknown error.");
-    return NULL;
 
 ERROR_HANDLE:
     Py_XDECREF(py_regr_coeff_out);
@@ -739,8 +722,7 @@ PyMethodDef mtkregression_methods[] = {
 };
 
 PyTypeObject MtkRegressionType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkRegression",      /*tp_name*/
     sizeof(MtkRegression),            /*tp_basicsize*/
     0,                         /*tp_itemsize*/

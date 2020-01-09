@@ -34,7 +34,7 @@
 static void
 MtkTimeMetaData_dealloc(MtkTimeMetaData* self)
 {
-   self->ob_type->tp_free((PyObject*)self);
+   Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -334,8 +334,7 @@ static PyMethodDef MtkTimeMetaData_methods[] = {
 };
 
 PyTypeObject MtkTimeMetaDataType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkTimeMetaData",  /*tp_name*/
     sizeof(MtkTimeMetaData),        /*tp_basicsize*/
     0,                         /*tp_itemsize*/

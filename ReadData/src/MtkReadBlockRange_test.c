@@ -107,6 +107,71 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  {
+    int startblock = 58;
+    int endblock = 61;
+    strcpy(gridname, "1.1_KM_PRODUCTS");
+    strcpy(fieldname, "Directional_Hemispherical_Reflectance[2]");
+    
+    status = MtkReadBlockRange(filename, gridname, fieldname,
+                               startblock, endblock, &dbuf);
+    if (status == MTK_SUCCESS &&
+        dbuf.data.u8[1][64][256] == 59 &&  // block 59, line 63, sample 256; file offset 448, 416
+        dbuf.data.u8[1][63][255] == 53) {  // block 59, line 63, sample 256; file offset 448, 416
+      MTK_PRINT_STATUS(cn,".");
+      MtkDataBufferFree3D(&dbuf);
+    } else {
+      MTK_PRINT_STATUS(cn,"*");
+      pass = MTK_FALSE;
+    }
+  }
+
+  status = MtkReadBlockRange(filename, NULL, fieldname, startblock, endblock,
+			     &dbuf);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadBlockRange(filename, gridname, NULL, startblock, endblock,
+			     &dbuf);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadBlockRange(filename, gridname, fieldname, 0, endblock,
+			     &dbuf);
+  if (status == MTK_OUTBOUNDS) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadBlockRange(filename, gridname, fieldname, startblock, 0,
+			     &dbuf);
+  if (status == MTK_OUTBOUNDS) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkReadBlockRange(filename, gridname, fieldname, 40, 26, &dbuf);
+  if (status == MTK_OUTBOUNDS) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

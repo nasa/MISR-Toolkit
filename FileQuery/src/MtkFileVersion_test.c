@@ -25,7 +25,7 @@ int main () {
   MTKt_boolean pass = MTK_TRUE; /* Test status */
   int cn = 0;			/* Column number */
   char filename[80];		/* HDF filename */
-  char fileversion[10]; 	/* File version */
+  char fileversion[100]; 	/* File version */
 
   MTK_PRINT_STATUS(cn,"Testing MtkFileVersion");
 
@@ -86,6 +86,23 @@ int main () {
   }
 
   strcpy(filename,"../Mtk_testdata/in/MISR_AM1_AS_LAND_P037_O029058_F06_0017.hdf");
+  status = MtkFileVersion(filename, NULL);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc");
+  status = MtkFileVersion(filename, fileversion);
+  if (status == MTK_SUCCESS && strcmp(fileversion,"F13_23") == 0) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   status = MtkFileVersion(filename, NULL);
   if (status == MTK_NULLPTR) {
     MTK_PRINT_STATUS(cn,".");

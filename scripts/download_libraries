@@ -32,7 +32,9 @@ fi
 #
 
 cd $libdir
-curl -L -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/zlib-1.2.5.tar.gz --disable-epsv
-curl -L -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/jpegsrc.v6b.tar.gz --disable-epsv
-curl -L -O http://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.10/src/hdf-4.2.10.tar.gz
-curl -L -O ftp://edhs1.gsfc.nasa.gov/edhs/hdfeos/previous_releases/HDF-EOS2.18v1.00.tar.Z --disable-epsv
+curl -L -O https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases/zlib-1.2.5.tar.gz
+curl -L -O https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases/jpegsrc.v6b.tar.gz
+curl -L -O https://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.10/src/hdf-4.2.10.tar.gz
+curl -L -O https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.16/src/hdf5-1.8.16.tar.gz
+curl -L -O https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases/HDF-EOS2.18v1.00.tar.Z
+curl -L -O ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.4.0.tar.gz

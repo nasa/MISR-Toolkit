@@ -19,9 +19,9 @@ This document describes the installation and usage of the Python interface to th
 \section{Installation \label {installation}}
 Prerequisites:
 
-  1. \ulink {Python 2.4 or 2.5}{http://www.python.org/}
+  1. \ulink {Python 2.7 or 3.x}{http://www.python.org/}
 
-  2. \ulink {MISR Toolkit}{http://www.openchannelfoundation.org/projects/MISR_Toolkit}
+  2. \ulink {MISR Toolkit}{https://github.com/nasa/MISR-Toolkit/releases}
 
   3. \ulink {NumPy}{http://numpy.scipy.org/} 
  
@@ -1019,22 +1019,35 @@ array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
   Transforms latitude/longitude coordinates into line/sample coordinates.
 
 \begin{verbatim}
->>> map_info = MtkRegion(39, 51, 52).snap_to_grid(39,275)
->>> latbuf, lonbuf = map_info.create_latlon()
->>> myproj.transform_coordinates(map_info, latbuf, lonbuf)
-(array([[-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
+>>> r = Mtk.MtkRegion(39, 51, 52)
+>>> mapinfo = r.snap_to_grid(39, 275)
+>>> (lat, lon) = reproj.create_geogrid(49.0, -113.0, 47.5, -114.0, 0.02, 0.02)
+>>> reproj.transform_coordinates(mapinfo, lat, lon)
+(array([[475.7129 , 474.96417, 474.21405, ..., 512.7551 , 512.07776,
+        511.39905],
+       [483.72412, 482.97504, 482.22458, ..., 520.7843 , 520.1066 ,
+        519.4276 ],
+       [491.73526, 490.98584, 490.23502, ..., 528.8135 , 528.13544,
+        527.45605],
        ...,
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.]], dtype=float32), array([[-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
+       [ -1.     ,  -1.     ,  -1.     , ...,  -1.     ,  -1.     ,
+         -1.     ],
+       [ -1.     ,  -1.     ,  -1.     , ...,  -1.     ,  -1.     ,
+         -1.     ],
+       [ -1.     ,  -1.     ,  -1.     , ...,  -1.     ,  -1.     ,
+         -1.     ]], dtype=float32), array([[313.62213 , 318.89313 , 324.1639  , ...,  39.21427 ,  44.49714 ,
+         49.779778],
+       [314.75842 , 320.03152 , 325.30438 , ...,  40.2419  ,  45.526855,
+         50.811584],
+       [315.89478 , 321.16998 , 326.44495 , ...,  41.269634,  46.556675,
+         51.843494],
        ...,
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.],
-       [-1., -1., -1., ..., -1., -1., -1.]], dtype=float32))
+       [ -1.      ,  -1.      ,  -1.      , ...,  -1.      ,  -1.      ,
+         -1.      ],
+       [ -1.      ,  -1.      ,  -1.      , ...,  -1.      ,  -1.      ,
+         -1.      ],
+       [ -1.      ,  -1.      ,  -1.      , ...,  -1.      ,  -1.      ,
+         -1.      ]], dtype=float32))
 \end{verbatim}
 \end{methoddesc}
 
@@ -1782,7 +1795,7 @@ array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
 
 \begin{verbatim}
 >>> version()
-'1.2.0'
+'1.5.0'
 \end{verbatim}
 \end{funcdesc}
 

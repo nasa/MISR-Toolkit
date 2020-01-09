@@ -38,6 +38,52 @@ MTKt_status MtkFileLGID(
   const char *filename,    /**< [IN] File name */
   char **lgid              /**< [OUT] Local Granual ID */ )
 {
+  MTKt_status status;       /* Return status */
+
+  status = MtkFileLGIDNC(filename, lgid); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileLGIDHDF(filename, lgid); // try HDF
+}
+
+MTKt_status MtkFileLGIDNC(
+  const char *filename,    /**< [IN] File name */
+  char **lgid              /**< [OUT] Local Granual ID */ )
+{
+  MTKt_status status;
+  MTKt_status status_code;
+  int ncid = 0;
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Get Local Granual ID */
+  status = MtkFileLGIDNcid(ncid,lgid);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileLGIDHDF(
+  const char *filename,    /**< [IN] File name */
+  char **lgid              /**< [OUT] Local Granual ID */ )
+{
   MTKt_status status;
   MTKt_status status_code; /* Return status of this function */
   intn hdf_status;
@@ -120,9 +166,11 @@ MTKt_status MtkFileLGIDFid(
   attr_buf[count] = '\0';
 
   fn_start = strstr(attr_buf, "MISR_AM1_");
-  if (fn_start == NULL)
-    MTK_ERR_CODE_JUMP(MTK_FAILURE);
-
+  if (fn_start == NULL) {
+	  fn_start = strstr(attr_buf, "MISR_HR_");
+	  if (fn_start == NULL)
+	    MTK_ERR_CODE_JUMP(MTK_FAILURE);
+  }
   fn_end = strstr(attr_buf, ".hdf");
   if (fn_end == NULL)
     MTK_ERR_CODE_JUMP(MTK_FAILURE);
@@ -140,6 +188,40 @@ MTKt_status MtkFileLGIDFid(
 ERROR_HANDLE:
   if (attr_buf != NULL)
     free(attr_buf);
+
+  return status_code;
+}
+
+MTKt_status MtkFileLGIDNcid(
+  int ncid,            /**< [IN] netCDF file identifier */
+  char **lgid              /**< [OUT] Local Granual ID */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  char *lgid_tmp = NULL;
+
+  if (lgid == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  size_t len;
+  {
+    int nc_status = nc_inq_attlen(ncid, NC_GLOBAL, "Local_granule_id", &len);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  lgid_tmp = calloc(len+1, sizeof(char));  /* Add 1 for null terminator */
+
+  {
+    int nc_status = nc_get_att(ncid, NC_GLOBAL, "Local_granule_id", lgid_tmp);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  *lgid = lgid_tmp;
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (lgid_tmp != NULL)
+    free(lgid_tmp);
 
   return status_code;
 }

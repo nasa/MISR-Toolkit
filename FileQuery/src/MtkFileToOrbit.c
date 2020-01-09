@@ -35,6 +35,50 @@
 MTKt_status MtkFileToOrbit( const char *filename, /**< [IN] File name */
 			   int *orbit            /**< [OUT] Orbit number */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkFileToOrbitNC(filename, orbit); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileToOrbitHDF(filename, orbit); // try HDF
+}
+
+MTKt_status MtkFileToOrbitNC( const char *filename, /**< [IN] File name */
+			   int *orbit            /**< [OUT] Orbit number */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFileToOrbitNcid(ncid, orbit);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileToOrbitHDF( const char *filename, /**< [IN] File name */
+			   int *orbit            /**< [OUT] Orbit number */ )
+{
   MTKt_status status_code;      /* Return status of this function */
   MTKt_status status;           /* Return status */
   int32 hdf_status;        /* HDF-EOS return status */
@@ -93,5 +137,24 @@ MTKt_status MtkFileToOrbitFid( int32 sd_id, /**< [IN] HDF SD file identifier */
 
 ERROR_HANDLE:
   MtkCoreMetaDataFree(&metadata);
+  return status_code;
+}
+
+MTKt_status MtkFileToOrbitNcid( int ncid,               /**< [IN] netCDF File ID */
+                                int *orbit            /**< [OUT] Orbit number */ )
+{
+  MTKt_status status_code;      /* Return status of this function */
+
+  if (orbit == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  {
+    int nc_status = nc_get_att_int(ncid, NC_GLOBAL, "Orbit_number", orbit);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
   return status_code;
 }

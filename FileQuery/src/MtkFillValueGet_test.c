@@ -101,4 +101,60 @@ int main () {
     MTK_PRINT_RESULT(cn,"Failed");
     return 1;
   }
+
+  /* Normal test call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc");
+  strcpy(gridname, "4.4_KM_PRODUCTS");
+  strcpy(fieldname, "Longitude");
+
+  status = MtkFillValueGet(filename, gridname, fieldname, &dbuf);
+  if (status == MTK_SUCCESS && dbuf.data.d[0][0] == -9999.0) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  /* Argument Checks */
+  status = MtkFillValueGet(NULL, gridname, fieldname, &dbuf);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFillValueGet(filename, NULL, fieldname, &dbuf);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFillValueGet(filename, gridname, NULL, &dbuf);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFillValueGet(filename, gridname, fieldname, NULL);
+  if (status == MTK_NULLPTR) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  if (pass) {
+    MTK_PRINT_RESULT(cn,"Passed");
+    return 0;
+  } else {
+    MTK_PRINT_RESULT(cn,"Failed");
+    return 1;
+  }
+
 }

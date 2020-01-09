@@ -43,6 +43,56 @@ MTKt_status MtkFileGridToNativeFieldList(
   int *nfields, /**< [OUT] Number of Fields */
   char **fieldlist[] /**< [OUT] List of Fields */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkFileGridToNativeFieldListNC(filename, gridname, nfields, fieldlist); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileGridToNativeFieldListHDF(filename, gridname, nfields, fieldlist); // try HDF
+}
+
+MTKt_status MtkFileGridToNativeFieldListNC(
+  const char *filename, /**< [IN] Filename */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFileGridToNativeFieldListNcid(ncid, gridname, nfields, fieldlist);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileGridToNativeFieldListHDF(
+  const char *filename, /**< [IN] Filename */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
   MTKt_status status;		/* Return status of called functions */
   MTKt_status status_code;	/* Return status of this function. */
   intn hdfstatus;		/* HDF-EOS return status */
@@ -160,6 +210,125 @@ MTKt_status MtkFileGridToNativeFieldListFid(
 
   free(list);
   GDdetach(Gid);
+
+  return status_code;
+}
+
+MTKt_status MtkFileGridToNativeFieldListNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  const char *gridname, /**< [IN] Gridname */
+  int *nfields, /**< [OUT] Number of Fields */
+  char **fieldlist[] /**< [OUT] List of Fields */ )
+{
+  MTKt_status status_code;	/* Return status of this function. */
+  int32 num_fields = 0;         /* Number of fields */
+  int *varids = NULL;
+  int *group_ids = NULL;
+
+  /* Check Arguments */
+  if (fieldlist == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  *fieldlist = NULL; /* Set output to NULL to prevent freeing unallocated
+                        memory in case of error. */
+
+  if (gridname == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  if (nfields == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  int group_id;
+  int nc_status = nc_inq_ncid(ncid, gridname, &group_id);
+  if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+  int ngroups;
+  nc_status = nc_inq_grps(group_id, &ngroups, NULL);
+  if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+  ngroups++; // Add 1 for base group
+  group_ids = (int *)calloc(ngroups, sizeof(int));
+  group_ids[0] = group_id; // include base group for the grid
+
+  if (ngroups > 1) {
+    nc_status = nc_inq_grps(group_id, NULL, group_ids+1);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  for (int i = 0 ; i < ngroups ; i++) {
+    int group_id = group_ids[i];
+
+    char group_name[MAX_NC_NAME] = {0};  // empty string for base group
+    if (i > 0) { // if this is not the base group
+      nc_status = nc_inq_grpname(group_id, group_name);
+      if (nc_status != NC_NOERR) {
+        MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+      }
+    }
+
+    int nvars;
+    nc_status = nc_inq_varids(group_id, &nvars, NULL);
+    if (nc_status != NC_NOERR) {
+      MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    }
+
+    varids = (int *)calloc(nvars, sizeof(int));
+    nc_status = nc_inq_varids(group_id, NULL, varids);
+    if (nc_status != NC_NOERR) {
+      MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    }
+
+    int start = num_fields;
+    num_fields += nvars;
+    *nfields = num_fields;
+    *fieldlist = (char**)realloc(*fieldlist, num_fields * sizeof(char*));
+    if (*fieldlist == NULL) {
+      MTK_ERR_CODE_JUMP(MTK_CALLOC_FAILED);
+    }
+    
+    for (int i = 0 ; i < nvars ; i++) {
+      int ifield = i + start;
+      int varid = varids[i];
+      char temp[MAX_NC_NAME];
+
+      int nc_status = nc_inq_varname(group_id, varid, temp);
+      if (nc_status != NC_NOERR) {
+        MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+      }
+
+      (*fieldlist)[ifield] = (char*)calloc(strlen(group_name) + strlen(temp) + 2, sizeof(char));
+      if ((*fieldlist)[ifield] == NULL) {
+        MTK_ERR_CODE_JUMP(MTK_CALLOC_FAILED);
+      }
+      strcpy((*fieldlist)[ifield],group_name);
+      if (strlen(group_name) > 0) {
+        strcat((*fieldlist)[ifield], "/");
+      }
+      strcat((*fieldlist)[ifield],temp);
+    }
+
+    free(varids);
+    varids = NULL;
+  }
+
+  free(group_ids);
+  group_ids = NULL;
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (fieldlist != NULL)
+    MtkStringListFree(num_fields, fieldlist);
+
+  if (nfields != NULL)
+    *nfields = -1;
+
+  if (varids != NULL) {
+    free(varids);
+  }
+
+  if (group_ids != NULL) {
+    free(group_ids);
+  }
 
   return status_code;
 }

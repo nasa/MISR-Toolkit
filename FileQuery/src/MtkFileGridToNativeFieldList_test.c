@@ -232,6 +232,131 @@ int main () {
     pass = MTK_FALSE;
   }  
 
+  /* Normal test call */
+  {
+    char *fieldlist_expected[] = {
+      "X_Dim",
+      "Y_Dim",
+      "Block_Number",
+      "Block_Start_X_Index",
+      "Block_Start_Y_Index",
+      "Time",
+      "Camera_Dim",
+      "Mixture_Dim",
+      "Spectral_AOD_Scaling_Coeff_Dim",
+      "Latitude",
+      "Longitude",
+      "Elevation",
+      "Year",
+      "Day_Of_Year",
+      "Month",
+      "Day",
+      "Hour",
+      "Minute",
+      "Land_Water_Retrieval_Type",
+      "Aerosol_Optical_Depth",
+      "Aerosol_Optical_Depth_Uncertainty",
+      "Angstrom_Exponent_550_860nm",
+      "Spectral_AOD_Scaling_Coeff",
+      "Absorption_Aerosol_Optical_Depth",
+      "Nonspherical_Aerosol_Optical_Depth",
+      "Small_Mode_Aerosol_Optical_Depth",
+      "Medium_Mode_Aerosol_Optical_Depth",
+      "Large_Mode_Aerosol_Optical_Depth",
+      "AUXILIARY/Land_Water_Retrieval_Type_Raw",
+      "AUXILIARY/Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Aerosol_Optical_Depth_Uncertainty_Raw",
+      "AUXILIARY/Angstrom_Exponent_550_860nm_Raw",
+      "AUXILIARY/Spectral_AOD_Scaling_Coeff_Raw",
+      "AUXILIARY/Absorption_Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Nonspherical_Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Small_Mode_Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Medium_Mode_Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Large_Mode_Aerosol_Optical_Depth_Raw",
+      "AUXILIARY/Single_Scattering_Albedo_446nm_Raw",
+      "AUXILIARY/Single_Scattering_Albedo_558nm_Raw",
+      "AUXILIARY/Single_Scattering_Albedo_672nm_Raw",
+      "AUXILIARY/Single_Scattering_Albedo_867nm_Raw",
+      "AUXILIARY/Aerosol_Retrieval_Confidence_Index",
+      "AUXILIARY/Aerosol_Optical_Depth_Per_Mixture",
+      "AUXILIARY/Minimum_Chisq_Per_Mixture",
+      "AUXILIARY/Legacy_Aerosol_Retrieval_Success_Flag_Per_Mixture",
+      "AUXILIARY/Cloud_Screening_Parameter",
+      "AUXILIARY/Cloud_Screening_Parameter_Neighbor_3x3",
+      "AUXILIARY/Aerosol_Retrieval_Screening_Flags",
+      "AUXILIARY/Column_Ozone_Climatology",
+      "AUXILIARY/Ocean_Surface_Wind_Speed_Climatology",
+      "AUXILIARY/Ocean_Surface_Wind_Speed_Retrieved",
+      "AUXILIARY/Rayleigh_Optical_Depth",
+      "AUXILIARY/Lowest_Residual_Mixture",
+      "GEOMETRY/Solar_Zenith_Angle",
+      "GEOMETRY/Solar_Azimuth_Angle",
+      "GEOMETRY/View_Zenith_Angle",
+      "GEOMETRY/View_Azimuth_Angle",
+      "GEOMETRY/Scattering_Angle",
+      "GEOMETRY/Glint_Angle"
+    };
+    
+    data_ok = MTK_TRUE;
+    strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc");
+    strcpy(gridname, "4.4_KM_PRODUCTS");
+
+    status = MtkFileGridToNativeFieldList(filename,gridname,&num_fields,&fieldlist);
+    if (status == MTK_SUCCESS) {
+      if (num_fields != sizeof(fieldlist_expected) /
+          sizeof(*fieldlist_expected))
+        data_ok = MTK_FALSE;
+        
+      for (i = 0; i < num_fields; ++i) {
+        if (strcmp(fieldlist[i],fieldlist_expected[i]) != 0) {
+          data_ok = MTK_FALSE;
+          break; 
+        }
+      }
+      MtkStringListFree(num_fields, &fieldlist);
+    }
+
+    if (status == MTK_SUCCESS && data_ok) {
+      MTK_PRINT_STATUS(cn,".");
+    } else {
+      MTK_PRINT_STATUS(cn,"*");
+      pass = MTK_FALSE;
+    }
+  }
+
+  status = MtkFileGridToNativeFieldList(filename,NULL,&num_fields,&fieldlist);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridToNativeFieldList(filename,gridname,NULL,&fieldlist);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridToNativeFieldList(filename,gridname,&num_fields,NULL);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }  
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

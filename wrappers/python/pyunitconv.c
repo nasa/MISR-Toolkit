@@ -16,9 +16,9 @@
 
 #include <Python.h>
 #include "MisrToolkit.h"
+#include "pyMtk.h"
 
-PyObject *
-DdToDegMinSec(PyObject *self, PyObject *args)
+PyObject* DdToDegMinSec(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -41,8 +41,7 @@ DdToDegMinSec(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DmsToDd(PyObject *self, PyObject *args)
+PyObject* DmsToDd(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -63,8 +62,7 @@ DmsToDd(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DdToDms(PyObject *self, PyObject *args)
+PyObject* DdToDms(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -85,8 +83,7 @@ DdToDms(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DmsToDegMinSec(PyObject *self, PyObject *args)
+PyObject* DmsToDegMinSec(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -109,8 +106,7 @@ DmsToDegMinSec(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DdToRad(PyObject *self, PyObject *args)
+PyObject* DdToRad(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -131,8 +127,7 @@ DdToRad(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DmsToRad(PyObject *self, PyObject *args)
+PyObject* DmsToRad(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -153,8 +148,7 @@ DmsToRad(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DegMinSecToDd(PyObject *self, PyObject *args)
+PyObject* DegMinSecToDd(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -177,8 +171,7 @@ DegMinSecToDd(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-RadToDd(PyObject *self, PyObject *args)
+PyObject* RadToDd(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -199,8 +192,7 @@ RadToDd(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DegMinSecToDms(PyObject *self, PyObject *args)
+PyObject* DegMinSecToDms(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -223,8 +215,7 @@ DegMinSecToDms(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-RadToDegMinSec(PyObject *self, PyObject *args)
+PyObject* RadToDegMinSec(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -247,8 +238,7 @@ RadToDegMinSec(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-DegMinSecToRad(PyObject *self, PyObject *args)
+PyObject* DegMinSecToRad(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -271,8 +261,7 @@ DegMinSecToRad(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-RadToDms(PyObject *self, PyObject *args)
+PyObject* RadToDms(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;

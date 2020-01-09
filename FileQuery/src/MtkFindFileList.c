@@ -197,7 +197,7 @@ static void findfile(const regex_t* preg, int *count, int *max, char ***file_lis
     while ((entry = readdir(dir)))
     {
 	  /* check if the pattern matchs. */
-      if (entry->d_name && regexec(preg, entry->d_name, 0, NULL, 0) == 0)
+      if (entry && regexec(preg, entry->d_name, 0, NULL, 0) == 0)
       {
 	    len = strlen(cwd) + strlen(entry->d_name) + 2;
 	    if (*count < *max)

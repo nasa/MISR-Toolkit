@@ -37,6 +37,54 @@ MTKt_status MtkFileToBlockRange(
   int *start_block,     /**< [OUT] Start block */
   int *end_block        /**< [OUT] End Block */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkFileToBlockRangeNC(filename, start_block, end_block); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFileToBlockRangeHDF(filename, start_block, end_block); // try HDF
+}
+
+MTKt_status MtkFileToBlockRangeNC(
+  const char *filename, /**< [IN] File name */
+  int *start_block,     /**< [OUT] Start block */
+  int *end_block        /**< [OUT] End Block */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFileToBlockRangeNcid(ncid, start_block, end_block);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFileToBlockRangeHDF(
+  const char *filename, /**< [IN] File name */
+  int *start_block,     /**< [OUT] Start block */
+  int *end_block        /**< [OUT] End Block */ )
+{
   MTKt_status status_code;      /* Return status of this function */
   MTKt_status status;		/* Return status */
   int32 sid=FAIL;  	        /* HDF SD file identifier */
@@ -101,6 +149,36 @@ MTKt_status MtkFileToBlockRangeFid(
   status = SDreadattr(sid, attr_index, &end_block_tmp);
   if (status == FAIL)
     MTK_ERR_CODE_JUMP(MTK_HDF_SDREADATTR_FAILED);
+
+  *start_block = start_block_tmp;
+  *end_block = end_block_tmp;
+
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  return status_code;
+}
+
+MTKt_status MtkFileToBlockRangeNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  int *start_block,     /**< [OUT] Start block */
+  int *end_block        /**< [OUT] End Block */ )
+{
+  MTKt_status status_code;      /* Return status of this function */
+  int start_block_tmp;	/* Temp start block */
+  int end_block_tmp;		/* Temp end block */
+
+  if (start_block == NULL || end_block == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  {
+    int nc_status = nc_get_att_int(ncid, NC_GLOBAL, "Start_block", &start_block_tmp);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+  {
+    int nc_status = nc_get_att_int(ncid, NC_GLOBAL, "End_block", &end_block_tmp);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
 
   *start_block = start_block_tmp;
   *end_block = end_block_tmp;

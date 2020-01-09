@@ -501,7 +501,6 @@ PathToProjParam(PyObject *self, PyObject *args)
       return NULL;
 
    proj = PyObject_New(MtkProjParam, &MtkProjParamType);
-   proj = (MtkProjParam*)PyObject_Init((PyObject*)proj, &MtkProjParamType);
 
    status = MtkPathToProjParam(path,resolution_meters,&proj->pp);
    if (status != MTK_SUCCESS)
@@ -757,7 +756,6 @@ PathBlockRangeToBlockCorners(PyObject *self, PyObject *args)
    }
 
    bc = (MtkBlockCorners*)PyObject_New(MtkBlockCorners, &MtkBlockCornersType);
-   bc = (MtkBlockCorners*)PyObject_Init((PyObject*)bc, &MtkBlockCornersType);
    MtkBlockCorners_init(bc,NULL,NULL);
 
    bc->path = block_corners.path;

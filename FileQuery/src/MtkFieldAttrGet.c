@@ -41,36 +41,79 @@ MTKt_status MtkFieldAttrGet(
   const char *attrname,    /**< [IN] Attribute name */
   MTKt_DataBuffer *attrbuf /**< [OUT] Attribute value */ )
 {
+  MTKt_status status;      /* Return status */
+
+  status = MtkFieldAttrGetNC(filename, fieldname, attrname, attrbuf); // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkFieldAttrGetHDF(filename, fieldname, attrname, attrbuf); // try HDF
+}
+
+MTKt_status MtkFieldAttrGetNC(
+  const char *filename,    /**< [IN] File name */
+  const char *fieldname,    /**< [IN] Field name */
+  const char *attrname,    /**< [IN] Attribute name */
+  MTKt_DataBuffer *attrbuf /**< [OUT] Attribute value */ )
+{
   MTKt_status status_code; /* Return status of this function */
   MTKt_status status;      /* Return status */
-  intn hdf_status;
-  int32 fid = FAIL;
 
-  if (filename == NULL)
-    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
-  /* Open HDF File */
+  if (filename == NULL) return MTK_NULLPTR;
+
+  /* Open file */
+  int ncid = 0;
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read grid attribute */
+  status = MtkFieldAttrGetNcid(ncid, fieldname, attrname, attrbuf);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
+  return status_code;
+}
+
+MTKt_status MtkFieldAttrGetHDF(
+  const char *filename,    /**< [IN] File name */
+  const char *fieldname,    /**< [IN] Field name */
+  const char *attrname,    /**< [IN] Attribute name */
+  MTKt_DataBuffer *attrbuf /**< [OUT] Attribute value */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+  intn hdfstatus;               /* HDF-EOS return status */
+  int32 fid = FAIL;		/* HDF-EOS File id */
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
   fid = GDopen((char*)filename, DFACC_READ);
-  if (fid == FAIL)
-    MTK_ERR_CODE_JUMP(MTK_HDFEOS_GDOPEN_FAILED);
+  if (fid == FAIL) MTK_ERR_CODE_JUMP(MTK_HDFEOS_GDOPEN_FAILED);
 
-  /* Get list of field attributes. */
+  /* Read grid attribute */
   status = MtkFieldAttrGetFid(fid, fieldname, attrname, attrbuf);
   MTK_ERR_COND_JUMP(status);
 
-  /* Close HDF file */
-  hdf_status = GDclose(fid);
-  if (hdf_status == FAIL)
-    MTK_ERR_CODE_JUMP(MTK_HDFEOS_GDCLOSE_FAILED);
-  fid = FAIL;
- 
-  return MTK_SUCCESS;
+  hdfstatus = GDclose(fid);
+  if (hdfstatus == FAIL) MTK_ERR_CODE_JUMP(MTK_HDFEOS_GDCLOSE_FAILED);
 
+  return MTK_SUCCESS;
 ERROR_HANDLE:
-  if (fid != FAIL)
-    GDclose(fid);
-  
+  if (fid != FAIL) GDclose(fid);
   return status_code;
 }
+
 
 /** \brief Version of MtkFieldAttrGet that takes an HDF SD file identifier rather than a filename.
  *
@@ -78,7 +121,7 @@ ERROR_HANDLE:
  */
 
 MTKt_status MtkFieldAttrGetFid(
-  int32 fid,            /**< [IN] HDF-EOS file identifier */
+  int32 fid,               /**< [IN] HDF-EOS File ID */
   const char *fieldname,    /**< [IN] Field name */
   const char *attrname,    /**< [IN] Attribute name */
   MTKt_DataBuffer *attrbuf /**< [OUT] Attribute value */ )
@@ -137,6 +180,83 @@ MTKt_status MtkFieldAttrGetFid(
 
 ERROR_HANDLE:
 
+  MtkDataBufferFree(&attrbuf_tmp);
+
+  return status_code;
+}
+
+MTKt_status MtkFieldAttrGetNcid(
+  int ncid,               /**< [IN] netCDF File ID */
+  const char *fieldname,    /**< [IN] Field name */
+  const char *attrname,    /**< [IN] Attribute name */
+  MTKt_DataBuffer *attrbuf /**< [OUT] Attribute value */ )
+{
+  MTKt_status status_code; /* Return status of this function */
+  MTKt_status status;      /* Return status */
+  MTKt_DataType datatype;       /* Mtk data type */
+  MTKt_DataBuffer attrbuf_tmp = MTKT_DATABUFFER_INIT; /* Temp attribute buffer */
+  int *gids = NULL;
+
+  if (fieldname == NULL || attrname == NULL || attrbuf == NULL)
+    MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+
+  /* Iterate over groups and fields until fieldname matches.  Only the first match will be tried. */
+  MTKt_ncvarid var;
+  int found = 0;
+  {
+    int number_group;
+    int nc_status = nc_inq_grps(ncid, &number_group, NULL);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+    
+    gids = (int *)calloc(number_group, sizeof(int));
+    if (gids == NULL) MTK_ERR_CODE_JUMP(MTK_CALLOC_FAILED);
+
+    nc_status = nc_inq_grps(ncid, &number_group, gids);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+
+    for (int i = 0 ; i < number_group ; i++) {
+      int gid = gids[i];
+      
+      status = MtkNCVarId(gid, fieldname, &var);
+      if (status == MTK_SUCCESS) {
+        found = 1;
+        break;
+      }
+    }
+    free(gids); 
+    gids = NULL;
+  }
+
+  if (found == 0) {
+    MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  nc_type nc_datatype;
+  {
+    int nc_status = nc_inq_atttype(var.gid, var.varid, attrname, &nc_datatype);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  status = MtkNcToMtkDataTypeConvert(nc_datatype, &datatype);
+  if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+
+  status = MtkDataBufferAllocate(1, 1, datatype, &attrbuf_tmp);
+  if (status != MTK_SUCCESS) MTK_ERR_CODE_JUMP(status);
+
+  {
+    int nc_status = nc_get_att(var.gid, var.varid, attrname, attrbuf_tmp.dataptr);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  *attrbuf = attrbuf_tmp;
+  
+  return MTK_SUCCESS;
+
+ERROR_HANDLE:
+  if (gids != NULL) {
+    free(gids);
+  }
   MtkDataBufferFree(&attrbuf_tmp);
 
   return status_code;

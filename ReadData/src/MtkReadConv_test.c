@@ -19,6 +19,7 @@
 #include "MisrError.h"
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 int main () {
 
@@ -86,6 +87,26 @@ int main () {
     MtkDataBufferFree(&dbuf);
   } else {
     MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  /* Normal test call */
+  /* Test for MISR HR L2 product file which has non-standard dimension order */
+  strcpy(filename, "../Mtk_testdata/in/MISR_HR_TIP_20121003_P168_O068050_B110_V2.00-0_GRN.hdf");
+  strcpy(gridname, "TIP");
+  strcpy(fieldname, "ObsCovarFluxes[0]");
+
+  MtkFileToPath(filename, &path);
+  MtkFileToBlockRange(filename, &sb, &eb);
+  MtkSetRegionByPathBlockRange(path, sb, eb, &region);
+
+  status = MtkReadConv(filename, gridname, fieldname, region, &dbuf, &mapinfo);
+  if (status == MTK_SUCCESS &&
+      fabs(dbuf.data.f[350][350] - 0.0035493) < 0.000001) {
+    MTK_PRINT_STATUS(cn,".");
+    MtkDataBufferFree(&dbuf);
+  } else {
+	MTK_PRINT_STATUS(cn,"*");
     pass = MTK_FALSE;
   }
 

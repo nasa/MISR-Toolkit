@@ -59,3 +59,39 @@ MTKt_status MtkHdfToMtkDataTypeConvert( int32 hdf_datatype,
 
   return MTK_SUCCESS;
 }
+
+MTKt_status MtkNcToMtkDataTypeConvert( nc_type nc_datatype,
+                                       MTKt_DataType *datatype ) {
+
+  if (datatype == NULL)
+    return MTK_NULLPTR;
+
+  switch (nc_datatype) {
+  case NC_CHAR: *datatype = MTKe_char8;
+    break;
+  case NC_UBYTE: *datatype = MTKe_uint8;
+    break;
+  case NC_BYTE: *datatype = MTKe_int8;
+    break;
+  case NC_SHORT: *datatype = MTKe_int16;
+    break;
+  case NC_USHORT: *datatype = MTKe_uint16;
+    break;
+  case NC_INT: *datatype = MTKe_int32;
+    break;
+  case NC_UINT: *datatype = MTKe_uint32;
+    break;
+  case NC_INT64: *datatype = MTKe_int64;
+    break;
+  case NC_UINT64: *datatype = MTKe_uint64;
+    break;
+  case NC_FLOAT: *datatype = MTKe_float;
+    break;
+  case NC_DOUBLE: *datatype = MTKe_double;
+    break;
+  default:
+    return MTK_FAILURE;
+  }
+
+  return MTK_SUCCESS;
+}

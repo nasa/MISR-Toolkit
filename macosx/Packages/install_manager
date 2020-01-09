@@ -6,7 +6,7 @@ PREFIX=/tmp
 ./install_hdf+hdfeos
 source $PREFIX/usr/local/hdfeoslibs/bin/hdfeos_env.sh
 cd Mtk
-MTK_INSTALLDIR=$PREFIX/Library/Mtk-1.4.5
+MTK_INSTALLDIR=$PREFIX/Library/Mtk-1.4.4
 export MTK_INSTALLDIR
 make cmdutil
 make python

@@ -1,6 +1,5 @@
 from distutils.core import setup, Extension
 import os
-import glob
 import numpy
 
 include_dirs = ['../../include', '../../Regression/include',
@@ -12,47 +11,33 @@ include_dirs = ['../../include', '../../Regression/include',
 
 lib_dirs = ['../../lib']
 
-
-include_files = []
-for idir in include_dirs:
-  include_files += glob.glob(idir+'/*.h')
-
-lib_files = []
-for idir in lib_dirs:
-  lib_files += glob.glob(idir+'/lib*.so')
-  lib_files += glob.glob(idir+'/lib*.a')
-
-for ifile in include_files:
-  link_path = 'MisrToolkit/include/'+os.path.basename(ifile)
-  if os.path.exists(link_path):
-    os.unlink(link_path)
-  os.symlink('../../'+ifile, link_path)
-
-for ifile in lib_files:
-  link_path = 'MisrToolkit/lib/'+os.path.basename(ifile)
-  if os.path.exists(link_path):
-    os.unlink(link_path)
-  os.symlink('../../'+ifile, link_path)
+gctpinc = os.getenv('GCTPINC', default=os.getenv('HDFEOS_INC'))
+gctplib = os.getenv('GCTPLIB', default=os.getenv('HDFEOS_LIB'))
+ncinc = os.getenv('NCINC', default=os.getenv('HDFEOS_INC'))
+nclib = os.getenv('NCLIB', default=os.getenv('HDFEOS_LIB'))
+jpeginc = os.getenv('JPEGINC', default=os.getenv('HDFEOS_INC'))
+jpeglib = os.getenv('JPEGLIB', default=os.getenv('HDFEOS_LIB'))
+hdf5inc = os.getenv('HDF5INC', default=os.getenv('HDFEOS_INC'))
+hdf5lib = os.getenv('HDF5LIB', default=os.getenv('HDFEOS_LIB'))
 
 module = Extension('MisrToolkit',
-	include_dirs = [numpy.get_include(),
-                        os.getenv('HDFEOS_INC'), os.getenv('HDFINC')] + include_dirs,
-	library_dirs = ['.',os.getenv('HDFEOS_LIB'), os.getenv('HDFLIB')],
-        libraries = ['hdfeos', 'mfhdf', 'df', 'z', 'jpeg', 'm',
-                     'Gctp'],
-        extra_objects = ['../../lib/libMisrToolkit.a'],
-        sources = ['pymisrtoolkit.c', 'pyhelpers.c', 'pyMtkFile.c', 'pyMtkFileId.c', 'pyMtkGrid.c',
-                   'pyMtkField.c', 'pyMtkRegion.c', 'pyMtkDataPlane.c',
-                   'pyMtkProjParam.c', 'pyMtkGeoCoord.c', 'pyMtkGeoBlock.c',
-                   'pyMtkBlockCorners.c', 'pyMtkMapInfo.c', 'pyMtkSomCoord.c', 'pyMtkReProject.c',
-                   'pyMtkSomRegion.c', 'pyMtkGeoRegion.c', 'pyMtkTimeMetaData.c', 'pycoordquery.c',
-                   'pyfilequery.c', 'pyorbitpath.c', 'pyunitconv.c', 'pyutil.c', 'pyMtkRegression.c',
-                   'pyMtkRegCoeff.c'])
+	include_dirs = [ numpy.get_include(), ncinc, hdf5inc, jpeginc, gctpinc,
+                     os.getenv('HDFEOS_INC'), os.getenv('HDFINC'), jpeginc ] + include_dirs,
+	library_dirs = [ '.', nclib, hdf5lib, os.getenv('HDFEOS_LIB'),
+                     gctplib, os.getenv('HDFLIB'), jpeglib ],
+    libraries = ['netcdf', 'hdf5_hl', 'hdf5', 'hdfeos', 'Gctp', 'mfhdf', 'df', 'jpeg', 'z', 'm'],
+    extra_objects = ['../../lib/libMisrToolkit.a'],
+    sources = ['pyMtkBlockCorners.c', 'pyMtkDataPlane.c', 'pyMtkField.c', 'pyMtkFile.c',
+               'pyMtkFileId.c', 'pyMtkGeoBlock.c', 'pyMtkGeoCoord.c', 'pyMtkGeoRegion.c',
+               'pyMtkGrid.c', 'pyMtkMapInfo.c', 'pyMtkProjParam.c', 'pyMtkReProject.c',
+               'pyMtkRegCoeff.c', 'pyMtkRegion.c', 'pyMtkRegression.c', 'pyMtkSomCoord.c',
+               'pyMtkSomRegion.c', 'pyMtkTimeMetaData.c', 'pycoordquery.c', 'pyfilequery.c',
+               'pyhelpers.c', 'pymisrtoolkit.c', 'pyorbitpath.c', 'pyunitconv.c', 'pyutil.c'],
+    )
 
 setup (name = 'MisrToolkit',
        description = 'Python interface to MISR Toolkit',
        packages = ['MisrToolkit'],
-       package_dir = {'MisrToolkit': 'MisrToolkit' },
-       package_data = {'MisrToolkit': ['include/*.h', 'lib/*']},
        ext_package = 'MisrToolkit',
-       ext_modules = [module])
+       ext_modules = [module],
+       version = '1.5.0')

@@ -109,7 +109,7 @@ MTKt_status MtkGCTPCreateLatLon(
   /* ------------------------------------------------------------------ */
 
   inv_init(Proj_info->proj_code, Proj_info->zone_code, Proj_info->proj_param,
-	   Proj_info->sphere_code, 0, 0, &iflg, inv_trans);
+           Proj_info->sphere_code, 0, 0, &iflg, inv_trans);
   if (iflg) {
     printf("iflg = %d\n",iflg);
     MTK_ERR_CODE_JUMP(MTK_GCTP_INVERSE_INIT_FAILED);

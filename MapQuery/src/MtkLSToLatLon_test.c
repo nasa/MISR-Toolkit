@@ -26,7 +26,7 @@ int main () {
   MTKt_status status;           /* Return status */
   MTKt_boolean pass = MTK_TRUE; /* Test status */
   MTKt_Region region;		/* Region structure */
-  MTKt_MapInfo mapinfo;		/* Map Info structure */
+  MTKt_MapInfo mapinfo = MTKT_MAPINFO_INIT; /* Map Info structure */
   int path;			/* Path */
   int resolution;		/* Resolution */
   int sblock;			/* Start block */

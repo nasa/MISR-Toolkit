@@ -38,7 +38,7 @@ static void
 DataPlane_dealloc(DataPlane* self)
 {
    MtkDataBufferFree(&self->databuf);
-   self->ob_type->tp_free((PyObject*)self);
+   Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -131,7 +131,6 @@ DataPlane_mapinfo(DataPlane *self)
    MtkMapInfo *mapinfo;
 
    mapinfo = (MtkMapInfo*)PyObject_New(MtkMapInfo, &MtkMapInfoType);
-   mapinfo = (MtkMapInfo*)PyObject_Init((PyObject*)mapinfo, &MtkMapInfoType);
    MtkMapInfo_init(mapinfo,NULL,NULL);
 
    /* Copy data into MtkMapInfo */
@@ -149,8 +148,7 @@ static PyMethodDef DataPlane_methods[] = {
 };
 
 PyTypeObject DataPlaneType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+    PyVarObject_HEAD_INIT(NULL, 0)
     "MisrToolkit.MtkDataPlane",      /*tp_name*/
     sizeof(DataPlane),            /*tp_basicsize*/
     0,                         /*tp_itemsize*/

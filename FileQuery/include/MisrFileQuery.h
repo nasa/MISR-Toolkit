@@ -38,6 +38,9 @@ typedef enum MTKt_FileType {       /* File type */
   MTK_CONVENTIONAL,
   MTK_UNKNOWN,
   MTK_TC_CLOUD,
+  MTK_HR_BRF,
+  MTK_HR_RPV,
+  MTK_HR_TIP,
 } MTKt_FileType;
 
 #define MTKT_FILE_TYPE_DESC { "AGP", "GP_GMP", "GRP_RCCM", \
@@ -45,7 +48,8 @@ typedef enum MTKt_FileType {       /* File type */
                               "GRP_ELLIPSOID_LM", "GRP_TERRAIN_LM", \
                               "AS_AEROSOL", "AS_LAND", "TC_ALBEDO", \
                               "TC_CLASSIFIERS", "TC_STEREO", \
-                              "PP", "CONVENTIONAL", "UNKNOWN","TC_CLOUD",}
+                              "PP", "CONVENTIONAL", "UNKNOWN","TC_CLOUD", \
+							  "MISR_HR_BRF", "MISR_HR_RPV", "MISR_HR_TIP",}
 
 /** \brief Core Metadata */
 typedef struct MtkCoreMetaData {
@@ -85,22 +89,45 @@ typedef struct MTKt_TimeMetaData {
 #define MTKT_TIME_METADATA_INIT { 0, 0, 0, {'\0'}, {0}, {{{'\0'}}}, {{0}}, {{0}}, \
 	                             {{{0.0}}}, {{0.0}}, {{0.0}} }
 
-MTKt_status MtkFileType( const char *filename,
-			 MTKt_FileType *filetype );
-
 MTKt_status MtkFileToPath( const char *filename,
+			   int *path );
+
+MTKt_status MtkFileToPathNC( const char *filename,
+			   int *path );
+
+MTKt_status MtkFileToPathHDF( const char *filename,
 			   int *path );
 
 MTKt_status MtkFileToPathFid( int32 sid,
 			      int *path );
 
+MTKt_status MtkFileToPathNcid( int ncid,
+			      int *path );
+
 MTKt_status MtkFileToOrbit( const char *filename,
+			    int *orbit );
+
+MTKt_status MtkFileToOrbitNC( const char *filename,
+			    int *orbit );
+
+MTKt_status MtkFileToOrbitHDF( const char *filename,
 			    int *orbit );
 
 MTKt_status MtkFileToOrbitFid( int32 sd_id,
 			       int *orbit );
 
+MTKt_status MtkFileToOrbitNcid( int ncid,
+			       int *orbit );
+
 MTKt_status MtkFileToBlockRange( const char *filename,
+				 int *start_block,
+				 int *end_block );
+
+MTKt_status MtkFileToBlockRangeNC( const char *filename,
+				 int *start_block,
+				 int *end_block );
+
+MTKt_status MtkFileToBlockRangeHDF( const char *filename,
 				 int *start_block,
 				 int *end_block );
 
@@ -108,7 +135,19 @@ MTKt_status MtkFileToBlockRangeFid( int32 sid,
 				    int *start_block,
 				    int *end_block );
 
+MTKt_status MtkFileToBlockRangeNcid( int ncid,
+				    int *start_block,
+				    int *end_block );
+
 MTKt_status MtkFileGridToResolution( const char *filename,
+				     const char *gridname,
+				     int *resolution );
+
+MTKt_status MtkFileGridToResolutionNC( const char *filename,
+				     const char *gridname,
+				     int *resolution );
+
+MTKt_status MtkFileGridToResolutionHDF( const char *filename,
 				     const char *gridname,
 				     int *resolution );
 
@@ -116,7 +155,21 @@ MTKt_status MtkFileGridToResolutionFid( int32 fid,
 				        const char *gridname,
 				        int *resolution );
 
+MTKt_status MtkFileGridToResolutionNcid( int ncid,
+				        const char *gridname,
+				        int *resolution );
+
 MTKt_status MtkFileGridFieldToDataType( const char *filename,
+					const char *gridname,
+					const char *fieldname,
+					MTKt_DataType *datatype );
+
+MTKt_status MtkFileGridFieldToDataTypeNC( const char *filename,
+					const char *gridname,
+					const char *fieldname,
+					MTKt_DataType *datatype );
+
+MTKt_status MtkFileGridFieldToDataTypeHDF( const char *filename,
 					const char *gridname,
 					const char *fieldname,
 					MTKt_DataType *datatype );
@@ -126,7 +179,22 @@ MTKt_status MtkFileGridFieldToDataTypeFid( int32 fid,
 					   const char *fieldname,
 					   MTKt_DataType *datatype );
 
+MTKt_status MtkFileGridFieldToDataTypeNcid( int32 fid,
+					   const char *gridname,
+					   const char *fieldname,
+					   MTKt_DataType *datatype );
+
 MTKt_status MtkFillValueGet( const char *filename,
+			     const char *gridname,
+			     const char *fieldname,
+			     MTKt_DataBuffer *fillbuf );
+
+MTKt_status MtkFillValueGetNC( const char *filename,
+			     const char *gridname,
+			     const char *fieldname,
+			     MTKt_DataBuffer *fillbuf );
+
+MTKt_status MtkFillValueGetHDF( const char *filename,
 			     const char *gridname,
 			     const char *fieldname,
 			     MTKt_DataBuffer *fillbuf );
@@ -136,11 +204,28 @@ MTKt_status MtkFillValueGetFid( int32 fid,
 				const char *fieldname,
 				MTKt_DataBuffer *fillbuf );
 
+MTKt_status MtkFillValueGetNcid( int ncid,
+				const char *gridname,
+				const char *fieldname,
+				MTKt_DataBuffer *fillbuf );
+
 MTKt_status MtkFileToGridList( const char *filename,
                                int *ngrids,
                                char **gridlist[] );
 
+MTKt_status MtkFileToGridListNC( const char *filename,
+                               int *ngrids,
+                               char **gridlist[] );
+
+MTKt_status MtkFileToGridListHDF( const char *filename,
+                               int *ngrids,
+                               char **gridlist[] );
+
 MTKt_status MtkFileToGridListFid( int32 fid,
+				  int *ngrids,
+				  char **gridlist[] );
+
+MTKt_status MtkFileToGridListNcid( int ncid,
 				  int *ngrids,
 				  char **gridlist[] );
 int32
@@ -152,7 +237,22 @@ MTKt_status MtkFileGridToFieldList( const char *filename,
 				    int *nfields,
                                     char **fieldlist[] );
 
+MTKt_status MtkFileGridToFieldListNC( const char *filename,
+                                    const char *gridname,
+				    int *nfields,
+                                    char **fieldlist[] );
+
+MTKt_status MtkFileGridToFieldListHDF( const char *filename,
+                                    const char *gridname,
+				    int *nfields,
+                                    char **fieldlist[] );
+
 MTKt_status MtkFileGridToFieldListFid( int32 Fid,
+				       const char *gridname,
+				       int *nfields,
+				       char **fieldlist[] );
+
+MTKt_status MtkFileGridToFieldListNcid( int ncid,
 				       const char *gridname,
 				       int *nfields,
 				       char **fieldlist[] );
@@ -162,7 +262,22 @@ MTKt_status MtkFileGridToNativeFieldList( const char *filename,
 					  int *nfields,
 					  char **fieldlist[] );
 
+MTKt_status MtkFileGridToNativeFieldListNC( const char *filename,
+					  const char *gridname,
+					  int *nfields,
+					  char **fieldlist[] );
+
+MTKt_status MtkFileGridToNativeFieldListHDF( const char *filename,
+					  const char *gridname,
+					  int *nfields,
+					  char **fieldlist[] );
+
 MTKt_status MtkFileGridToNativeFieldListFid( int32 Fid,
+					     const char *gridname,
+					     int *nfields,
+					     char **fieldlist[] );
+
+MTKt_status MtkFileGridToNativeFieldListNcid( int ncid,
 					     const char *gridname,
 					     int *nfields,
 					     char **fieldlist[] );
@@ -187,22 +302,59 @@ MTKt_status MtkFindFileList( const char *searchdir,
 MTKt_status MtkFileLGID( const char *filename,
 			 char **lgid );
 
+MTKt_status MtkFileLGIDNC( const char *filename,
+			 char **lgid );
+
+MTKt_status MtkFileLGIDHDF( const char *filename,
+			 char **lgid );
+
 MTKt_status MtkFileLGIDFid( int32 sds_id,
+			    char **lgid );
+
+MTKt_status MtkFileLGIDNcid( int ncid,
 			    char **lgid );
 
 MTKt_status MtkFileType( const char *filename,
 			 MTKt_FileType *filetype );
 
+MTKt_status MtkFileTypeNC( const char *filename,
+			 MTKt_FileType *filetype );
+
+MTKt_status MtkFileTypeHDF( const char *filename,
+			 MTKt_FileType *filetype );
+
 MTKt_status MtkFileTypeFid( int32 Fid,
+			    MTKt_FileType *filetype );
+
+MTKt_status MtkFileTypeNcid( int ncid,
 			    MTKt_FileType *filetype );
 
 MTKt_status MtkFileVersion( const char *filename,
 			    char *fileversion );
 
+MTKt_status MtkFileVersionNC( const char *filename,
+			    char *fileversion );
+
+MTKt_status MtkFileVersionHDF( const char *filename,
+			    char *fileversion );
+
 MTKt_status MtkFileVersionFid( int32 sd_id,
 			       char *fileversion );
 
+MTKt_status MtkFileVersionNcid( int ncid,
+			       char *fileversion );
+
 MTKt_status MtkGridAttrGet( const char *filename,
+			    const char *gridname,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
+MTKt_status MtkGridAttrGetNC( const char *filename,
+			    const char *gridname,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
+MTKt_status MtkGridAttrGetHDF( const char *filename,
 			    const char *gridname,
 			    const char *attrname,
 			    MTKt_DataBuffer *attrbuf );
@@ -212,7 +364,26 @@ MTKt_status MtkGridAttrGetFid( int32 fid,
 			       const char *attrname,
 			       MTKt_DataBuffer *attrbuf );
 
+MTKt_status MtkGridAttrGetNcid( int ncid,
+			       const char *gridname,
+			       const char *attrname,
+			       MTKt_DataBuffer *attrbuf );
+
 MTKt_status MtkFileGridFieldToDimList( const char *filename,
+				       const char *gridname,
+				       const char *fieldname,
+				       int *dimcnt,
+				       char **dimlist[],
+				       int **dimsize );
+
+MTKt_status MtkFileGridFieldToDimListNC( const char *filename,
+				       const char *gridname,
+				       const char *fieldname,
+				       int *dimcnt,
+				       char **dimlist[],
+				       int **dimsize );
+
+MTKt_status MtkFileGridFieldToDimListHDF( const char *filename,
 				       const char *gridname,
 				       const char *fieldname,
 				       int *dimcnt,
@@ -226,13 +397,35 @@ MTKt_status MtkFileGridFieldToDimListFid( int32 Fid,
 					  char **dimlist[],
 					  int **dimsize );
 
+MTKt_status MtkFileGridFieldToDimListNcid( int ncid,
+					  const char *gridname,
+					  const char *fieldname,
+					  int *dimcnt,
+					  char **dimlist[],
+					  int **dimsize );
+
 MTKt_status MtkFileCoreMetaDataRaw( const char *filename,
                                     char **coremeta );
+MTKt_status MtkFileCoreMetaDataRawNC( const char *filename,
+                                      char **coremeta );
+MTKt_status MtkFileCoreMetaDataRawHDF( const char *filename,
+                                       char **coremeta );
 
 MTKt_status MtkFileCoreMetaDataRawFid( int32 sds_id,
 				       char **coremeta );
 
+MTKt_status MtkFileCoreMetaDataRawNcid( int ncid,
+				       char **coremeta );
+
 MTKt_status MtkFileCoreMetaDataQuery( const char *filename,
+                                      int *nparam,
+				      char ***paramlist );
+
+MTKt_status MtkFileCoreMetaDataQueryNC( const char *filename,
+                                      int *nparam,
+				      char ***paramlist );
+
+MTKt_status MtkFileCoreMetaDataQueryHDF( const char *filename,
                                       int *nparam,
 				      char ***paramlist );
 
@@ -240,11 +433,25 @@ MTKt_status MtkFileCoreMetaDataQueryFid( int32 sd_id,
 					 int *nparam,
 					 char ***paramlist );
 
+MTKt_status MtkFileCoreMetaDataQueryNcid( int ncid,
+					 int *nparam,
+					 char ***paramlist );
+
 MTKt_status MtkFileCoreMetaDataGet( const char *filename,
+				    const char *param,
+				    MtkCoreMetaData *metadata );
+MTKt_status MtkFileCoreMetaDataGetNC( const char *filename,
+				    const char *param,
+				    MtkCoreMetaData *metadata );
+MTKt_status MtkFileCoreMetaDataGetHDF( const char *filename,
 				    const char *param,
 				    MtkCoreMetaData *metadata );
 
 MTKt_status MtkFileCoreMetaDataGetFid( int32 sd_id,
+				       const char *param,
+				       MtkCoreMetaData *metadata );
+
+MTKt_status MtkFileCoreMetaDataGetNcid( int ncid,
 				       const char *param,
 				       MtkCoreMetaData *metadata );
 
@@ -254,7 +461,19 @@ MTKt_status MtkFileAttrGet( const char *filename,
 			    const char *attrname,
 			    MTKt_DataBuffer *attrbuf );
 
+MTKt_status MtkFileAttrGetHDF( const char *filename,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
+MTKt_status MtkFileAttrGetNC( const char *filename,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
 MTKt_status MtkFileAttrGetFid( int32 sds_id,
+			       const char *attrname,
+			       MTKt_DataBuffer *attrbuf );
+
+MTKt_status MtkFileAttrGetNcid( int ncid,
 			       const char *attrname,
 			       MTKt_DataBuffer *attrbuf );
 
@@ -262,7 +481,19 @@ MTKt_status MtkFileGridFieldCheck( const char *filename,
 				   const char *gridname,
 				   const char *fieldname );
 
+MTKt_status MtkFileGridFieldCheckNC( const char *filename,
+				   const char *gridname,
+				   const char *fieldname );
+
+MTKt_status MtkFileGridFieldCheckHDF( const char *filename,
+				   const char *gridname,
+				   const char *fieldname );
+
 MTKt_status MtkFileGridFieldCheckFid( int32 Fid,
+				      const char *gridname,
+				      const char *fieldname );
+
+MTKt_status MtkFileGridFieldCheckNcid( int ncid,
 				      const char *gridname,
 				      const char *fieldname );
 
@@ -270,11 +501,33 @@ MTKt_status MtkFileAttrList( const char *filename,
 			     int *num_attrs,
 			     char **attrlist[] );
 
+MTKt_status MtkFileAttrListNC( const char *filename,
+			     int *num_attrs,
+			     char **attrlist[] );
+
+MTKt_status MtkFileAttrListHDF( const char *filename,
+			     int *num_attrs,
+			     char **attrlist[] );
+
 MTKt_status MtkFileAttrListFid( int32 sd_id,
 				int *num_attrs,
 				char **attrlist[] );
 
+MTKt_status MtkFileAttrListNcid( int ncid,
+				int *num_attrs,
+				char **attrlist[] );
+
 MTKt_status MtkGridAttrList( const char *filename,
+			     const char *gridname,
+			     int *num_attrs,
+			     char **attrlist[] );
+			     
+MTKt_status MtkGridAttrListNC( const char *filename,
+			     const char *gridname,
+			     int *num_attrs,
+			     char **attrlist[] );
+			     
+MTKt_status MtkGridAttrListHDF( const char *filename,
 			     const char *gridname,
 			     int *num_attrs,
 			     char **attrlist[] );
@@ -284,7 +537,22 @@ MTKt_status MtkGridAttrListFid( int32 fid,
 				int *num_attrs,
 				char **attrlist[] );
         
+MTKt_status MtkGridAttrListNcid( int ncid,
+				const char *gridname,
+				int *num_attrs,
+				char **attrlist[] );
+        
 MTKt_status MtkFieldAttrList( const char *filename,
+           const char *fieldname,
+			     int *num_attrs,
+			     char **attrlist[] );
+
+MTKt_status MtkFieldAttrListNC( const char *filename,
+           const char *fieldname,
+			     int *num_attrs,
+			     char **attrlist[] );
+
+MTKt_status MtkFieldAttrListHDF( const char *filename,
            const char *fieldname,
 			     int *num_attrs,
 			     char **attrlist[] );
@@ -294,12 +562,32 @@ MTKt_status MtkFieldAttrListFid( int32 fid,
 				int *num_attrs,
 				char **attrlist[] );
 
+MTKt_status MtkFieldAttrListNcid( int ncid,
+        const char *fieldname,
+				int *num_attrs,
+				char **attrlist[] );
+
 MTKt_status MtkFieldAttrGet( const char *filename,
           const char *fieldname,
 			    const char *attrname,
 			    MTKt_DataBuffer *attrbuf );
 
+MTKt_status MtkFieldAttrGetNC( const char *filename,
+          const char *fieldname,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
+MTKt_status MtkFieldAttrGetHDF( const char *filename,
+          const char *fieldname,
+			    const char *attrname,
+			    MTKt_DataBuffer *attrbuf );
+
 MTKt_status MtkFieldAttrGetFid( int32 sds_id,
+             const char *fieldname,
+			       const char *attrname,
+			       MTKt_DataBuffer *attrbuf );                
+			     
+MTKt_status MtkFieldAttrGetNcid( int ncid,
              const char *fieldname,
 			       const char *attrname,
 			       MTKt_DataBuffer *attrbuf );                

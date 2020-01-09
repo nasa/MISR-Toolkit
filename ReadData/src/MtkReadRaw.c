@@ -55,6 +55,22 @@ MTKt_status MtkReadRaw(
   MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
 {
   MTKt_status status;		/* Return status */
+
+  status = MtkReadRawNC(filename, gridname, fieldname, region, databuf, mapinfo);  // try netCDF
+  if (status != MTK_NETCDF_OPEN_FAILED) return status;
+
+  return MtkReadRawHDF(filename, gridname, fieldname, region, databuf, mapinfo);  // try HDF
+}
+
+MTKt_status MtkReadRawHDF(
+  const char *filename,     /**< [IN] File name */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
+  MTKt_status status;		/* Return status */
   MTKt_status status_code;	/* Return status code for error macros */
   int32 fid = FAIL;		/* HDF-EOS File id */
   intn hdfstatus;		/* HDF return status */
@@ -77,6 +93,43 @@ MTKt_status MtkReadRaw(
   return MTK_SUCCESS;
  ERROR_HANDLE:
   if (fid != FAIL) GDclose(fid);
+  return status_code;
+}
+
+MTKt_status MtkReadRawNC(
+  const char *filename,     /**< [IN] File name */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
+  MTKt_status status;		/* Return status */
+  MTKt_status status_code;	/* Return status code for error macros */
+  int ncid = 0;
+
+  if (filename == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Open file. */
+  {
+    int nc_status = nc_open(filename, NC_NOWRITE, &ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_OPEN_FAILED);
+  }
+
+  /* Read data. */
+  status = MtkReadRawNcid(ncid, gridname, fieldname, region, databuf, mapinfo);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Close file. */
+  {
+    int nc_status = nc_close(ncid);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_CLOSE_FAILED);
+  }
+  ncid = 0;
+
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
+  if (ncid != 0) nc_close(ncid);
   return status_code;
 }
 
@@ -149,7 +202,7 @@ MTKt_status MtkReadRawFid(
   MTK_ERR_COND_JUMP(status);
 
   /* Inital block cache */
-  status = MtkCacheInit(fid, gridname, fieldname, &blockcache);
+  status = MtkCacheInitFid(fid, gridname, fieldname, &blockcache);
   MTK_ERR_COND_JUMP(status);
 
   {
@@ -175,6 +228,98 @@ MTKt_status MtkReadRawFid(
     }
   }
 
+  MtkCacheFree(&blockcache);
+
+  *databuf = buf;
+  *mapinfo = map;
+
+  return MTK_SUCCESS;
+ ERROR_HANDLE:
+  MtkCacheFree(&blockcache);
+  MtkDataBufferFree(&buf);
+  return status_code;
+}
+
+/** \brief Version of MtkReadRaw that takes an HDF-EOS file identifier rather than a filename.
+ *
+ *  \return MTK_SUCCESS if successful.
+*/
+
+MTKt_status MtkReadRawNcid(
+  int ncid,                 /**< [IN] netcdf file identifier */
+  const char *gridname,     /**< [IN] Grid name */
+  const char *fieldname,    /**< [IN] Field name */
+  MTKt_Region region,       /**< [IN] Region */
+  MTKt_DataBuffer *databuf, /**< [OUT] Data buffer */
+  MTKt_MapInfo *mapinfo     /**< [OUT] Mapinfo */ )
+{
+  MTKt_status status;		/* Return status */
+  MTKt_status status_code;	/* Return status code for error macros */
+  MTKt_DataBuffer buf = MTKT_DATABUFFER_INIT;
+                                /* Data buffer structure */
+  MTKt_MapInfo map = MTKT_MAPINFO_INIT;
+				/* Map info structure */
+  MTKt_DataType datatype;	/* Datatype */
+  MTKt_Cache blockcache = MTKT_CACHE_INIT;
+				/* Block cache */
+
+  if (gridname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+  if (fieldname == NULL) MTK_ERR_CODE_JUMP(MTK_NULLPTR);
+
+  /* Check for valid file/grid/field/dim  */
+  status = MtkFileGridFieldCheckNcid(ncid, gridname, fieldname);
+  MTK_ERR_COND_JUMP(status);
+
+  int path;
+  {
+    int nc_status = nc_get_att_int(ncid, NC_GLOBAL, "Path_number", &path);
+    if (nc_status != NC_NOERR) MTK_ERR_CODE_JUMP(MTK_NETCDF_READ_FAILED);
+  }
+
+  int resolution;
+  status = MtkFileGridToResolutionNcid(ncid, gridname, &resolution);
+  MTK_ERR_COND_JUMP(status);
+
+  status = MtkFileGridFieldToDataTypeNcid(ncid, gridname, fieldname, &datatype);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Snap region to som grid for this path */
+  status = MtkSnapToGrid(path, resolution, region, &map);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Allocate the data buffer */
+  status = MtkDataBufferAllocate(map.nline, map.nsample, datatype, &buf);
+  MTK_ERR_COND_JUMP(status);
+
+  /* Inital block cache */
+  status = MtkCacheInitNcid(ncid, gridname, fieldname, &blockcache);
+  MTK_ERR_COND_JUMP(status);
+
+  {
+    int b;			/* Block */
+    float l;			/* Line */
+    float s;			/* Sample */
+    double x;			/* Som x */
+    double y;			/* Som y */
+    char *dptr;			/* Data pointer to buffer */
+    MTKt_MisrProjParam pp;      /* Projection parameters */
+    /* (this could come from map, instead of MtkPathToProjParam call) */
+
+    MtkPathToProjParam(map.path, map.resolution, &pp);
+    misr_init(pp.nblock, pp.nline, pp.nsample, pp.reloffset, pp.ulc, pp.lrc);
+
+    dptr = (char *)buf.dataptr;
+    for (x = map.som.ulc.x; x <= map.som.lrc.x; x += map.resolution) {
+      for (y = map.som.ulc.y; y <= map.som.lrc.y; y += map.resolution) {
+        misrfor(x, y, &b, &l, &s);
+        status = MtkCachePixelGet(&blockcache, b, l, s, dptr);
+        if (status != MTK_SUCCESS && status != MTK_OUTBOUNDS) {
+          MTK_ERR_CODE_JUMP(status);
+        }
+        dptr += buf.datasize;
+      }
+    }
+  }
   MtkCacheFree(&blockcache);
 
   *databuf = buf;

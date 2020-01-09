@@ -26,7 +26,7 @@ int main () {
   MTKt_status status;           /* Return status */
   MTKt_boolean pass = MTK_TRUE; /* Test status */
   MTKt_boolean data_ok = MTK_TRUE; /* Data OK */
-  char filename[] = "../Mtk_testdata/in/MISR_AM1_GRP_TERRAIN_GM_P161_O012115_DF_F03_0021.hdf";
+  char filename[80];		/* HDF-EOS filename */
   char *gridlist_expected[] = {"BlueBand", "GreenBand", "RedBand", "NIRBand",
 			       "BRF Conversion Factors", "GeometricParameters"};
   int num_grids;
@@ -37,6 +37,7 @@ int main () {
   MTK_PRINT_STATUS(cn,"Testing MtkFileToGridList");
 
   /* Normal Call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_GRP_TERRAIN_GM_P161_O012115_DF_F03_0021.hdf");
   status = MtkFileToGridList(filename,&num_grids,&gridlist);
   if (status == MTK_SUCCESS)
   {
@@ -85,6 +86,55 @@ int main () {
   {
     MTK_PRINT_STATUS(cn,"*");
     pass = MTK_FALSE;
+  }
+
+  status = MtkFileToGridList(filename,NULL,&gridlist);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileToGridList(filename,&num_grids,NULL);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  /* Normal Call */
+  {
+    char *gridlist_expected[] = {"4.4_KM_PRODUCTS"};
+
+    strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_AEROSOL_P039_O002467_F13_23.b056-070.nc");
+    status = MtkFileToGridList(filename,&num_grids,&gridlist);
+    if (status == MTK_SUCCESS) {
+      if (num_grids != sizeof(gridlist_expected) /
+          sizeof(*gridlist_expected))
+        data_ok = MTK_FALSE;
+      
+      for (i = 0; i < num_grids; ++i)
+        if (strcmp(gridlist[i],gridlist_expected[i]) != 0) {
+          data_ok = MTK_FALSE;
+          break;
+        }
+      MtkStringListFree(num_grids, &gridlist);
+    }
+    
+    if (status == MTK_SUCCESS && data_ok) {
+      MTK_PRINT_STATUS(cn,".");
+    } else {
+      MTK_PRINT_STATUS(cn,"*");
+      pass = MTK_FALSE;
+    }
   }
 
   status = MtkFileToGridList(filename,NULL,&gridlist);

@@ -63,6 +63,30 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  /* Normal test call */
+  status = MtkFileLGID("../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc",&lgid);
+  if (status == MTK_SUCCESS && strcmp(lgid,"MISR_AM1_AS_LAND_P039_O002467_F08_23.nc") == 0)
+  {
+    free(lgid);
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileLGID("../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc",NULL);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   if (pass) {
     MTK_PRINT_RESULT(cn,"Passed");
     return 0;

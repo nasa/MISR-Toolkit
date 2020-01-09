@@ -114,14 +114,18 @@ MTKt_status MtkReadConvFid(
   intn hdfstatus;		/* HDF-EOS return status */
   int32 gid = FAIL;		/* HDF-EOS Grid id */
   int32 start[10];		/* HDF-EOS start dimension */
+  int32 start_copy[10];		/* HDF-EOS start dimension copy*/
   int32 edge[10];		/* HDF-EOS edge dimension */
+  int32 edge_copy[10];		/* HDF-EOS edge dimension copy */
   int32 hdf_datatype;		/* HDF-EOS data type */
   int32 rank;			/* HDF-EOS rank */
   int32 dims[10];		/* HDF-EOS dimensions */
+  int32 dims_copy[10];		/* HDF-EOS dimensions copy */
   char dimlist[80];		/* HDF-EOS dimension name list */
   char *basefield = NULL;	/* Base fieldname */
   int nextradims;               /* Number of extra dimensions */
   int *extradims = NULL;	/* Extra dimension list */
+  int dims_reversed = 0;    /* Whether the dims are "reversed"*/
   int i;			/* Loop index */
   int32 xdimsize;		/* X dimension size of file */
   int32 ydimsize;		/* Y dimension size of file */
@@ -166,6 +170,23 @@ MTKt_status MtkReadConvFid(
   /* Determine rank, dimensions and datatype of the field */
   hdfstatus = GDfieldinfo(gid, basefield, &rank, dims, &hdf_datatype, dimlist);
   if (hdfstatus == FAIL) MTK_ERR_CODE_JUMP(MTK_HDFEOS_GDFIELDINFO_FAILED);
+
+  /* If dimlist doesn't start with an X for XDim, assume dims are from MISR HR */
+  /* Band,Camera,XDim,YDim should be XDim,YDim,Band,Camera */
+  if (dimlist[0] != 'X') {
+	  /* XDim */
+	  dims_copy[0] = dims[rank - 2];
+	  /* YDim */
+	  dims_copy[1] = dims[rank - 1];
+	  /* Remaining, shifted by two */
+	  for (i = 2; i < rank; i++) {
+		  dims_copy[i] = dims[i - 2];
+	  }
+	  for (i = 0; i < rank; i++) {
+		  dims[i] = dims_copy[i];
+	  }
+	  dims_reversed = 1;
+  }
 
   /* Check range against extra dimensions */
   if (rank != nextradims + 2) MTK_ERR_CODE_JUMP(MTK_BAD_ARGUMENT);
@@ -242,6 +263,25 @@ MTKt_status MtkReadConvFid(
   for (i = 2; i < rank; i++) {
     start[i] = extradims[i-2];
     edge[i] = 1;
+  }
+
+  /* Dims didn't start with XDim, assuming MISR HR format */
+  if (dims_reversed) {
+	  /* XDim */
+	  start_copy[rank - 2] = start[0];
+	  edge_copy[rank - 2] = edge[0];
+	  /* YDim */
+	  start_copy[rank - 1] = start[1];
+	  edge_copy[rank - 1] = edge[1];
+	  /* Remaining, shifted by two */
+	  for (i = 0; i < rank - 2; i++) {
+		  start_copy[i] = start[i + 2];
+		  edge_copy[i] = edge[i + 2];
+	  }
+	  for (i = 0; i < rank; i++) {
+		  start[i] = start_copy[i];
+		  edge[i] = edge_copy[i];
+	  }
   }
 
   /* Allocate the temp data buffer */

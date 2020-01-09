@@ -17,9 +17,9 @@
 #include <Python.h>
 #include "MisrToolkit.h"
 #include <stdlib.h>
+#include "pyMtk.h"
 
-PyObject *
-LatLonToPathList(PyObject *self, PyObject *args)
+PyObject* LatLonToPathList(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -47,8 +47,7 @@ LatLonToPathList(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-OrbitToPath(PyObject *self, PyObject *args)
+PyObject* OrbitToPath(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -69,8 +68,7 @@ OrbitToPath(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-PathTimeRangeToOrbitList(PyObject *self, PyObject *args)
+PyObject* PathTimeRangeToOrbitList(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -100,8 +98,7 @@ PathTimeRangeToOrbitList(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-TimeRangeToOrbitList(PyObject *self, PyObject *args)
+PyObject* TimeRangeToOrbitList(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -129,8 +126,7 @@ TimeRangeToOrbitList(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-TimeToOrbitPath(PyObject *self, PyObject *args)
+PyObject* TimeToOrbitPath(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;
@@ -152,8 +148,7 @@ TimeToOrbitPath(PyObject *self, PyObject *args)
    return result;
 }
 
-PyObject *
-OrbitToTimeRange(PyObject *self, PyObject *args)
+PyObject* OrbitToTimeRange(PyObject *self, PyObject *args)
 {
    PyObject *result;
    MTKt_status status;

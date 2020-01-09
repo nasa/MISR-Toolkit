@@ -25,13 +25,15 @@
 #define MAX_FIELDNAME 1000
 #define MAX_LENGTH 1000
 #define GP_GMP_GRID_NAME "GeometricParameters"
-#define LAND_BRF_GRID_NAME "SubregParamsLnd"
+#define LAND_BRF_FIELD_NAME_NC "Bidirectional_Reflectance_Factor"  // For land version 23 and later
+#define LAND_BRF_GRID_NAME_NC "1.1_KM_PRODUCTS"                    // For land version 23 and later
+#define LAND_BRF_FIELD_NAME_HDF "LandBRF"        // For land version 22 and earlier
+#define LAND_BRF_GRID_NAME_HDF "SubregParamsLnd" // For land version 22 and earlier
 #define AGP_GRID_NAME "Standard"
 #define AGP_LAND_WATER_ID_FIELD_NAME "SurfaceFeatureID"
 #define AGP_LW_LAND 1 
 #define GLITTER_THRESHOLD_DEFAULT 40.0
 #define MAX_NUMBER_GP_GMP_FIELD 5
-#define LAND_BRF_FIELD_NAME "LandBRF"
 #define NUMBER_BAND 4
 #define NUMBER_CAMERA 9
 #define OUTPUT_GRIDNAME "SurfaceBRFRegression"
@@ -469,6 +471,19 @@ int main( int argc, char *argv[] ) {
   }
 
   /* ------------------------------------------------------------------ */
+  /* Detect land file type                                              */
+  /* ------------------------------------------------------------------ */
+
+  int is_netcdf = 0;
+  {
+    int ncid;
+    int status = nc_open(argr.land_file, NC_NOWRITE, &ncid);
+    if (status == NC_NOERR) {
+      is_netcdf = 1;
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
   /* For each band to process...                                        */
   /* ------------------------------------------------------------------ */
 
@@ -481,12 +496,17 @@ int main( int argc, char *argv[] ) {
   /* Read LandBRF for the target area.                                  */
   /* ------------------------------------------------------------------ */
 
-      snprintf(fieldname,MAX_FIELDNAME,"%s[%d][%d]",LAND_BRF_FIELD_NAME,iband,camera);
-
-      status = MtkReadData(argr.land_file, LAND_BRF_GRID_NAME, fieldname,
-			   region, &land_brf_data, &land_brf_map_info);
+      if (is_netcdf) {
+        snprintf(fieldname,MAX_FIELDNAME,"%s[%d][%d]",LAND_BRF_FIELD_NAME_NC,iband,camera);
+        status = MtkReadData(argr.land_file, LAND_BRF_GRID_NAME_NC, fieldname,
+                             region, &land_brf_data, &land_brf_map_info);  // Try netCDF
+      } else {
+        snprintf(fieldname,MAX_FIELDNAME,"%s[%d][%d]",LAND_BRF_FIELD_NAME_HDF,iband,camera);
+				status = MtkReadData(argr.land_file, LAND_BRF_GRID_NAME_HDF, fieldname,
+														 region, &land_brf_data, &land_brf_map_info);  // Try HDF
+			}
       if (status != MTK_SUCCESS) {
-	MTK_ERR_MSG_JUMP("Trouble with MtkReadData(LandBRF)\n");
+				MTK_ERR_MSG_JUMP("Trouble with MtkReadData(LandBRF)\n");
       }
 
   /* ------------------------------------------------------------------ */
@@ -500,14 +520,23 @@ int main( int argc, char *argv[] ) {
       }
 
       for (iline = 0; iline < land_brf_data.nline; iline++) {
-	for (isample = 0; isample < land_brf_data.nsample; isample++) {
-	  if (land_brf_data.data.f[iline][isample] > 65532.0 ||
-	      land_brf_data.data.f[iline][isample] == 0.0) {
-	    land_brf_mask.data.u8[iline][isample] = 0;
-	  } else {
-	    land_brf_mask.data.u8[iline][isample] = 1;
-	  }
-	}
+        for (isample = 0; isample < land_brf_data.nsample; isample++) {
+          if (0 == is_netcdf) {
+            if (land_brf_data.data.f[iline][isample] > 65532.0 ||
+                land_brf_data.data.f[iline][isample] == 0.0) {
+              land_brf_mask.data.u8[iline][isample] = 0;
+            } else {
+              land_brf_mask.data.u8[iline][isample] = 1;
+            }
+          } else {
+            if (land_brf_data.data.f[iline][isample] == -9999 ||
+                land_brf_data.data.f[iline][isample] == 0.0) {
+              land_brf_mask.data.u8[iline][isample] = 0;
+            } else {
+              land_brf_mask.data.u8[iline][isample] = 1;
+            }
+          }
+        }
       }
 
   /* ------------------------------------------------------------------ */

@@ -89,7 +89,8 @@ int main () {
   /* Normal test call */
   MtkSetRegionByPathBlockRange(39, 51, 52, &region);
   MtkSnapToGrid(39, 275, region, &mapinfo);
-  MtkCreateGeoGrid(51.0, -114.0, 46.0, -106.0, 0.02, 0.02, &lat, &lon);
+  // MtkCreateGeoGrid(51.0, -114.0, 46.0, -106.0, 0.02, 0.02, &lat, &lon);
+  MtkCreateGeoGrid(49.0, -113.0, 47.5, -114.0, 0.02, 0.02, &lat, &lon);
 
   status = MtkTransformCoordinates(mapinfo, lat, lon, &line, &sample);
   if (status == MTK_SUCCESS) {

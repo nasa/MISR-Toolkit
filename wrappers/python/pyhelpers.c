@@ -177,6 +177,11 @@ MTKt_status Mtk_PyArrayToDataBuffer(PyObject **pyobj, MTKt_DataBuffer *databuf) 
     }
     
     (*databuf).vdata[0] = PyArray_DATA((PyArrayObject *)*pyobj);
+
+    /* Hook the data pointer to the data */
+    (*databuf).dataptr = (*databuf).vdata[0];
+
+
     Py_DECREF(databuf_arr);
     return status;
     

@@ -29,6 +29,7 @@ int main () {
   char gridname[MAXSTR];	/* HDF-EOS gridname */
   char fieldname[MAXSTR];	/* HDF-EOS fieldname */
   char *dimlist_expected[] = { "NBandDim", "NCamDim" };
+  char *dimlist_expected2[] = { "Band_Dim", "Camera_Dim" };
   int dimsize_expected[] = { 4, 9 };
   char **dimlist;
   int *dimsize;
@@ -180,6 +181,100 @@ int main () {
   status = MtkFileGridFieldToDimList(NULL,gridname,fieldname,&num_dims,
                                      &dimlist,&dimsize);
   if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDimList(filename,NULL,fieldname,&num_dims,
+                                     &dimlist,&dimsize);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDimList(filename,gridname,NULL,&num_dims,
+                                     &dimlist,&dimsize);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDimList(filename,gridname,fieldname,NULL,
+                                     &dimlist,&dimsize);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDimList(filename,gridname,fieldname,&num_dims,
+                                     NULL,&dimsize);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  status = MtkFileGridFieldToDimList(filename,gridname,fieldname,&num_dims,
+                                     &dimlist, NULL);
+  if (status == MTK_NULLPTR)
+  {
+    MTK_PRINT_STATUS(cn,".");
+  }
+  else
+  {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
+  /* Normal test call */
+  strcpy(filename, "../Mtk_testdata/in/MISR_AM1_AS_LAND_P039_O002467_F08_23.b056-070.nc");
+  strcpy(gridname, "1.1_KM_PRODUCTS");
+  strcpy(fieldname, "Hemispherical_Directional_Reflectance_Factor");
+  status = MtkFileGridFieldToDimList(filename,gridname,fieldname,&num_dims,
+                                     &dimlist,&dimsize);
+  if (status == MTK_SUCCESS) {
+    int num_dims_expect = sizeof(dimlist_expected2) / sizeof(*dimlist_expected2);
+    if (num_dims != num_dims_expect) {
+      data_ok = MTK_FALSE;
+    }
+
+    for (i = 0; i < num_dims; ++i) {
+      if (strcmp(dimlist[i],dimlist_expected2[i]) != 0 ||
+          dimsize[i] != dimsize_expected[i])
+      {
+        data_ok = MTK_FALSE;
+        break;
+      }
+    }
+    MtkStringListFree(num_dims, &dimlist);
+    free(dimsize);
+  }
+
+  if (status == MTK_SUCCESS && data_ok)
   {
     MTK_PRINT_STATUS(cn,".");
   }

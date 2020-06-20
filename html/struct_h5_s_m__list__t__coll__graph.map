@@ -1,0 +1,5 @@
+<map id="H5SM_list_t" name="H5SM_list_t">
+<area shape="rect" id="node2" href="$struct_h5_s_m__sohm__t.html" title="{H5SM_sohm_t\n|+ location\l+ hash\l+ msg_type_id\l+ mesg_loc\l+ u\l|}" alt="" coords="15,189,125,325"/>
+<area shape="rect" id="node3" href="$struct_h5_s_m__heap__loc__t.html" title="{H5SM_heap_loc_t\n|+ ref_count\l+ fheap_id\l|}" alt="" coords="5,5,135,97"/>
+<area shape="rect" id="node4" href="$struct_h5_s_m__index__header__t.html" title="{H5SM_index_header_t\n|+ mesg_types\l+ min_mesg_size\l+ list_max\l+ btree_min\l+ num_messages\l+ index_type\l+ index_addr\l+ heap_addr\l+ list_size\l|}" alt="" coords="149,160,303,355"/>
+</map>

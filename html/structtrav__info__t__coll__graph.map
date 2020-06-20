@@ -1,0 +1,5 @@
+<map id="trav_info_t" name="trav_info_t">
+<area shape="rect" id="node2" href="$structsymlink__trav__t.html" title="{symlink_trav_t\n|+ nalloc\l+ nused\l+ dangle_link\l|}" alt="" coords="21,182,128,289"/>
+<area shape="rect" id="node3" href="$structsymlink__trav__path__t.html" title="{symlink_trav_path_t\n|+ type\l+ file\l+ path\l|}" alt="" coords="5,5,144,112"/>
+<area shape="rect" id="node4" href="$structtrav__path__t.html" title="{trav_path_t\n|+ path\l+ type\l+ objno\l+ fileno\l|}" alt="" coords="165,175,251,296"/>
+</map>

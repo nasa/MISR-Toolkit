@@ -1,0 +1,13 @@
+<map id="H5::Exception" name="H5::Exception">
+<area shape="rect" id="node2" href="$class_h5_1_1_data_space_i_exception.html" title="{H5::DataSpaceIException\n||+ DataSpaceIException()\l+ DataSpaceIException()\l+ ~DataSpaceIException()\l}" alt="" coords="5,395,183,501"/>
+<area shape="rect" id="node3" href="$class_h5_1_1_id_component_exception.html" title="{H5::IdComponentException\n||+ IdComponentException()\l+ IdComponentException()\l+ ~IdComponentException()\l}" alt="" coords="207,395,394,501"/>
+<area shape="rect" id="node4" href="$class_h5_1_1_library_i_exception.html" title="{H5::LibraryIException\n||+ LibraryIException()\l+ LibraryIException()\l+ ~LibraryIException()\l}" alt="" coords="419,395,569,501"/>
+<area shape="rect" id="node5" href="$class_h5_1_1_location_exception.html" title="{H5::LocationException\n||+ LocationException()\l+ LocationException()\l+ ~LocationException()\l}" alt="" coords="594,395,751,501"/>
+<area shape="rect" id="node11" href="$class_h5_1_1_prop_list_i_exception.html" title="{H5::PropListIException\n||+ PropListIException()\l+ PropListIException()\l+ ~PropListIException()\l}" alt="" coords="775,395,935,501"/>
+<area shape="rect" id="node12" href="$class_h5_1_1_reference_exception.html" title="{H5::ReferenceException\n||+ ReferenceException()\l+ ReferenceException()\l+ ~ReferenceException()\l}" alt="" coords="959,395,1127,501"/>
+<area shape="rect" id="node6" href="$class_h5_1_1_attribute_i_exception.html" title="{H5::AttributeIException\n||+ AttributeIException()\l+ AttributeIException()\l+ ~AttributeIException()\l}" alt="" coords="312,549,473,656"/>
+<area shape="rect" id="node7" href="$class_h5_1_1_data_set_i_exception.html" title="{H5::DataSetIException\n||+ DataSetIException()\l+ DataSetIException()\l+ ~DataSetIException()\l}" alt="" coords="498,549,658,656"/>
+<area shape="rect" id="node8" href="$class_h5_1_1_data_type_i_exception.html" title="{H5::DataTypeIException\n||+ DataTypeIException()\l+ DataTypeIException()\l+ ~DataTypeIException()\l}" alt="" coords="683,549,852,656"/>
+<area shape="rect" id="node9" href="$class_h5_1_1_group_i_exception.html" title="{H5::GroupIException\n||+ GroupIException()\l+ GroupIException()\l+ ~GroupIException()\l}" alt="" coords="877,549,1023,656"/>
+<area shape="rect" id="node10" href="$class_h5_1_1_file_i_exception.html" title="{H5::FileIException\n||+ FileIException()\l+ FileIException()\l+ ~FileIException()\l}" alt="" coords="883,704,1017,811"/>
+</map>

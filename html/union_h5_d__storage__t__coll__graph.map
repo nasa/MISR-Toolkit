@@ -1,0 +1,5 @@
+<map id="H5D_storage_t" name="H5D_storage_t">
+<area shape="rect" id="node2" href="$struct_h5_d__compact__storage__t.html" title="{H5D_compact_storage_t\n|+ buf\l+ dirty\l|}" alt="" coords="5,5,172,97"/>
+<area shape="rect" id="node3" href="$struct_h5_d__contig__storage__t.html" title="{H5D_contig_storage_t\n|+ dset_addr\l+ dset_size\l|}" alt="" coords="197,5,349,97"/>
+<area shape="rect" id="node4" href="$struct_h5_d__chunk__storage__t.html" title="{H5D_chunk_storage_t\n|+ index\l+ offset\l|}" alt="" coords="373,5,525,97"/>
+</map>

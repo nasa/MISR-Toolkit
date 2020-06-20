@@ -1,0 +1,4 @@
+<map id="H5O_info_t" name="H5O_info_t">
+<area shape="rect" id="node2" href="$struct_h5_o__hdr__info__t.html" title="{H5O_hdr_info_t\n|+ version\l+ nmesgs\l+ nchunks\l+ flags\l+ total\l+ meta\l+ mesg\l+ free\l+ space\l+ present\l+ shared\l+ mesg\l|}" alt="" coords="5,5,119,244"/>
+<area shape="rect" id="node3" href="$struct_h5__ih__info__t.html" title="{H5_ih_info_t\n|+ index_size\l+ heap_size\l|}" alt="" coords="143,79,239,171"/>
+</map>

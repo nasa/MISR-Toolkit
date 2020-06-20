@@ -1,0 +1,6 @@
+<map id="H5HL_cache_dblk_ud_t" name="H5HL_cache_dblk_ud_t">
+<area shape="rect" id="node2" href="$struct_h5_h_l__t.html" title="{H5HL_t\n|+ rc\l+ prots\l+ sizeof_size\l+ sizeof_addr\l+ single_cache_obj\l+ prfx_addr\l+ prfx_size\l+ free_block\l+ dblk_addr\l+ dblk_size\l+ dblk_image\l|}" alt="" coords="172,160,307,384"/>
+<area shape="rect" id="node3" href="$struct_h5_h_l__prfx__t.html" title="{H5HL_prfx_t\n|+ cache_info\l|}" alt="" coords="191,447,288,524"/>
+<area shape="rect" id="node5" href="$struct_h5_h_l__dblk__t.html" title="{H5HL_dblk_t\n|+ cache_info\l|}" alt="" coords="319,447,418,524"/>
+<area shape="rect" id="node4" href="$struct_h5_h_l__free__t.html" title="{H5HL_free_t\n|+ offset\l+ size\l|}" alt="" coords="191,5,287,97"/>
+</map>

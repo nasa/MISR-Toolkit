@@ -1,0 +1,4 @@
+<map id="H5G_bt_it_idx_common_t" name="H5G_bt_it_idx_common_t">
+<area shape="rect" id="node2" href="$struct_h5_g__entry__t.html" title="{H5G_entry_t\n|+ type\l+ name_off\l+ header\l|}" alt="" coords="44,204,140,311"/>
+<area shape="rect" id="node3" href="$union_h5_g__cache__t.html" title="{H5G_cache_t\n|+ btree_addr\l+ heap_addr\l+ stab\l+ lval_offset\l+ slink\l|}" alt="" coords="41,5,143,141"/>
+</map>

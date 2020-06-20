@@ -1,0 +1,11 @@
+<map id="H5D_chunk_info_t" name="H5D_chunk_info_t">
+<area shape="rect" id="node2" href="$struct_h5_s__t.html" title="{H5S_t\n||}" alt="" coords="699,233,757,311"/>
+<area shape="rect" id="node10" href="$struct_h5_s__select__class__t.html" title="{H5S_select_class_t\n|+ type\l+ copy\l+ get_seq_list\l+ is_valid\l+ deserialize\l+ is_regular\l+ project_scalar\l|}" alt="" coords="659,520,797,685"/>
+<area shape="rect" id="node3" href="$struct_h5_s__extent__t.html" title="{H5S_extent_t\n|+ sh_loc\l+ type\l+ version\l+ nelem\l+ rank\l+ size\l+ max\l|}" alt="" coords="677,5,779,171"/>
+<area shape="rect" id="node4" href="$struct_h5_s__select__t.html" title="{H5S_select_t\n|+ offset_changed\l+ offset\l+ num_elem\l+ sel_info\l|}" alt="" coords="552,748,675,869"/>
+<area shape="rect" id="node5" href="$struct_h5_s__hyper__sel__t.html" title="{H5S_hyper_sel_t\n|+ diminfo_valid\l+ opt_diminfo\l+ app_diminfo\l|}" alt="" coords="5,549,128,656"/>
+<area shape="rect" id="node6" href="$struct_h5_s__hyper__span__info__t.html" title="{H5S_hyper_span_info_t\n|+ count\l|}" alt="" coords="78,233,239,311"/>
+<area shape="rect" id="node7" href="$struct_h5_s__hyper__span__t.html" title="{H5S_hyper_span_t\n|+ low\l+ high\l+ nelem\l+ pstride\l|}" alt="" coords="152,542,285,663"/>
+<area shape="rect" id="node8" href="$struct_h5_s__pnt__list__t.html" title="{H5S_pnt_list_t\n||}" alt="" coords="371,564,479,641"/>
+<area shape="rect" id="node9" href="$struct_h5_s__pnt__node__t.html" title="{H5S_pnt_node_t\n|+ pnt\l|}" alt="" coords="366,233,485,311"/>
+</map>

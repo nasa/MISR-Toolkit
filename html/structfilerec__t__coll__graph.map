@@ -1,6 +1,6 @@
 <map id="filerec_t" name="filerec_t">
-<area shape="rect" id="node4" href="$structddblock__t.html" title="{ddblock_t\n|+ dirty\l+ myoffset\l+ ndds\l+ nextoffset\l|}" alt="" coords="50,582,141,703"/>
-<area shape="rect" id="node2" href="$structtbbt__node.html" title="{tbbt_node\n|+ data\l+ key\l|}" alt="" coords="5,27,83,119"/>
-<area shape="rect" id="node3" href="$structversion__t.html" title="{version_t\n|+ majorv\l+ minorv\l+ release\l+ string\l+ modified\l|}" alt="" coords="108,5,191,141"/>
-<area shape="rect" id="node5" href="$structdd__t.html" title="{dd_t\n|+ tag\l+ ref\l+ length\l+ offset\l|}" alt="" coords="61,769,131,890"/>
+<area shape="rect" id="node4" href="$structddblock__t.html" title="{ddblock_t\n|+ dirty\l+ myoffset\l+ ndds\l+ nextoffset\l|}" alt="" coords="51,579,143,700"/>
+<area shape="rect" id="node2" href="$structtbbt__node.html" title="{tbbt_node\n|+ data\l+ key\l|}" alt="" coords="5,27,84,119"/>
+<area shape="rect" id="node3" href="$structversion__t.html" title="{version_t\n|+ majorv\l+ minorv\l+ release\l+ string\l+ modified\l|}" alt="" coords="109,5,191,141"/>
+<area shape="rect" id="node5" href="$structdd__t.html" title="{dd_t\n|+ tag\l+ ref\l+ length\l+ offset\l|}" alt="" coords="62,763,131,884"/>
 </map>

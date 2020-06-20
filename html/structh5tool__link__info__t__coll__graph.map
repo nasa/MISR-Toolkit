@@ -1,0 +1,4 @@
+<map id="h5tool_link_info_t" name="h5tool_link_info_t">
+<area shape="rect" id="node2" href="$structh5tool__opt__t.html" title="{h5tool_opt_t\n|+ toolname\l+ msg_mode\l|}" alt="" coords="5,42,104,134"/>
+<area shape="rect" id="node3" href="$struct_h5_l__info__t.html" title="{H5L_info_t\n|+ type\l+ corder_valid\l+ corder\l+ cset\l+ address\l+ val_size\l+ u\l|}" alt="" coords="128,5,232,171"/>
+</map>

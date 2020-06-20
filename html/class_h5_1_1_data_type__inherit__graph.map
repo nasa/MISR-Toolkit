@@ -1,0 +1,14 @@
+<map id="H5::DataType" name="H5::DataType">
+<area shape="rect" id="node5" href="$class_h5_1_1_array_type.html" title="Class ArrayType inherits from DataType and provides wrappers for the HDF5&#39;s Array Datatypes..." alt="" coords="51,1511,183,1750"/>
+<area shape="rect" id="node6" href="$class_h5_1_1_atom_type.html" title="AtomType is a base class, inherited by IntType, FloatType, StrType, and PredType. ..." alt="" coords="207,1489,322,1772"/>
+<area shape="rect" id="node11" href="$class_h5_1_1_comp_type.html" title="CompType is a derivative of a DataType and operates on HDF5 compound datatypes. " alt="" coords="347,1511,503,1750"/>
+<area shape="rect" id="node12" href="$class_h5_1_1_enum_type.html" title="EnumType is a derivative of a DataType and operates on HDF5 enum datatypes. " alt="" coords="527,1519,667,1743"/>
+<area shape="rect" id="node13" href="$class_h5_1_1_var_len_type.html" title="VarLenType is a derivative of a DataType and operates on HDF5 C&#39;s Variable&#45;length Datatypes..." alt="" coords="691,1526,811,1735"/>
+<area shape="rect" id="node2" href="$class_h5_1_1_h5_object.html" title="Class H5Object is a bridge between H5Location and DataSet, DataType, and Group. " alt="" coords="361,843,488,1081"/>
+<area shape="rect" id="node3" href="$class_h5_1_1_h5_location.html" title="H5Location is an abstract base class, providing a collection of wrappers of the C functions that take..." alt="" coords="349,439,500,795"/>
+<area shape="rect" id="node4" href="$class_h5_1_1_id_component.html" title="Class IdComponent provides wrappers of the C functions that operate on an HDF5 identifier. " alt="" coords="349,5,500,391"/>
+<area shape="rect" id="node7" href="$class_h5_1_1_float_type.html" title="FloatType is a derivative of a DataType and operates on HDF5 floating point datatype. " alt="" coords="5,1981,111,2205"/>
+<area shape="rect" id="node8" href="$class_h5_1_1_int_type.html" title="IntType is a derivative of a DataType and operates on HDF5 integer datatype. " alt="" coords="135,1974,237,2213"/>
+<area shape="rect" id="node9" href="$class_h5_1_1_pred_type.html" title="Class PredType holds the definition of all the HDF5 predefined datatypes. " alt="" coords="261,1820,425,2367"/>
+<area shape="rect" id="node10" href="$class_h5_1_1_str_type.html" title="StrType is a derivative of a DataType and operates on HDF5 string datatype. " alt="" coords="450,1981,549,2205"/>
+</map>

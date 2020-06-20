@@ -1,0 +1,10 @@
+<map id="H5S_select_t" name="H5S_select_t">
+<area shape="rect" id="node8" href="$struct_h5_s__t.html" title="{H5S_t\n||}" alt="" coords="143,557,201,635"/>
+<area shape="rect" id="node2" href="$struct_h5_s__hyper__sel__t.html" title="{H5S_hyper_sel_t\n|+ diminfo_valid\l+ opt_diminfo\l+ app_diminfo\l|}" alt="" coords="5,153,128,259"/>
+<area shape="rect" id="node3" href="$struct_h5_s__hyper__span__info__t.html" title="{H5S_hyper_span_info_t\n|+ count\l|}" alt="" coords="78,5,239,83"/>
+<area shape="rect" id="node4" href="$struct_h5_s__hyper__span__t.html" title="{H5S_hyper_span_t\n|+ low\l+ high\l+ nelem\l+ pstride\l|}" alt="" coords="152,145,285,267"/>
+<area shape="rect" id="node5" href="$struct_h5_s__pnt__list__t.html" title="{H5S_pnt_list_t\n||}" alt="" coords="371,167,479,245"/>
+<area shape="rect" id="node6" href="$struct_h5_s__pnt__node__t.html" title="{H5S_pnt_node_t\n|+ pnt\l|}" alt="" coords="366,5,485,83"/>
+<area shape="rect" id="node7" href="$struct_h5_s__select__class__t.html" title="{H5S_select_class_t\n|+ type\l+ copy\l+ get_seq_list\l+ is_valid\l+ deserialize\l+ is_regular\l+ project_scalar\l|}" alt="" coords="159,844,297,1009"/>
+<area shape="rect" id="node9" href="$struct_h5_s__extent__t.html" title="{H5S_extent_t\n|+ sh_loc\l+ type\l+ version\l+ nelem\l+ rank\l+ size\l+ max\l|}" alt="" coords="86,329,189,495"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="vdata_desc" name="vdata_desc">
+<area shape="rect" id="node3" href="$structvs__instance__struct.html" title="{vs_instance_struct\n|+ key\l+ ref\l+ nattach\l+ nvertices\l|}" alt="" coords="206,549,338,671"/>
+<area shape="rect" id="node2" href="$structdyn__vsattr__struct.html" title="{dyn_vsattr_struct\n|+ findex\l+ atag\l+ aref\l|}" alt="" coords="5,49,128,156"/>
+<area shape="rect" id="node4" href="$structsymdef__struct.html" title="{symdef_struct\n|+ name\l+ type\l+ isize\l+ order\l|}" alt="" coords="153,42,258,163"/>
+<area shape="rect" id="node5" href="$structdyn__read__struct.html" title="{dyn_read_struct\n|+ n\l+ item\l|}" alt="" coords="283,57,397,149"/>
+<area shape="rect" id="node6" href="$structdyn__write__struct.html" title="{dyn_write_struct\n|+ n\l+ ivsize\l+ name\l+ bptr\l+ type\l+ off\l+ isize\l+ order\l+ esize\l|}" alt="" coords="422,5,541,200"/>
+</map>

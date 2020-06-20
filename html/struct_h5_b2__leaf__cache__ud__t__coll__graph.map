@@ -1,0 +1,24 @@
+<map id="H5B2_leaf_cache_ud_t" name="H5B2_leaf_cache_ud_t">
+<area shape="rect" id="node2" href="$struct_h5_f__t.html" title="{H5F_t\n|+ open_name\l+ actual_name\l+ extpath\l+ nopen_objs\l+ obj_count\l+ file_id\l+ closing\l+ nmounts\l|}" alt="" coords="539,160,647,340"/>
+<area shape="rect" id="node13" href="$struct_h5_f__mount__t.html" title="{H5F_mount_t\n||}" alt="" coords="640,476,741,553"/>
+<area shape="rect" id="node21" href="$struct_h5_b2__hdr__t.html" title="{H5B2_hdr_t\n|+ cache_info\l+ split_percent\l+ merge_percent\l+ node_size\l+ rrec_size\l+ depth\l+ max_nrec_size\l+ addr\l+ hdr_size\l+ rc\land 12 more...\l|}" alt="" coords="377,403,500,627"/>
+<area shape="rect" id="node3" href="$struct_h5_f__file__t.html" title="{H5F_file_t\n|+ nrefs\l+ flags\l+ efc\l+ sizeof_addr\l+ sizeof_size\l+ sohm_addr\l+ sohm_vers\l+ sohm_nindexes\l+ feature_flags\l+ maxaddr\land 21 more...\l|}" alt="" coords="628,991,753,1215"/>
+<area shape="rect" id="node15" href="$struct_h5_h_g__heap__t.html" title="{H5HG_heap_t\n|+ cache_info\l+ addr\l+ size\l+ chunk\l+ nalloc\l+ nused\l|}" alt="" coords="559,1277,665,1428"/>
+<area shape="rect" id="node4" href="$struct_h5_f_d__t.html" title="{H5FD_t\n|+ driver_id\l+ fileno\l+ feature_flags\l+ maxaddr\l+ base_addr\l+ threshold\l+ alignment\l|}" alt="" coords="5,719,115,884"/>
+<area shape="rect" id="node5" href="$struct_h5_f_d__class__t.html" title="{H5FD_class_t\n|+ name\l+ maxaddr\l+ fc_degree\l+ sb_size\l+ sb_encode\l+ sb_decode\l+ fapl_size\l+ fapl_get\l+ fapl_copy\l+ fapl_free\land 20 more...\l|}" alt="" coords="7,991,113,1215"/>
+<area shape="rect" id="node6" href="$struct_h5_f__meta__accum__t.html" title="{H5F_meta_accum_t\n|+ buf\l+ loc\l+ size\l+ alloc_size\l+ dirty_off\l+ dirty_len\l+ dirty\l|}" alt="" coords="993,719,1133,884"/>
+<area shape="rect" id="node7" href="$struct_h5_g__t.html" title="{H5G_t\n|+ oloc\l+ path\l|}" alt="" coords="747,204,807,296"/>
+<area shape="rect" id="node8" href="$struct_h5_g__shared__t.html" title="{H5G_shared_t\n|+ fo_count\l+ mounted\l|}" alt="" coords="724,5,831,97"/>
+<area shape="rect" id="node9" href="$struct_h5_f__super__t.html" title="{H5F_super_t\n|+ cache_info\l+ super_vers\l+ status_flags\l+ sym_leaf_k\l+ btree_k\l+ base_addr\l+ ext_addr\l+ driver_addr\l+ root_addr\l|}" alt="" coords="139,704,245,899"/>
+<area shape="rect" id="node10" href="$struct_h5_g__entry__t.html" title="{H5G_entry_t\n|+ type\l+ name_off\l+ header\l|}" alt="" coords="113,461,209,568"/>
+<area shape="rect" id="node11" href="$union_h5_g__cache__t.html" title="{H5G_cache_t\n|+ btree_addr\l+ heap_addr\l+ stab\l+ lval_offset\l+ slink\l|}" alt="" coords="81,182,183,318"/>
+<area shape="rect" id="node12" href="$struct_h5_f__mtab__t.html" title="{H5F_mtab_t\n|+ nmounts\l+ nalloc\l|}" alt="" coords="643,755,738,847"/>
+<area shape="rect" id="node14" href="$struct_h5_f__blk__aggr__t.html" title="{H5F_blk_aggr_t\n|+ feature_flag\l+ alloc_size\l+ tot_size\l+ size\l+ addr\l|}" alt="" coords="269,733,384,869"/>
+<area shape="rect" id="node16" href="$struct_h5_h_g__obj__t.html" title="{H5HG_obj_t\n|+ nrefs\l+ size\l+ begin\l|}" alt="" coords="505,1049,599,1156"/>
+<area shape="rect" id="node17" href="$struct_h5_f_s__t.html" title="{H5FS_t\n|+ cache_info\l+ tot_space\l+ tot_sect_count\l+ serial_sect_count\l+ ghost_sect_count\l+ client\l+ nclasses\l+ shrink_percent\l+ expand_percent\l+ max_sect_addr\land 15 more...\l|}" alt="" coords="1318,689,1455,913"/>
+<area shape="rect" id="node18" href="$struct_h5_f_s__sinfo__t.html" title="{H5FS_sinfo_t\n|+ cache_info\l+ dirty\l+ nbins\l+ serial_size\l+ tot_size_count\l+ serial_size_count\l+ ghost_size_count\l+ sect_prefix_size\l+ sect_off_size\l+ sect_len_size\l+ merge_list\l|}" alt="" coords="1312,991,1448,1215"/>
+<area shape="rect" id="node19" href="$struct_h5_f_s__bin__t.html" title="{H5FS_bin_t\n|+ tot_sect_count\l+ serial_sect_count\l+ ghost_sect_count\l+ bin_list\l|}" alt="" coords="1157,741,1294,862"/>
+<area shape="rect" id="node20" href="$struct_h5_a_c__cache__config__t.html" title="{H5AC_cache_config_t\n|+ version\l+ rpt_fcn_enabled\l+ open_trace_file\l+ close_trace_file\l+ trace_file_name\l+ evictions_enabled\l+ set_initial_size\l+ initial_size\l+ min_clean_fraction\l+ max_size\land 20 more...\l|}" alt="" coords="815,689,969,913"/>
+<area shape="rect" id="node22" href="$struct_h5_b2__node__info__t.html" title="{H5B2_node_info_t\n|+ max_nrec\l+ split_nrec\l+ merge_nrec\l+ cum_max_nrec\l+ cum_max_nrec_size\l+ nat_rec_fac\l+ node_ptr_fac\l|}" alt="" coords="208,167,363,333"/>
+<area shape="rect" id="node23" href="$struct_h5_b2__node__ptr__t.html" title="{H5B2_node_ptr_t\n|+ addr\l+ node_nrec\l+ all_nrec\l|}" alt="" coords="387,197,509,303"/>
+</map>

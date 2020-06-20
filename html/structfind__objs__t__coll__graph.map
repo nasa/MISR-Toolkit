@@ -1,0 +1,4 @@
+<map id="find_objs_t" name="find_objs_t">
+<area shape="rect" id="node2" href="$structtable__t.html" title="{table_t\n|+ size\l+ nobjs\l|}" alt="" coords="17,189,83,281"/>
+<area shape="rect" id="node3" href="$structobj__t.html" title="{obj_t\n|+ objno\l+ objname\l+ displayed\l+ recorded\l|}" alt="" coords="5,5,95,127"/>
+</map>

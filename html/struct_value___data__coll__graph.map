@@ -1,6 +1,6 @@
 <map id="Value_Data" name="Value_Data">
-<area shape="rect" id="node2" href="$struct_o_d_l_real.html" title="{ODLReal\n|+ number\l|}" alt="" coords="5,229,83,307"/>
-<area shape="rect" id="node3" href="$struct_o_d_l_units.html" title="{ODLUnits\n|+ designator\l+ exponent\l|}" alt="" coords="54,6,148,98"/>
-<area shape="rect" id="node4" href="$struct_o_d_l_integer.html" title="{ODLInteger\n|+ number\l|}" alt="" coords="107,229,196,307"/>
-<area shape="rect" id="node5" href="$struct_o_d_l_date.html" title="{ODLDate\n|+ year\l+ doy\l+ month\l+ day\l+ zone_hours\l+ zone_minutes\l+ hours\l+ minutes\l+ seconds\l+ nanoseconds\l|}" alt="" coords="221,163,336,373"/>
+<area shape="rect" id="node2" href="$struct_o_d_l_real.html" title="{ODLReal\n|+ number\l|}" alt="" coords="5,226,83,303"/>
+<area shape="rect" id="node3" href="$struct_o_d_l_units.html" title="{ODLUnits\n|+ designator\l+ exponent\l|}" alt="" coords="50,5,145,97"/>
+<area shape="rect" id="node4" href="$struct_o_d_l_integer.html" title="{ODLInteger\n|+ number\l|}" alt="" coords="107,226,197,303"/>
+<area shape="rect" id="node5" href="$struct_o_d_l_date.html" title="{ODLDate\n|+ year\l+ doy\l+ month\l+ day\l+ zone_hours\l+ zone_minutes\l+ hours\l+ minutes\l+ seconds\l+ nanoseconds\l|}" alt="" coords="221,160,336,369"/>
 </map>

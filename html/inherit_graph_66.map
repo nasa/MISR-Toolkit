@@ -1,0 +1,14 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_h5_1_1_exception.html" title="Exception provides wrappers of HDF5 error handling functions. " alt="" coords="5,132,111,159"/>
+<area shape="rect" id="node2" href="$class_h5_1_1_data_space_i_exception.html" title="H5::DataSpaceIException" alt="" coords="163,5,337,32"/>
+<area shape="rect" id="node3" href="$class_h5_1_1_id_component_exception.html" title="H5::IdComponentException" alt="" coords="159,56,341,83"/>
+<area shape="rect" id="node4" href="$class_h5_1_1_library_i_exception.html" title="H5::LibraryIException" alt="" coords="176,107,324,133"/>
+<area shape="rect" id="node5" href="$class_h5_1_1_location_exception.html" title="H5::LocationException" alt="" coords="173,157,327,184"/>
+<area shape="rect" id="node11" href="$class_h5_1_1_prop_list_i_exception.html" title="H5::PropListIException" alt="" coords="171,208,329,235"/>
+<area shape="rect" id="node12" href="$class_h5_1_1_reference_exception.html" title="H5::ReferenceException" alt="" coords="167,259,333,285"/>
+<area shape="rect" id="node6" href="$class_h5_1_1_attribute_i_exception.html" title="H5::AttributeIException" alt="" coords="393,81,552,108"/>
+<area shape="rect" id="node7" href="$class_h5_1_1_data_set_i_exception.html" title="H5::DataSetIException" alt="" coords="394,132,551,159"/>
+<area shape="rect" id="node8" href="$class_h5_1_1_data_type_i_exception.html" title="H5::DataTypeIException" alt="" coords="389,183,556,209"/>
+<area shape="rect" id="node9" href="$class_h5_1_1_group_i_exception.html" title="H5::GroupIException" alt="" coords="401,233,545,260"/>
+<area shape="rect" id="node10" href="$class_h5_1_1_file_i_exception.html" title="H5::FileIException" alt="" coords="604,233,735,260"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="H5E_walk_op_t" name="H5E_walk_op_t">
+<area shape="rect" id="node2" href="$struct_h5_e__error2__t.html" title="{H5E_error2_t\n|+ cls_id\l+ maj_num\l+ min_num\l+ line\l+ func_name\l+ file_name\l+ desc\l|}" alt="" coords="5,5,104,171"/>
+<area shape="rect" id="node3" href="$struct_h5_e__error1__t.html" title="{H5E_error1_t\n|+ maj_num\l+ min_num\l+ func_name\l+ file_name\l+ line\l+ desc\l|}" alt="" coords="128,13,227,163"/>
+</map>

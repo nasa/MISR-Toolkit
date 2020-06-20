@@ -1,0 +1,4 @@
+<map id="trav_table_t" name="trav_table_t">
+<area shape="rect" id="node2" href="$structtrav__obj__t.html" title="{trav_obj_t\n|+ objno\l+ flags\l+ is_same_trgobj\l+ name\l+ type\l+ sizelinks\l+ nlinks\l|}" alt="" coords="5,145,128,311"/>
+<area shape="rect" id="node3" href="$structtrav__link__t.html" title="{trav_link_t\n|+ new_name\l|}" alt="" coords="18,5,115,83"/>
+</map>

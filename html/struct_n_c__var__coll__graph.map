@@ -1,5 +1,5 @@
 <map id="NC_var" name="NC_var">
-<area shape="rect" id="node2" href="$struct_n_c__string.html" title="{NC_string\n|+ count\l+ len\l+ values\l|}" alt="" coords="5,20,85,127"/>
-<area shape="rect" id="node3" href="$struct_n_c__iarray.html" title="{NC_iarray\n|+ count\l+ values\l|}" alt="" coords="110,27,191,119"/>
-<area shape="rect" id="node4" href="$struct_n_c__array.html" title="{NC_array\n|+ type\l+ len\l+ szof\l+ count\l+ values\l|}" alt="" coords="215,5,293,141"/>
+<area shape="rect" id="node2" href="$struct_n_c__string.html" title="{NC_string\n|+ count\l+ len\l+ values\l|}" alt="" coords="5,20,87,127"/>
+<area shape="rect" id="node3" href="$struct_n_c__iarray.html" title="{NC_iarray\n|+ count\l+ values\l|}" alt="" coords="111,27,192,119"/>
+<area shape="rect" id="node4" href="$struct_n_c__array.html" title="{NC_array\n|+ type\l+ len\l+ szof\l+ count\l+ values\l|}" alt="" coords="216,5,295,141"/>
 </map>

@@ -1,0 +1,3 @@
+<map id="FL_PacketTable" name="FL_PacketTable">
+<area shape="rect" id="node2" href="$class_packet_table.html" title="{PacketTable\n|# table_id\l|+ PacketTable()\l+ PacketTable()\l+ PacketTable()\l+ ~PacketTable()\l+ IsValid()\l+ IsVariableLength()\l+ ResetIndex()\l+ SetIndex()\l+ GetIndex()\l+ GetPacketCount()\l+ GetPacketCount()\l+ GetTableId()\l+ GetDatatype()\l+ GetDataset()\l+ FreeBuff()\l}" alt="" coords="9,5,147,288"/>
+</map>

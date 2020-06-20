@@ -1,0 +1,4 @@
+<map id="H5FS_t" name="H5FS_t">
+<area shape="rect" id="node2" href="$struct_h5_f_s__sinfo__t.html" title="{H5FS_sinfo_t\n|+ cache_info\l+ dirty\l+ nbins\l+ serial_size\l+ tot_size_count\l+ serial_size_count\l+ ghost_size_count\l+ sect_prefix_size\l+ sect_off_size\l+ sect_len_size\l+ merge_list\l|}" alt="" coords="89,292,225,516"/>
+<area shape="rect" id="node3" href="$struct_h5_f_s__bin__t.html" title="{H5FS_bin_t\n|+ tot_sect_count\l+ serial_sect_count\l+ ghost_sect_count\l+ bin_list\l|}" alt="" coords="167,57,304,178"/>
+</map>

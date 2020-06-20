@@ -1,7 +1,7 @@
 <map id="MTKt_MapInfo" name="MTKt_MapInfo">
-<area shape="rect" id="node2" href="$struct_m_t_kt___misr_proj_param.html" title="MISR Projection Parameters. " alt="" coords="5,222,152,461"/>
-<area shape="rect" id="node3" href="$struct_m_t_kt___geo_region.html" title="Geographic Region. " alt="" coords="177,303,303,380"/>
-<area shape="rect" id="node4" href="$struct_m_t_kt___geo_coord.html" title="Geographic Coordinates. " alt="" coords="180,6,300,98"/>
-<area shape="rect" id="node5" href="$struct_m_t_kt___som_region.html" title="SOM Region. " alt="" coords="327,303,456,380"/>
-<area shape="rect" id="node6" href="$struct_m_t_kt___som_coord.html" title="SOM Coordinates. " alt="" coords="331,6,453,98"/>
+<area shape="rect" id="node2" href="$struct_m_t_kt___misr_proj_param.html" title="MISR Projection Parameters. " alt="" coords="5,219,152,457"/>
+<area shape="rect" id="node3" href="$struct_m_t_kt___geo_region.html" title="Geographic Region. " alt="" coords="177,299,303,377"/>
+<area shape="rect" id="node4" href="$struct_m_t_kt___geo_coord.html" title="Geographic Coordinates. " alt="" coords="180,5,300,97"/>
+<area shape="rect" id="node5" href="$struct_m_t_kt___som_region.html" title="SOM Region. " alt="" coords="327,299,457,377"/>
+<area shape="rect" id="node6" href="$struct_m_t_kt___som_coord.html" title="SOM Coordinates. " alt="" coords="331,5,453,97"/>
 </map>

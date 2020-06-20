@@ -1,0 +1,6 @@
+<map id="H5O_chunk_proxy_t" name="H5O_chunk_proxy_t">
+<area shape="rect" id="node2" href="$struct_h5_o__t.html" title="{H5O_t\n|+ cache_info\l+ sizeof_size\l+ sizeof_addr\l+ ndecode_dirtied\l+ rc\l+ chunk0_size\l+ mesgs_modified\l+ prefix_modified\l+ has_refcount_msg\l+ nlink\land 14 more...\l|}" alt="" coords="63,535,204,759"/>
+<area shape="rect" id="node3" href="$struct_h5_o__mesg__t.html" title="{H5O_mesg_t\n|+ dirty\l+ locked\l+ flags\l+ crt_idx\l+ chunkno\l+ native\l+ raw\l+ raw_size\l|}" alt="" coords="21,292,120,472"/>
+<area shape="rect" id="node4" href="$struct_h5_o__msg__class__t.html" title="{H5O_msg_class_t\n|+ id\l+ name\l+ native_size\l+ share_flags\l+ decode\l+ encode\l+ copy\l+ raw_size\l+ reset\l+ free\land 10 more...\l|}" alt="" coords="5,5,136,229"/>
+<area shape="rect" id="node5" href="$struct_h5_o__chunk__t.html" title="{H5O_chunk_t\n|+ addr\l+ size\l+ gap\l+ image\l|}" alt="" coords="145,321,247,443"/>
+</map>

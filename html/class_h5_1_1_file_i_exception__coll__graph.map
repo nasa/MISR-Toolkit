@@ -1,0 +1,5 @@
+<map id="H5::FileIException" name="H5::FileIException">
+<area shape="rect" id="node2" href="$class_h5_1_1_group_i_exception.html" title="{H5::GroupIException\n||+ GroupIException()\l+ GroupIException()\l+ ~GroupIException()\l}" alt="" coords="11,549,157,656"/>
+<area shape="rect" id="node3" href="$class_h5_1_1_location_exception.html" title="{H5::LocationException\n||+ LocationException()\l+ LocationException()\l+ ~LocationException()\l}" alt="" coords="5,395,163,501"/>
+<area shape="rect" id="node4" href="$class_h5_1_1_exception.html" title="Exception provides wrappers of HDF5 error handling functions. " alt="" coords="17,5,151,347"/>
+</map>

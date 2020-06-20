@@ -96,8 +96,8 @@ MTKt_status MtkSnapToGrid(
   map.som.ctr.x = (som_max.x + som_min.x) / 2.0;
   map.som.ctr.y = (som_max.y + som_min.y) / 2.0;
 
-  map.nline = (som_max.x - som_min.x) / map.resolution;
-  map.nsample = (som_max.y - som_min.y) / map.resolution;
+  map.nline = (int) (som_max.x - som_min.x) / map.resolution;
+  map.nsample = (int) (som_max.y - som_min.y) / map.resolution;
 
   /* ------------------------- */
   /* Compute upper left corner */

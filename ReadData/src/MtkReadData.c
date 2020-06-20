@@ -177,7 +177,7 @@ MTKt_status MtkReadDataFid(
   case MTK_GRP_RCCM:
   case MTK_PP:
     status = MtkReadRawFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
@@ -186,43 +186,49 @@ MTKt_status MtkReadDataFid(
   case MTK_GRP_TERRAIN_GM:
   case MTK_GRP_TERRAIN_LM:
     status = MtkReadL1B2Fid(fid, gridname, fieldname, region,
-			    databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_AS_AEROSOL:
     status = MtkReadRawFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_AS_LAND:
     status = MtkReadL2LandFid(fid, gridname, fieldname, region,
-			      databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_TC_ALBEDO:
     status = MtkReadRawFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_TC_CLASSIFIERS:
     status = MtkReadRawFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_TC_STEREO:
     status = MtkReadRawFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 
   case MTK_TC_CLOUD:
     status = MtkReadL2TCCloudFid(fid, gridname, fieldname, region,
-			   databuf, mapinfo);
+               databuf, mapinfo);
+    MTK_ERR_COND_JUMP(status);
+    break;
+
+  case MTK_CMV_NRT:
+    status = MtkReadRawFid(fid, gridname, fieldname, region,
+               databuf, mapinfo);
     MTK_ERR_COND_JUMP(status);
     break;
 

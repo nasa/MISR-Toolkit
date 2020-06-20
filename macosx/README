@@ -5,6 +5,26 @@ IMPORTANT: You MUST "make clean" in the Mtk source directory right before using 
 NOTE: By default the scripts install_manager, download_libraries, and install_hdf+hdfeos in the macosx/Packages directory used by this system have a "PREFIX=/tmp".
       When distributing for general use, these prefixes should be changed to be blank ( "PREFIX=" )
  
+
+--- New Procedure for release ---
+Packages should now create a flat package (.pkg), which can be distributed and installed directly.
+
+However, it order to get past gatekeeper checks, it will need to be signed with a Developer ID Installer certificate:
+productsign --sign "Developer ID Installer: Jet Propulsion Laboratory (XXXXXXXX)" macosx/Packages/build/Mtk_Packages.pkg macosx/Packages/build/Mtk_Packages_signed.pkg
+
+In addition, to run on Catalina and greater, the software should also be notarized, and the notarization ticket stapled to the package.
+To submit the package for notarization:
+xcrun altool --notarize-app --primary-bundle-id "gov.nasa.jpl.mtk" --username "<email_address>" --password "@env:PASSWORD" --file macosx/Packages/build/Mtk_Packages_signed.pkg -itc_provider JetPropulsionLaboratory
+
+On submitting the package for notarization, you will get back a notarization_id that you can use to check the status.
+
+To check the status of notarization:
+xcrun altool --notarization-info <notarization_id> -u "<email_address>" --password "@env:PASSWORD" -itc_provider JetPropulsionLaboratory
+
+Once, notarization status is successful, to staple the notarization to the package:
+xcrun stapler staple macosx/Packages/build/Mtk_Packages_signed.pkg
+
+--- Old Procedure is below ---
 To bundle for release, you should put the Packages created mpkg into a sparse R/W DMG file and then convert that DMG to a R/O Compressed DMG.
 Example release steps follow:
 

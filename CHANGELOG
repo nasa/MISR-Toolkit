@@ -1,3 +1,9 @@
+1.5.1 (June 2020)
+Added support for Windows 10 64-bit binary releases
+Added support for L2 CMV NRT product
+Fixed IDL wrapper function ordering
+Fixed problem preventing build of toolkit without regex (using REGEXP_WORKAROUND)
+
 1.5.0 (January 2020)
 Completed full support for V23 AS_AEROSOL and AS_LAND netCDF4 products.
 Added HDF5 and NetCDF4 as Mtk dependencies.

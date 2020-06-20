@@ -1,0 +1,7 @@
+To build MisrToolkit_bundled.lib, we bundle together Mtk and the required dependencies using lib.exe.
+
+In the VS2015 x64 Native Tools Command Prompt:
+
+cd C:\Mtk\win64\MisrToolkit\x64\Release
+
+lib.exe /OUT:MisrToolkit_bundled.lib /LIBPATH:"C:\Mtk\win64\HDF_4.2.14\lib" /LIBPATH:"C:\Mtk\win64\hdfeos_2.19\lib" /LIBPATH:"C:\Mtk\win64\HDF5_1.8.21\lib" /LIBPATH:"C:\Mtk\win64\netcdf_4.7.4\lib" /LIBPATH:"C:\Mtk\win64\MisrToolkit\x64\Release" /LIBPATH:"C:\Mtk\win64\tre_0.8.0\lib" sleep.lib ws2_32.lib tre.lib libxdr.lib libjpeg.lib libszip.lib gctp.lib libhdf.lib libmfhdf.lib hdfeos.lib libzlib.lib libhdf5.lib libhdf5_hl.lib netcdf.lib MisrToolkit.lib

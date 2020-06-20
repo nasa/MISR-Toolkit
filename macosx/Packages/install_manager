@@ -6,7 +6,7 @@ PREFIX=/tmp
 ./install_hdf+hdfeos
 source $PREFIX/usr/local/hdfeoslibs/bin/hdfeos_env.sh
 cd Mtk
-MTK_INSTALLDIR=$PREFIX/Library/Mtk-1.4.4
+MTK_INSTALLDIR=$PREFIX/Applications/Mtk-1.5.1
 export MTK_INSTALLDIR
 make cmdutil
 make python
@@ -42,9 +42,6 @@ fi
 
 cd ../..
 make applications
-if test -n "$(find /Applications/exelis -maxdepth 1 -name 'idl*' -print -quit 2> /dev/null)"
-then
-    make idl
-fi
+make idl || true # It is okay if we can't install IDL
 make install
 

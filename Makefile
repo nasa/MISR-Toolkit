@@ -26,7 +26,7 @@ INSTALLDIR :=	$(shell printenv MTK_INSTALLDIR)
 COMMON_MK := $(MTKHOME)/common.mk
 
 ifeq ("$(ARCH)","Darwin x86_64")
-  IDL_DIR ?= 	/Applications/exelis/idl
+  IDL_DIR ?=    $(shell dirname $$(dirname $$(find /Applications/harris /Applications/exelis /Applications/rsi -type f -name idl -print -quit)))
   DOXYDIR ?=	/Applications/Doxygen/Doxygen.app/Contents/Resources
   PYDOCDIR?=    /usr/local/bin
   ARCH_CFLAGS:=	-arch x86_64
@@ -38,10 +38,10 @@ ifeq ("$(ARCH)","Darwin x86_64")
   MTK_LD_PATH := DYLD_LIBRARY_PATH
 else
 ifeq ("$(ARCH)","Linux x86_64")
-  IDL_DIR ?= 	/usr/local/exelis/idl
+  IDL_DIR ?= 	/usr/local/harris/idl
   DOXYDIR ?=	/usr/bin
   PYDOCDIR?=	/usr/local/bin
-  ARCH_CFLAGS:=	-m64 -fno-cse-follow-jumps -fno-gcse -DREGEXP_WORKAROUND
+  ARCH_CFLAGS:=	-m64 -fno-cse-follow-jumps -fno-gcse -D_XOPEN_SOURCE=500
   IDL_MODE:=
   IDL_CFLAGS:=  -fno-strict-aliasing
   IDL_LDFLAGS:= $(IDL_DIR)/bin/bin.linux.x86_64/idl_hdf.so
@@ -291,7 +291,7 @@ idl: $(IDLLIB) $(IDLDLM) $(IDLENV)
 $(IDLLIB): $(STCLIB) $(DYNLIB) $(MTKHOME)/wrappers/idl/idl_mtk.c
 	@if [ -d "$(IDL_DIR)" ]; then \
 		echo "Creating idl shared library $(IDLLIB)..." ;\
-		CMD="make_dll,'idl_mtk','idl_MisrToolkit','IDL_Load',output_directory='lib', compile_directory='wrappers/idl',input_directory='wrappers/idl',/show_all_output,extra_cflags='$(IDL_CFLAGS)',extra_lflags='$(MTKHOME)/$(STCLIB)  $(IDL_LDFLAGS)'" ;\
+		CMD="make_dll,'idl_mtk','idl_MisrToolkit','IDL_Load',output_directory='lib', compile_directory='wrappers/idl',input_directory='wrappers/idl',/show_all_output,extra_cflags='$(IDL_CFLAGS)',extra_lflags='$(MTKHOME)/$(STCLIB)  $(IDL_LDFLAGS)',/platform_extension" ;\
 		echo $$CMD | $(IDL_DIR)/bin/idl $(IDL_MODE);\
 	else \
 		echo "IDL not installed in" $(IDL_DIR) ;\

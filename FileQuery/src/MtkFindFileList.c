@@ -30,7 +30,9 @@
   #include <unistd.h>   /* getcwd(), etc.                     */
 #endif
 
+#ifndef REGEXP_WORKAROUND
 #include <regex.h>
+#endif
 
 #ifndef S_ISDIR
 #define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
@@ -43,7 +45,9 @@
 #define MAX_DIR_PATH 2048	/* maximal full path we support.      */
 #define FILE_LIST_SIZE 20       /* Size to extend file list by */
 
+#ifndef REGEXP_WORKAROUND
 static void findfile(const regex_t* preg, int *count, int *max, char ***file_list, MTKt_status *status);
+#endif
 
 
 /** \brief Find files in a directory tree, using regular expressions
@@ -71,14 +75,19 @@ MTKt_status MtkFindFileList(
   int *filecnt,          /**< [OUT] File count */
   char **filenames[]     /**< [OUT] Filenames */ )
 {
-    MTKt_status status;   /* Return status */
-    int status_code;
+#ifdef REGEXP_WORKAROUND
+	return MTK_FAILURE;
+#else // regex enabled    
+	MTKt_status status;   /* Return status */
+	int status_code = 1;
+	int chdir_status = 0;
+	char **temp_file_list = NULL;
+	char *curr_dir = NULL; /* current directory */
+	int max = FILE_LIST_SIZE;
     char* dir_path;		  /* path to the directory. */
-    regex_t preg;
-    char **temp_file_list = NULL;
+    regex_t preg;    
     int count;
-    int max = FILE_LIST_SIZE;
-    char *curr_dir = NULL; /* current directory */
+
     int path_name_size = 1024; /* length of curr_dir */
     struct stat dir_stat; /* used by stat().        */
     char temp[128];
@@ -145,7 +154,10 @@ MTKt_status MtkFindFileList(
     *filenames = temp_file_list;
 
     /* restore current directory */
-    chdir(curr_dir);
+    chdir_status = chdir(curr_dir);
+    if (chdir_status) {
+        perror("chdir error: ");
+    }
 
     regfree(&preg);
     free(curr_dir);
@@ -158,14 +170,18 @@ ERROR_HANDLE:
 
   if (curr_dir != NULL)
   {
-    chdir(curr_dir); /* restore current directory */
+    chdir_status = chdir(curr_dir); /* restore current directory */
+    if (chdir_status) {
+        perror("chdir error: ");
+    }
     free(curr_dir);
   }
 
   return status_code;
+#endif
 }
 
-
+#ifndef REGEXP_WORKAROUND
 static void findfile(const regex_t* preg, int *count, int *max, char ***file_list, MTKt_status *status)
 {
     DIR* dir;			/* pointer to the scanned directory. */
@@ -265,3 +281,4 @@ static void findfile(const regex_t* preg, int *count, int *max, char ***file_lis
     
     closedir(dir);
 }
+#endif

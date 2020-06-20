@@ -1,0 +1,41 @@
+      SUMMARY OF THE HDF4 CONFIGURATION
+      =================================
+
+General Information:
+-------------------
+                   HDF4 Version: 4.2.14
+                  Configured on: 2020-06-01
+                  Configured by: Visual Studio 14 2015 Win64
+                 Configure mode: CMAKE 3.17.2
+                    Host system: Windows-10.0.17763
+              Uname information: Windows
+                      Libraries: 
+             Installation point: C:/Program Files/HDF4
+
+Compiling Options:
+------------------
+               Compilation Mode: Release
+                     C Compiler: C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/x86_amd64/cl.exe
+                         CFLAGS: /DWIN32 /D_WINDOWS /W3
+                       CPPFLAGS: /DWIN32 /D_WINDOWS /W3 /GR /EHsc
+               Shared Libraries: NO
+               Static Libraries: YES
+  Statically Linked Executables: 
+                        LDFLAGS: /machine:x64
+                Extra libraries: 
+                       Archiver: 
+                         Ranlib: 
+
+Languages:
+----------
+                        Fortran: OFF
+               Fortran Compiler: 
+                  Fortran Flags: 
+
+                            JAVA: OFF
+                     JAVA Compiler:  
+
+Features:
+---------
+               SZIP compression: enabled with encoder
+   Support for netCDF API 2.3.2: OFF

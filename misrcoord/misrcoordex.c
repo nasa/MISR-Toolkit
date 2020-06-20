@@ -5,6 +5,7 @@
 #include <HdfEosDef.h>
 #include <proj.h>
 #include "misrproj.h"
+#include "MisrCoordQuery.h"
 #include "errormacros.h"
 
 #define MAXNDIM	   10
@@ -150,7 +151,7 @@ int main(int argc, char *argv[]) {
     HDFEOS_ERROR_CHECK("GDinqdims");
 
     /* Block dimension is always last dimension returned by GDinqdims. */
-    if (dim[ndim - 1] != NBLOCK) ERROR("File does not have 180 blocks");
+    if (dim[ndim - 1] != NBLOCK) MTK_ERROR("File does not have 180 blocks");
 
     hdfeos_status_code = GDgridinfo(gid, &nline, &nsample, ulc, lrc);
     HDFEOS_ERROR_CHECK("GDgridinfo");
@@ -159,7 +160,7 @@ int main(int argc, char *argv[]) {
     HDFEOS_ERROR_CHECK("GDblkSOMoffset");
 
     status = misr_init(NBLOCK, nline, nsample, offset, ulc, lrc);
-    if (status) ERROR("misr_init");
+    if (status) MTK_ERROR("misr_init");
 
     printf("\nFilename (path/orbit): %s\n", filepath);
     printf("Gridname: %s\n", gridname[igrid]);
@@ -181,11 +182,11 @@ int main(int argc, char *argv[]) {
 
     for_init((long)projcode, (long)zonecode, (double*)projparam,
 	     (long)spherecode, NULL, NULL, &iflg, for_trans);
-    if (iflg) ERROR("for_init");
+    if (iflg) MTK_ERROR("for_init");
 
     inv_init((long)projcode, (long)zonecode, (double*)projparam,
 	     (long)spherecode, NULL, NULL, &iflg, inv_trans);
-    if (iflg) ERROR("inv_init");
+    if (iflg) MTK_ERROR("inv_init");
 
     printf("GCTP projection code: %d\n", projcode);
     printf("GCTP zone code (not used for SOM): %d\n", zonecode);

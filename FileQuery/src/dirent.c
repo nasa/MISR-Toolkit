@@ -13,6 +13,10 @@
  *	      4.  To support TurboC
  *	      5.  To support Windows NT
  */
+#ifdef _MSC_VER
+#define strdup _strdup
+#define strlwr _strlwr
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>

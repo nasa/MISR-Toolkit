@@ -1,0 +1,12 @@
+In Visual Studio 2015 x64 native tools commands prompt:
+
+cd C:\Mtk
+"C:\Program Files\Harris\IDL87\bin\bin.x86_64\idl.exe"
+
+At IDL Prompt:
+make_dll,'idl_mtk','idl_MisrToolkit','IDL_Load',output_directory='lib', compile_directory='wrappers/idl',input_directory='wrappers/idl',/show_all_output,extra_cflags='-IC:\Mtk\include -IC:\Mtk\include -IC:\Mtk\Util\include -IC:\Mtk\FileQuery\include -IC:\Mtk\UnitConv\include -IC:\Mtk\CoordQuery\include -IC:\Mtk\MapQuery\include -IC:\Mtk\OrbitPath\include -IC:\Mtk\SetRegion\include -IC:\Mtk\ReadData\include -IC:\Mtk\WriteData\include -IC:\Mtk\ReProject\include -IC:\Mtk\Regression\include -IC:\Mtk\misrcoord -IC:\Mtk\odl -IC:\Mtk\win64\netcdf_4.7.4\include -IC:\Mtk\win64\HDF_4.2.14\include -IC:\Mtk\win64\hdfeos_2.19\include -IC:\Mtk\win64\HDF5_1.8.21\include',extra_lflags='C:\Mtk\win64\MisrToolkit\x64\Release\MisrToolkit_bundled.lib', /verbose, /nocleanup, /platform_extension
+
+Then modify bat file in wrappers\idl to remove /nodefaultlib in echo and actual command below it.
+Run bat file to produce idl_mtk.dll in lib dir
+
+

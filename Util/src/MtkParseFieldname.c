@@ -22,7 +22,9 @@
 #ifdef __linux__
 #include <sys/types.h>
 #endif
+#ifndef REGEXP_WORKAROUND
 #include <regex.h>
+#endif
 #include <string.h>
 #include <stdlib.h>
 #include <limits.h>

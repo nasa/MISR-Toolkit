@@ -41,6 +41,7 @@ typedef enum MTKt_FileType {       /* File type */
   MTK_HR_BRF,
   MTK_HR_RPV,
   MTK_HR_TIP,
+  MTK_CMV_NRT
 } MTKt_FileType;
 
 #define MTKT_FILE_TYPE_DESC { "AGP", "GP_GMP", "GRP_RCCM", \
@@ -49,7 +50,8 @@ typedef enum MTKt_FileType {       /* File type */
                               "AS_AEROSOL", "AS_LAND", "TC_ALBEDO", \
                               "TC_CLASSIFIERS", "TC_STEREO", \
                               "PP", "CONVENTIONAL", "UNKNOWN","TC_CLOUD", \
-							  "MISR_HR_BRF", "MISR_HR_RPV", "MISR_HR_TIP",}
+                              "MISR_HR_BRF", "MISR_HR_RPV", "MISR_HR_TIP", \
+                              "MISR_CMV_NRT"}
 
 /** \brief Core Metadata */
 typedef struct MtkCoreMetaData {
@@ -179,7 +181,7 @@ MTKt_status MtkFileGridFieldToDataTypeFid( int32 fid,
 					   const char *fieldname,
 					   MTKt_DataType *datatype );
 
-MTKt_status MtkFileGridFieldToDataTypeNcid( int32 fid,
+MTKt_status MtkFileGridFieldToDataTypeNcid( int ncid,
 					   const char *gridname,
 					   const char *fieldname,
 					   MTKt_DataType *datatype );

@@ -14,7 +14,8 @@
 #include <string.h>
 #include <ctype.h>
 
-char* strcasestr(const char *s, const char *find)
+/* Since Windows does not include strcasestr, we carry our own implementation */
+char* win_strcasestr(const char *s, const char *find)
 {
   char c, sc;
   size_t len;

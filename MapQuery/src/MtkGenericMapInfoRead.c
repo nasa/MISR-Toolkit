@@ -13,12 +13,12 @@
                  U.S. Government Sponsorship acknowledged.
 
 ============================================================================*/
-
-#include "MisrMapQuery.h"
-#include "MisrUtil.h"
+#include "MisrToolkit.h"
 #include <stdlib.h>
 #include <math.h>
+#ifndef _MSC_VER
 #include <strings.h> 		/* for strncasecmp */
+#endif
 
 #define MAX_LENGTH 1000
 
@@ -88,8 +88,8 @@ MTKt_status MtkGenericMapInfoRead(
   double min_corner_y = 0.0;
   double resolution_x = 0.0;
   double resolution_y = 0.0;
-  int number_pixel_x = 0.0;
-  int number_pixel_y = 0.0;
+  int number_pixel_x = 0;
+  int number_pixel_y = 0;
   MTKt_OriginCode origin_code = -1;
   MTKt_PixRegCode pix_reg_code = -1;
   FILE *fp = NULL;

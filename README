@@ -18,13 +18,16 @@ that knows about MISR data products. It has the ability to:
    - Convert MISR product files to IDL ENVI files
 
 The MISR Toolkit has been tested on Linux CentOS 7, Mac OS X 10.14.6 and Windows 10. 
-It's core interface is C. There are also bindings for Python (2.7 and 3.x supported) and IDL. 
+It's core interface is C. There are also bindings for Python (2.7 and 3.x supported) and IDL.
+Note that Python 2.7 is end of life and deprecated in MISR Toolkit.
 
 
 Complete documentation and function reference
 ---------------------------------------------
 
 Use a browser to view online documentation: https://nasa.github.io/MISR-Toolkit/html/index.html
+
+Offline documentation packages are also available for download on the github releases page.
 
 
 Third Party Library Dependencies
@@ -43,8 +46,28 @@ download NumPy and install it according to NumPy instructions.
    - zlib-1.2.5       (https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos/previous_releases)
    - NumPy 1.15 or later Python module (http://www.numpy.org/)
 
-Installation Instructions
--------------------------
+
+Binary Installation Instructions
+--------------------------------
+
+Binary installations that do not require compilation are now available for Python 3.6, IDL, and C library users
+on Linux, Mac OS X, and Windows.
+Python 2.7 binaries are also available but deprecated on Linux and Mac OS X.
+
+For Python users, the most convenient option is downloading MISR Toolkit directly from PyPI using pip.
+- python -m pip install -U pip
+- python -m pip install -U wheel numpy
+- python -m pip install -U MisrToolkit
+
+A downloadable python binary wheel distribution is also available on the releases page.
+
+For IDL users, a IDL Dynamically Loadable Module (DLM) distribution is available on the releases page.
+To use it, download the package, extract it to a convenient location, and then follow the instructions in the README
+to set the IDL_DLM_PATH enviornment variable or use IDL's PREF_SET to tell IDL where you extracted the package.
+
+
+Source Installation Instructions
+--------------------------------
 
 Linux and MacOS X
 
@@ -216,7 +239,7 @@ and before the "make install" step for the MISR Toolkit.
 
 Windows
 
-See win32/README.txt in the source or binary bundle.
+See win64/README.txt in the source or binary bundle.
 
 Known Problems
 --------------

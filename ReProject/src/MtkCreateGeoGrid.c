@@ -87,8 +87,8 @@ MTKt_status MtkCreateGeoGrid(
     lon_extent_dd = lrc_lon_dd - ulc_lon_dd;
   }
 
-  nline = lat_extent_dd / lat_cellsize_dd + 1;
-  nsample = lon_extent_dd / lon_cellsize_dd + 1;
+  nline = (int) (lat_extent_dd / lat_cellsize_dd) + 1;
+  nsample = (int) (lon_extent_dd / lon_cellsize_dd) + 1;
 
   /* --------------------------------------------------- */
   /* Allocate buffers of the latitude and longitude data */

@@ -20,10 +20,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-static double round(double val)
-{    
-    return floor(val + 0.5);
-}
 
 
 int main( ) {

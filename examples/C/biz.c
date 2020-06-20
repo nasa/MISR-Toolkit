@@ -20,12 +20,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#ifdef _MSC_VER // Visual Studio '08 does not include round (part of C99) in math.h
-static double round(double val)
-{    
-    return floor(val + 0.5);
-}
-#endif
 
 
 int biz( ) {

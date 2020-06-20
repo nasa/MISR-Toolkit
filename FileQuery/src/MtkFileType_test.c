@@ -184,6 +184,15 @@ int main () {
     pass = MTK_FALSE;
   }
 
+  strcpy(filename,"../Mtk_testdata/in/MISR_AM1_CMV_T20200609165530_P025_O108918_F01_0001.hdf");
+  status = MtkFileType(filename, &filetype);
+  if (status == MTK_SUCCESS && filetype == MTK_CMV_NRT) {
+    MTK_PRINT_STATUS(cn,".");
+  } else {
+    MTK_PRINT_STATUS(cn,"*");
+    pass = MTK_FALSE;
+  }
+
   /* Argument Checks */
   status = MtkFileType(NULL, &filetype);
   if (status == MTK_NULLPTR) {

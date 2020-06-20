@@ -246,6 +246,8 @@ MTKt_status MtkFileTypeFid(
     *filetype = MTK_PP;
   else if (strncmp(fn_start,"TC_CLOUD",8) == 0)
     *filetype = MTK_TC_CLOUD;
+  else if (strncmp(fn_start,"CMV_T",5) == 0)
+    *filetype = MTK_CMV_NRT;
   else
     *filetype = MTK_UNKNOWN;
 

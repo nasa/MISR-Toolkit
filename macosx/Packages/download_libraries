@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+ #!/usr/bin/env sh
 
 PREFIX=/tmp
 #
 # Create ThirdParty library directory
 #
 
-default_libdir="$PREFIX/Library/Mtk_thirdparty"
+default_libdir="$PREFIX/Applications/Mtk_thirdparty"
 echo mkdir -p $default_libdir
 mkdir -p $default_libdir
 

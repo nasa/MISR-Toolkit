@@ -269,9 +269,13 @@ MTKt_status MtkNCVarId(int Ncid, const char *Name, MTKt_ncvarid *Var);
 
 char *MtkVersion(void);
 
+
 #ifdef _MSC_VER
-char* strcasestr(const char *s, const char *find);
-int strncasecmp(const char *s1, const char *s2, unsigned int n);
+char* win_strcasestr(const char *s, const char *find);
+#define strncasecmp _strnicmp
+#define strdup _strdup
+#define strlwr _strlwr
+#define strcasestr win_strcasestr
 #endif
 
 #endif /* MISRUTIL_H */

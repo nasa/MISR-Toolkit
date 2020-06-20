@@ -6,13 +6,7 @@ PREFIX=/tmp
 #
 
 arch=`uname -s -m`
-if [ "$arch" = "Darwin Power Macintosh" ]; then
-    default_arch_flags="-arch ppc"
-    mathlib="-lmx"
-elif [ "$arch" = "Darwin i386" ]; then
-    default_arch_flags="-arch i386"
-    mathlib="-lmx"
-elif [ "$arch" = "Darwin x86_64" ]; then
+if [ "$arch" = "Darwin x86_64" ]; then
     default_arch_flags="-arch x86_64"
     mathlib="-lmx"
 else
@@ -35,7 +29,7 @@ mkdir -p $installdir/bin $installdir/lib $installdir/include $installdir/man/man
 # Select ThirdParty library directory
 #
 
-default_libdir="$PREFIX/Library/Mtk_thirdparty"
+default_libdir="$PREFIX/Applications/Mtk_thirdparty"
 libdir="$default_libdir"
 
 #
@@ -56,8 +50,22 @@ jpegfile="$default_jpegfile"
 # Select HDF
 #
 
-default_hdffile="${libdir}/hdf-4.2.8.tar.gz"
+default_hdffile="${libdir}/hdf-4.2.10.tar.gz"
 hdffile="$default_hdffile"
+
+#
+# Select HDF5
+#
+
+default_hdf5file="${libdir}/hdf5-1.8.16.tar.gz"
+hdf5file="$default_hdf5file"
+
+#
+# Select netcdf
+#
+
+default_netcdffile="${libdir}/netcdf-4.4.0.tar.gz"
+netcdffile="$default_netcdffile"
 
 #
 # Select HDF-EOS
@@ -109,8 +117,36 @@ libbasename=`basename $hdffile .tar.gz`
 cd /tmp/Mtk.$$
 tar xzvf $hdffile
 cd /tmp/Mtk.$$/$libbasename
-./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-dependency-tracking --disable-fortran --prefix=$installdir --with-zlib=$installdir --with-jpeg=$installdir --disable-netcdf --disable-shared
 make 
+make check
+make install
+
+#
+# Install HDF5
+#
+
+libbasename=`basename $hdf5file .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $hdf5file
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags" LDFLAGS="$mathlib" --disable-shared -disable-silent-rules --disable-fortran --prefix=$installdir --with-zlib=$installdir
+make 
+make check
+make install
+HDF5LIB=${installdir}/lib
+HDF5INC=${installdir}/include
+
+#
+# Install netcdf
+#
+
+libbasename=`basename $netcdffile .tar.gz`
+cd /tmp/Mtk.$$
+tar xzvf $netcdffile
+cd /tmp/Mtk.$$/$libbasename
+./configure CFLAGS="-O2 -fPIC -fno-common $arch_flags -I${HDF5INC}" LDFLAGS="-L${HDF5LIB} $mathlib" --disable-shared --enable-static --disable-dap --enable-netcdf4 --prefix=$installdir
+make
 make check
 make install
 
@@ -146,6 +182,6 @@ echo 'setenv HDFEOS_LIB $HDFLIB' >> ${installdir}/bin/hdfeos_env.csh
 
 rm -rf /tmp/Mtk.$$
 
-echo "The HDF-EOS, HDF, jpeg and zlib libraries have been installed in $installdir"
+echo "The HDF-EOS, HDF4, HDF5, NetCDF4, jpeg and zlib libraries have been installed in $installdir"
 
 exit 0
